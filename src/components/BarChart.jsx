@@ -106,7 +106,7 @@ class BarChart extends Component {
                         'rule6'
                     ]}
                     indexBy="date"
-                    margin={{ top: 50, right: 130, bottom: 50, left: 60 }}
+                    margin={{ top: 50, right: 80, bottom: 50, left: 30 }}
                     padding={0.3}
                     valueScale={{ type: 'linear' }}
                     indexScale={{ type: 'band', round: true }}

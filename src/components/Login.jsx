@@ -8,7 +8,7 @@ const USER_REGEX = /^[a-zA-Z0-9_]{5,}[a-zA-Z]+[0-9]*$/;
 const PWD_REGEX = /^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{6,16}$/;
 
 export const Login = () => {
-    const BASE_URL = "https://transactionmonitor.co.uk/";
+    const BASE_URL = "https://s2.transactionmonitor.co.uk";
 
     const userRef = useRef();
     const errRef = useRef();

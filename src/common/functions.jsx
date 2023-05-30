@@ -1,4 +1,27 @@
-export const BASE_URL = "https://transactionmonitor.co.uk";
+import { useSyncExternalStore } from 'react';
+
+export const BASE_URL = "https://s2.transactionmonitor.co.uk";
+
+export function useWindowDimensions() {
+  // the 3rd parameter is optional and only needed for server side rendering
+  return useSyncExternalStore(subscribe, getSnapshot, getServerSnapshot);
+}
+
+function subscribe(callback) {
+  window.addEventListener('resize', callback);
+  return () => window.removeEventListener('resize', callback);
+}
+
+function getSnapshot() {
+  return { width: window.innerWidth, height: window.innerHeight };
+}
+
+function getServerSnapshot() {
+  return {
+      width: 0,
+      height: 0,
+  };
+}
 
 export function getStartAndEndDates(numberMonthsAgo) {
         let startDate = new Date();

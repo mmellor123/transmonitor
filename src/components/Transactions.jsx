@@ -78,7 +78,7 @@ class Transactions extends Component {
                 <Box >
                     {/* Drop down to pick rule */}
                     <Dropdown>
-                        <Dropdown.Toggle id="dropdown-button-dark-example1" variant="secondary">
+                        <Dropdown.Toggle id="dropdown-button-dark-example1" variant="secondary"  size="sm">
                             Rule {this.state.selectedRule}
                         </Dropdown.Toggle>
                         <Dropdown.Menu variant="dark">

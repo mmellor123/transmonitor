@@ -1,4 +1,4 @@
-import { Box, Button, IconButton, Typography, useTheme } from "@mui/material";
+import { Box, IconButton, Typography, useTheme } from "@mui/material";
 import { tokens } from "../../theme";
 import Header from "../../components/Header";
 import DownloadOutlinedIcon from "@mui/icons-material/DownloadOutlined"
@@ -76,6 +76,8 @@ class Dashboard extends Component {
     }
 
     render(){
+        const width = window.innerWidth;
+        // const height = window.innerHeight;
         const colors = this.props.colors;
         const startDate = this.state.startDate;
         const endDate = this.state.endDate;
@@ -84,14 +86,14 @@ class Dashboard extends Component {
                 <Box display="flex" justifyContent="space-between" alignItems="center">
                     <Header title="DASHBOARD" subtitle="Welcome to your dashboard"/>
                     <Typography variant="h3" fontWeight="bold">{monthIndexToString(this.state.selectedMonth)} {this.state.selectedYear}</Typography>
-                <Box>
+                {/* <Box>
                     <Button
                         sx={{backgroundColor: colors.blueAccent[700], color: colors.grey[100], fontSize: "14px", fontWeight: "bold", padding: "10px 20px"}}
                     >
                         <DownloadOutlinedIcon sx={{mr: "10px"}}/>
                         Download Reports
                     </Button> 
-                </Box>
+                </Box> */}
                 </Box>
                 {/* GRID AND CHARTS */}
                 <Box
@@ -101,7 +103,8 @@ class Dashboard extends Component {
                     gap="20px"
                 >
                     <Box
-                        gridColumn="span 8"
+                        
+                        gridColumn={width > 1000 ? 'span 6' : 'span 12'}
                         gridRow="span 2"
                         backgroundColor={colors.primary[400]}
                     >
@@ -116,9 +119,9 @@ class Dashboard extends Component {
                                 <Typography variant="h5" fontWeight="600" color={colors.grey[100]}>
                                     Rules Broken
                                 </Typography>
-                                <Typography variant="h3" fontWeight="bold" color={colors.greenAccent[500]}>
+                                {/* <Typography variant="h3" fontWeight="bold" color={colors.greenAccent[500]}>
                                     Total no
-                                </Typography>
+                                </Typography> */}
                             </Box>
 
                             <Box>
@@ -135,28 +138,29 @@ class Dashboard extends Component {
                         </Box>
 
                         {/*TRANSACTIONS*/}
-                        <Box gridColumn="span 4" gridRow="span 2" backgroundColor={colors.primary[400]} overflow="auto">
+                        <Box gridColumn={width > 1000 ? 'span 6' : 'span 12'} gridRow="span 2" backgroundColor={colors.primary[400]} overflow="auto">
                                 <Typography variant="h5" fontWeight="600" sx={{p: "30px 30px 0 30px"}}>
                                     Bar Chart
                                 </Typography>
+                                
                                 <Box height="250px" mt="-20px">
                                     <BarChart isDashboard={true} numberOfMonthsAgo={this.state.numberOfMonthsAgo} data={this.state.datas['bar']}/>
                                 </Box>
                         </Box>
 
                         {/* ROW 3 */}
-                        <Box  gridColumn="span 8" gridRow="span 3" backgroundColor={colors.primary[400]} overflow="auto">
-                            <Typography variant="h5" fontWeight="600" sx={{p: "30px 30px 0 30px"}}>
+                        <Box  gridColumn={width > 1000 ? 'span 8' : 'span 12'} gridRow="span 2" backgroundColor={colors.primary[400]} overflow="auto">
+                            {/* <Typography variant="h5" fontWeight="600" sx={{p: "30px 30px 0 30px"}}>
                                 Search Table
-                            </Typography>
-                            <Box  m="30px">
+                            </Typography> */}
+                            <Box  m="30px 30px 30px 30px">
                             {this.state.startDate ? <Transactions isDashboard={true} startDate={startDate} endDate={endDate} numberOfMonthsAgo={this.state.numberOfMonthsAgo}/> : null}
                             </Box>
                         </Box>
                         
                         <Box
-                            gridColumn="span 4"
-                            gridRow="span 2"
+                            gridColumn={width > 1000 ? 'span 4' : 'span 12'}
+                            gridRow="span 1"
                             backgroundColor={colors.primary[400]}
                             padding="30px"
                         >
