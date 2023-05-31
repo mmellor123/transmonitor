@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Sidebar, Menu, MenuItem, useProSidebar} from "react-pro-sidebar";
 // import 'react-pro-sidebar/dist/css/styles.css';
 import {Box, IconButton, Typography, useTheme} from '@mui/material';
-import {Link} from "react-router-dom";
+// import {Link} from "react-router-dom";
 import {tokens} from "../../theme";
 import HomeOutlinedIcon from "@mui/icons-material/HomeOutlined";
 // import PeopleOutlinedIcon from "@mui/icons-material/PeopleOutlined";
@@ -18,25 +18,7 @@ import MenuOutlinedIcon from "@mui/icons-material/MenuOutlined";
 // import MapOutlinedIcon from "@mui/icons-material/MapOutlined";
 import logo from './user.png'
 import { useAuth } from "../../components/auth";
-
-
-const Item = ({ title, to, icon, selected, setSelected }) => {
-    const theme = useTheme();
-    const colors = tokens(theme.palette.mode);
-    return (
-      <MenuItem
-        active={selected === title}
-        style={{
-          color: colors.grey[100],
-        }}
-        onClick={() => setSelected(title)}
-        icon={icon}
-        component={<Link to={to}/>}
-      >
-        <Typography>{title}</Typography>
-      </MenuItem>
-    );
-  };
+import { Item } from "../../common/functions";
 
 
 const SidebarMine = () => {
@@ -206,14 +188,6 @@ const SidebarMine = () => {
                                 selected={selected}
                                 setSelected={setSelected}
                             />
-                            {/* <Item
-                                title="Geography Chart"
-                                to="/geography"
-                                icon={<MapOutlinedIcon />}
-                                selected={selected}
-                                setSelected={setSelected}
-                            /> */}
-                            
                         </Box>
                 </Menu>
             </Sidebar>

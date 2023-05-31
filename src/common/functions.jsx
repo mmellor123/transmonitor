@@ -1,4 +1,10 @@
 import { useSyncExternalStore } from 'react';
+import { Typography, useTheme } from '@mui/material';
+import {Link} from "react-router-dom";
+import {MenuItem} from "react-pro-sidebar";
+import {tokens} from "../theme";
+
+
 
 export const BASE_URL = "https://s2.transactionmonitor.co.uk";
 
@@ -6,6 +12,24 @@ export function useWindowDimensions() {
   // the 3rd parameter is optional and only needed for server side rendering
   return useSyncExternalStore(subscribe, getSnapshot, getServerSnapshot);
 }
+
+export const Item = ({ title, to, icon, selected, setSelected }) => {
+  const theme = useTheme();
+  const colors = tokens(theme.palette.mode);
+  return (
+    <MenuItem
+      active={selected === title}
+      style={{
+        color: colors.grey[100],
+      }}
+      onClick={() => setSelected(title)}
+      icon={icon}
+      component={<Link to={to}/>}
+    >
+      <Typography>{title}</Typography>
+    </MenuItem>
+  );
+};
 
 function subscribe(callback) {
   window.addEventListener('resize', callback);

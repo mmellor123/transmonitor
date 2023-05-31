@@ -1,7 +1,8 @@
 import {Box, useTheme} from "@mui/material";
 import { DataGrid, GridToolbar} from "@mui/x-data-grid";
 import { tokens } from "../theme";
-import React, {Component} from "react";
+import React, {Component, useState} from "react";
+import {Link} from "react-router-dom";
 
 
 
@@ -9,7 +10,8 @@ function withMyHook(Component){
     return function WrappedComponent(props){
         const theme = useTheme();
         const colors = tokens(theme.palette.mode);
-        return <Component {...props} theme={theme} colors={colors}/>
+        const [selected, setSelected] = useState("Dashboard");
+        return <Component {...props} theme={theme} colors={colors} selected={selected} setSelected={setSelected}/>
     }
 }
 
@@ -24,7 +26,10 @@ class Table extends Component {
             if(key < 1){
                 Object.entries(this.props.data[key]).forEach(([key1, value1]) => {
                     if(key1 === "cif" && !this.props.isCustomerPage){
-                        columns.push({field: key1, headerName: key1, renderCell: (params) => <a href={"/customer?cif=" + params.row.cif + "&start="+params.row.start_date + "&end="+params.row.end_date+"&type="+params.row.type}>{params.row.cif}</a>});
+                        columns.push({field: key1, headerName: key1, renderCell: (params) => 
+                        <Link to={"/customer?cif=" + params.row.cif + "&start="+params.row.start_date + "&end="+params.row.end_date+"&type="+params.row.type}>
+                            {params.row.cif}
+                        </Link>});
                     }
                     else{
                         columns.push({field: key1, headerName: key1});
