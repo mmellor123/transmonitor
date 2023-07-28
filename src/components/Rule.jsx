@@ -11,7 +11,7 @@ import {postData, BASE_URL} from "../common/functions.jsx";
 const INTEGER_REGEX = /^\d+$/;
 const WHITELIST_REGEX = /^[0-9]+(,[0-9]+)*$/;
 
-const NAME_REGEX = /^([A-Za-z0-9 _]*[A-Za-z0-9][A-Za-z0-9 _]){4,10}$/;
+const NAME_REGEX = /^[A-Za-z0-9 ]{5,15}$/;
 const ERROR_HEX = "#FFCCCC"
 const EMPTY_REGEX = /^$/
 
