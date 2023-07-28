@@ -11,7 +11,7 @@ body,
 }
 
 .emailText {
-  padding:3px 3px;
+  margin-right:5px;
 }
 
 
@@ -37,7 +37,7 @@ form {
 }
 
 a, a:visited {
-    color: #fff;
+    color: #000;
 }
 
 input[type="text"],
@@ -45,14 +45,12 @@ input[type="password"],
 button,
 textarea {
   font-family: 'Nunito', sans-serif;
-  font-size: 22px;
-  padding: 0.25rem;
-  border-radius: 0.5rem;
 }
 
 label,
 button {
   margin-top: 1rem;
+  color: black
 }
 
 button {
@@ -60,6 +58,7 @@ button {
 }
 
 .instructions {
+    
     font-size: 0.75rem;
     border-radius: 0.5rem;
     background: #000;
@@ -104,22 +103,25 @@ button {
     display: inline-block;
 }
 
+#nav-dropdown{
+    color: #000;
+    background-color: #fff;
+    border:1px solid #0b0e07;
+}
+
 .myButton {
-	background:linear-gradient(to bottom, #3e4396 5%, #3e4396 100%);
-	background-color:#3e4396;
+	background:linear-gradient(to bottom, #0c6588 5%, #0c6588 100%);
 	border-radius:3px;
-	border:1px solid #0b0e07;
+	border:0px solid #0b0e07;
 	display:inline-block;
 	cursor:pointer;
-	color:#ffffff;
-	font-size:15px;
-	padding:6px 16px;
-	text-decoration:none;
-	text-shadow:0px 1px 0px #263666;
+	color:#fff;
+  font-weight: bold;
+	padding:5px 16px;
+	text-decoration:none
 }
 .myButton:hover {
-	background:linear-gradient(to bottom, #131649 5%, #131649 100%);
-	background-color: #131649;
+	background:linear-gradient(to bottom, #094861 5%, #094861 100%);
 }
 .myButton:active {
 	position:relative;
@@ -150,5 +152,78 @@ button {
 
 ::-webkit-scrollbar-track:hover {
   background: #555;
+}
+
+.create-rule-dropdown {
+  width: 150px !important;
+}
+
+.delete-rule-button {
+  width: 100px !important;
+  background-color: firebrick;
+	border-radius:3px;
+	border:0px solid #0b0e07;
+	display:inline-block;
+	cursor:pointer;
+	color:#fff;
+  font-weight: bold;
+	padding:5px 16px;
+	text-decoration:none;
+  margin-top: 10px;
+  
+}
+
+
+.button-1:hover,
+.button-1:focus {
+  background-color: #F082AC;
+}
+
+.cancel-button {
+  background:linear-gradient(to bottom, #0c6588 5%, #0c6588 100%);
+	background-color:#0c6588;
+	border-radius:3px;
+	border:0px solid #0b0e07;
+	display:inline-block;
+	cursor:pointer;
+	color:#fff;
+  font-weight: bold;
+	padding:5px 16px;
+	text-decoration:none;
+  margin-top: 10px;
+  width: 100px;
+}
+.create-rule-submit:hover,
+.cancel-button:hover {
+	background:linear-gradient(to bottom, #094861 5%, #094861 100%);
+}
+
+.delete-rule-button:hover {
+	background:linear-gradient(to bottom, rgb(145, 28, 28) 5%, rgb(145, 28, 28) 100%);
+}
+
+.create-rule-submit {
+  background:linear-gradient(to bottom, #0c6588 5%, #0c6588 100%);
+	border-radius:3px;
+	border:0px solid #0b0e07;
+	display:inline-block;
+	cursor:pointer;
+	color:#fff;
+  font-weight: bold;
+	padding:5px 16px;
+	text-decoration:none;
+  margin-top: 10px;
+  width: 100px;
+
+}
+
+.rule-description {
+  font-size: 0.75rem;
+  border-radius: 0.5rem;
+  background: rgb(148, 0, 0);
+  color: #fff;
+  padding: 0.5rem;
+  position: relative;
+  bottom: -10px;
 }
 

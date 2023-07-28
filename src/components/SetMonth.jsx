@@ -12,7 +12,7 @@ class SetMonth extends Component{
                 <Box display="flex" paddingBottom="10px">
                                 <Box paddingRight="5px">
                                     <Dropdown>
-                                        <Dropdown.Toggle id="dropdown-button-dark-example1" variant="secondary"  size="sm">
+                                        <Dropdown.Toggle id="nav-dropdown" variant="secondary"  size="sm">
                                             {this.props.monthStr}
                                         </Dropdown.Toggle>
                                         <Dropdown.Menu variant="dark">
@@ -33,7 +33,7 @@ class SetMonth extends Component{
                                 </Box>
                                 <Box paddingRight="5px">
                                     <Dropdown>
-                                        <Dropdown.Toggle id="dropdown-button-dark-example1" variant="secondary"  size="sm">
+                                        <Dropdown.Toggle id="nav-dropdown" variant="secondary"  size="sm">
                                             {this.props.selectedYear}
                                         </Dropdown.Toggle>
                                         <Dropdown.Menu variant="dark">

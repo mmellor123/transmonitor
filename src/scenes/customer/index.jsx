@@ -1,9 +1,11 @@
-import {Box, Typography, useTheme} from "@mui/material";
+import {Box, useTheme} from "@mui/material";
 import { tokens } from "../../theme";
 import React, {Component} from "react";
 import {fetchData, sendEmail, jsonToCSV, BASE_URL} from "../../common/functions.jsx";
 import Table from "../../components/Table";
 import { useSearchParams } from "react-router-dom";
+import Header from "../../components/Header";
+
 
 
 function withMyHook(Component){
@@ -36,14 +38,22 @@ class Customer extends Component {
         });
     }
 
+    getEmailAddress = () => {
+        return document.getElementById("emailAddress").value;
+    }
+
     render(){
         return (
             <Box m="20px">
-                <Typography>Customer Transactions</Typography>
+                <Header title="Customer Transactions" subtitle="View Customer Transactions"/>
                 {/* <Box textAlign="right" display="inline-block">
                     <Button variant="contained" color="error"><CSVLink data={this.state.datas}>Download CSV</CSVLink></Button>
                 </Box> */}
-                <button onClick={() => sendEmail("max.m@kogopay.com", jsonToCSV(this.state.datas), this.props.cif + "_transactions")}>Send Email</button>
+                {/* <button onClick={() => sendEmail("max.m@kogopay.com", jsonToCSV(this.state.datas), this.props.cif + "_transactions")}>Send Email</button> */}
+                <Box>
+                            <input class="emailText" type="text" id="emailAddress"/>
+                            <button class="create-rule-submit" onClick={() => sendEmail(this.getEmailAddress(), jsonToCSV(this.state.datas), this.props.cif)}>Send Email</button>
+                </Box>
                 <Table data={this.state.datas} isCustomerPage={true}/>
             </Box>
         )

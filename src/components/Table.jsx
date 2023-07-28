@@ -1,8 +1,11 @@
-import {Box, useTheme} from "@mui/material";
+import {Box, IconButton, useTheme} from "@mui/material";
 import { DataGrid, GridToolbar} from "@mui/x-data-grid";
 import { tokens } from "../theme";
 import React, {Component, useState} from "react";
 import {Link} from "react-router-dom";
+import EditIcon from '@mui/icons-material/Edit';
+import ClearIcon from '@mui/icons-material/Clear';
+
 
 
 
@@ -20,16 +23,37 @@ class Table extends Component {
     state = {
     }
 
+    addRuleEditIcons = (columns) => {
+        if(this.props.isViewRules){
+            columns.push({field: "Edit", headerName: "Edit", renderCell: (params) => 
+                <Link to={"/edit-rule?id="+params.row.id}>
+                    <EditIcon/>
+                </Link>
+            });
+            columns.push({field: "Delete", headerName: "Delete", renderCell: (params) => 
+                <IconButton onClick={() => this.props.handleDelete(params.row.id)} style={{color: "#ff0033"}}>
+                    <ClearIcon/>          
+                </IconButton>
+            });
+        }
+        return columns;
+    }
+
     getColumns = () => {
-        const columns = []
+        var columns = []
         Object.entries(this.props.data).forEach(([key, value]) => {
             if(key < 1){
                 Object.entries(this.props.data[key]).forEach(([key1, value1]) => {
-                    if(key1 === "cif" && !this.props.isCustomerPage){
+                    console.log("KEY: ", key1)
+                    if(key1 === "CIF From" && !this.props.isCustomerPage){
                         columns.push({field: key1, headerName: key1, renderCell: (params) => 
-                        <Link to={"/customer?cif=" + params.row.cif + "&start="+params.row.start_date + "&end="+params.row.end_date+"&type="+params.row.type}>
-                            {params.row.cif}
-                        </Link>});
+                            <Link to={"/customer?cif=" + params.row[`CIF From`] + "&start="+params.row.From + "&end="+params.row.To+"&type="+params.row.type}>
+                                {params.row[`CIF From`]}
+                            </Link>
+                        });
+                    }
+                    else if(key1 === "whitelist"){
+                        columns = this.addRuleEditIcons(columns);
                     }
                     else{
                         columns.push({field: key1, headerName: key1});
@@ -52,7 +76,8 @@ class Table extends Component {
                     height="75vh"
                     sx={{
                         "& .MuiDataGrid-root": {
-                            border: "none"
+                            border: "none",
+                            color: "#000"
                         },
                         "& .MuiDataGrid-cell": {
                             borderBottom: "none"
@@ -75,7 +100,7 @@ class Table extends Component {
                             color: `${colors.greenAccent[200]} !important`
                         },
                         "& .MuiDataGrid-toolbarContainer .MuiButton-text": {
-                            color: `${colors.grey[100]} !important`
+                            color: `${colors.grey[200]} !important`
                         }
                     }}
                 >

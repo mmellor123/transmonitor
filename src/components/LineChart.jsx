@@ -20,7 +20,7 @@ class LineChart extends Component {
         datas : [
         
         ],
-        url: BASE_URL + "/line-data?"
+        url: BASE_URL + "/line-data-new?"
     }
 
     componentDidMount(){
@@ -38,7 +38,7 @@ class LineChart extends Component {
     getRuleData = (numberMonthsAgo) =>{
         const startDate = this.props.startDate;
         const endDate = this.props.endDate;
-        fetchData(this.state.url + "start="+startDate+"&end="+endDate).then((results) => {
+        fetchData(this.state.url + "start="+startDate+"T00:00:00&end="+endDate+"T00:00:00").then((results) => {
             this.setState({datas: results});
         });
     }

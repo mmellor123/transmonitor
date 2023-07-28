@@ -22,31 +22,39 @@ class Transactions extends Component {
         
         ],
         url: BASE_URL + "/rule",
-        selectedRule: 1,
-        selectedType: "2c2p"  
+        selectedType: "2c2p",
+        rules: []
     }
 
     componentDidMount(){
         this.getRuleData(this.props.numberOfMonthsAgo, this.state.selectedRule);
+        this.getRules();
     }
 
     componentDidUpdate(previousProps){
         // if(previousProps.numberOfMonthsAgo != this.props.numberOfMonthsAgo){
         if(previousProps.startDate !== this.props.startDate || previousProps.endDate !== this.props.endDate){
-            this.getRuleData(this.props.numberOfMonthsAgo, this.state.selectedRule);     
+            this.getRuleData(this.props.numberOfMonthsAgo, this.state.selectedRule);
+            this.getRules();
         }
     }
 
-    getRuleData = (numberMonthsAgo, rule) =>{
+    getRuleData = (numberMonthsAgo, rule, ruleName) =>{
         const startDate = this.props.startDate;
         const endDate = this.props.endDate;
-        fetchData(this.state.url +""+rule+ "?start="+startDate+"&end="+endDate).then((results) => {
-            this.setState({datas: results, numberMonthsAgo: numberMonthsAgo, selectedRule: rule})
+        fetchData(BASE_URL +"/get-rule-data?rule_id="+rule+ "&start="+startDate+"T00:00:00&end="+endDate+"T00:00:00").then((results) => {
+            this.setState({datas: results, numberMonthsAgo: numberMonthsAgo, selectedRule: ruleName})
         });
     }
 
-    handleSelectRule = (rule) => {
-        this.getRuleData(this.props.numberOfMonthsAgo, rule)
+    getRules = () =>{
+        fetchData(BASE_URL + "/get-rules").then((results) => {
+            this.setState({rules: results});
+        });
+    }
+
+    handleSelectRule = (rule, ruleName) => {
+        this.getRuleData(this.props.numberOfMonthsAgo, rule, ruleName)
     }
 
     handlePreviousMonthClick = () => {
@@ -78,22 +86,21 @@ class Transactions extends Component {
                 <Box >
                     {/* Drop down to pick rule */}
                     <Dropdown>
-                        <Dropdown.Toggle id="dropdown-button-dark-example1" variant="secondary"  size="sm">
-                            Rule {this.state.selectedRule}
+                        <Dropdown.Toggle id="nav-dropdown" variant="secondary"  size="sm">
+                            {this.state.selectedRule ? this.state.selectedRule : "Select Rule"}
                         </Dropdown.Toggle>
                         <Dropdown.Menu variant="dark">
-                            <Dropdown.Item onClick={() => this.handleSelectRule(1)}>1</Dropdown.Item>
-                            <Dropdown.Item onClick={() => this.handleSelectRule(2)}>2</Dropdown.Item>
-                            <Dropdown.Item onClick={() => this.handleSelectRule(3)}>3</Dropdown.Item>
-                            <Dropdown.Item onClick={() => this.handleSelectRule(4)}>4</Dropdown.Item>
+                            {this.state.rules.map((rule, index) => {
+                                return <Dropdown.Item onClick={() => this.handleSelectRule(rule.id, rule.name)}>{rule.name}</Dropdown.Item>
+                            })}
                         </Dropdown.Menu>
                     </Dropdown>
-                    {!this.props.isDashboard &&
+                    {/* {!this.props.isDashboard &&
                         <Box display="flex">
                             <input class="emailText" type="text" id="emailAddress"/>
                             <button class="myButton" onClick={() => sendEmail(this.getEmailAddress(), jsonToCSV(this.state.datas), headerSubtitle)}>Send Email</button>
                         </Box>
-                    }
+                    } */}
                 </Box>
                 <Table data={this.state.datas} isCustomerPage={false}/>
             </Box>

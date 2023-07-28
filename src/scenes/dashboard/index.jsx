@@ -1,4 +1,4 @@
-import { Box, IconButton, Typography, useTheme } from "@mui/material";
+import { Box, IconButton, Typography, useTheme} from "@mui/material";
 import { tokens } from "../../theme";
 import Header from "../../components/Header";
 import DownloadOutlinedIcon from "@mui/icons-material/DownloadOutlined"
@@ -33,8 +33,9 @@ class Dashboard extends Component {
         numberOfMonthsAgo: 0,
         selectedYear: 2023,
         selectedMonth: 1,
-        url: BASE_URL + "/graph-data?",
+        url: BASE_URL + "/graph-data-new?",
         datas: {'bar': [], 'line': []},
+        rules: []
 
     }
 
@@ -43,6 +44,7 @@ class Dashboard extends Component {
         let [startDate, endDate] = getDates(d.getFullYear(), d.getMonth());
         this.setState({startDate: startDate, endDate: endDate, selectedMonth: d.getMonth(), selectedYear: d.getFullYear()});
         this.getRuleData(startDate, endDate);
+
     }
 
     handlePreviousMonthClick = () => {
@@ -55,10 +57,11 @@ class Dashboard extends Component {
     };
 
     getRuleData = (startDate, endDate) =>{
-        fetchData(this.state.url + "start="+startDate+"&end="+endDate).then((results) => {
+        fetchData(this.state.url + "start="+startDate+"T00:00:00&end="+endDate+"T00:00:00").then((results) => {
             this.setState({datas: results});
         });
     }
+
 
     handleSelectMonth = (month, monthStr) => {
         this.setState({selectedMonth: month, monthStr: monthStr});
@@ -70,7 +73,8 @@ class Dashboard extends Component {
 
     handleSearch = () => {
         let [sDate, eDate] = getDates(this.state.selectedYear, this.state.selectedMonth);
-        fetchData(this.state.url + "start="+sDate+"&end="+eDate).then((results) => {
+        fetchData(this.state.url + "start="+sDate+"T00:00:00&end="+eDate+"T00:00:00").then((results) => {
+            console.log(results)
             this.setState({datas: results, startDate: sDate, endDate: eDate});
         });
     }

@@ -20,7 +20,8 @@ class BarChart extends Component {
         datas : [
         
         ],
-        url: BASE_URL + "/bar-data?"
+        rules: [],
+        url: BASE_URL + "/bar-data-new?"
     }
 
     componentDidMount(){
@@ -39,25 +40,20 @@ class BarChart extends Component {
     getRuleData = (numberMonthsAgo) =>{
         const startDate = this.props.startDate;
         const endDate = this.props.endDate;
-        fetchData(this.state.url + "start="+startDate+"&end="+endDate).then((results) => {
-            let data = []
-            for(var i = 0 ; i < results.length ; i++){
-                const result = results[i]
-                data[i] = result.rules;
-                data[i]['date'] = result.date;
-            }
-            this.setState({datas: data});
+        fetchData(this.state.url + "start="+startDate+"T00:00:00&end="+endDate+"T00:00:00").then((results) => {
+            this.setState({datas: results});
+
         });
     }
 
     render(){
-        // const theme = this.props.theme;
         const colors = this.props.colors;    
         const isDashboard = this.props.isDashboard;
         let data = this.state.datas;
         if(isDashboard){
             data = this.props.data;
         }
+        let {["date"]: _, ...rules} = data.length > 0 ? data[0]: []
         return(
             <Box height="100%">
                 {/* {!isDashboard &&
@@ -97,14 +93,7 @@ class BarChart extends Component {
                             }
                         }
                     }}
-                    keys={[
-                        'rule1',
-                        'rule2',
-                        'rule3',
-                        'rule4',
-                        'rule5',
-                        'rule6'
-                    ]}
+                    keys={Object.keys(rules)}
                     indexBy="date"
                     margin={{ top: 50, right: 80, bottom: 50, left: 30 }}
                     padding={0.3}

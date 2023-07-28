@@ -3,6 +3,7 @@ import { Typography, useTheme } from '@mui/material';
 import {Link} from "react-router-dom";
 import {MenuItem} from "react-pro-sidebar";
 import {tokens} from "../theme";
+import { Message } from '@mui/icons-material';
 
 
 
@@ -76,7 +77,7 @@ export function sendEmail(email, csv, filename){
     let data = {email: email, csv_file: csv, filename: filename};
     fetch(BASE_URL + "/send-email", {method: "POST", headers: {'token':'mytoken', 'content-type':'application/json'}, body: JSON.stringify(data)})
             .then(res => {
-              console.log("Email Sent!")
+              window.alert("Email sent to ", email)
             });
 }
 
@@ -102,14 +103,60 @@ export function getDates(year, month) {
 
 export async function fetchData(url){
     const response = await fetch(url, {headers: {'token':'mytoken'}})
-          .then(res => res.json())
+          .then(
+            res => res.json()
+            )
           .then(
             (results) => {
+                    console.log("Results: ", results)
                     return results;
             },
             (error) => {
-              console.log(error)
+              console.log("Error: ", error);
             }
           )
     return response;
+}
+
+export async function deleteRule(url, payload){
+  const response = await fetch(url, {
+    method: "DELETE",
+    body: JSON.stringify(payload),
+    headers: {
+      "Content-type": "application/json; charset=UTF-8",
+      'token': 'mytoken'
+    }
+  }).then(
+    res => res.json()
+  )
+  .then(
+    (results) => {
+      window.alert("Rule Deleted Successfully!")
+    },
+    (error) => {
+      window.alert("An error occured. Please try again")
+    }
+  );
+}
+
+export async function postData(url, payload, method){
+  const response = await fetch(url, {
+    method: method,
+    body: JSON.stringify(payload),
+    headers: {
+      "Content-type": "application/json; charset=UTF-8",
+      'token': 'mytoken'
+    }
+  }).then(
+    res => res.json()
+  )
+  .then(
+    (results) => {
+      window.alert("Rule Created Successfully!")
+    },
+    (error) => {
+      window.alert("An error occured. Please try again")
+      console.log(error)
+    }
+  );
 }
