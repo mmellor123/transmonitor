@@ -17,10 +17,8 @@ import TimelineOutlinedIcon from "@mui/icons-material/TimelineOutlined";
 import MenuOutlinedIcon from "@mui/icons-material/MenuOutlined";
 // import MapOutlinedIcon from "@mui/icons-material/MapOutlined";
 import AddIcon from '@mui/icons-material/Add';
-import RemoveIcon from '@mui/icons-material/Remove';
 import EditIcon from '@mui/icons-material/Edit';
 
-import logo from './user.png'
 import { useAuth } from "../../components/auth";
 import { Item } from "../../common/functions";
 import { ReactComponent as Logo } from "./flower.svg";

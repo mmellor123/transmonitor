@@ -3,6 +3,7 @@ import { faCheck, faTimes, faInfoCircle } from "@fortawesome/free-solid-svg-icon
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useAuth } from './auth';
 import { useNavigate } from 'react-router-dom';
+import { ReactComponent as Logo } from "../scenes/global/flower.svg";
 
 const USER_REGEX = /^[a-zA-Z0-9_]{5,}[a-zA-Z]+[0-9]*$/;
 const PWD_REGEX = /^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{6,16}$/;
@@ -89,7 +90,10 @@ export const Login = () => {
         
         <section>
             <p ref={errRef} className={errMsg ? "errmsg": "offscreen"} aria-live="assertive">{errMsg}</p>
-            <h5>KogoPay Transaction Monitoring</h5>
+            <div style={{display:"flex"}}>
+                <Logo/>
+                <h5 className="login-title">KogoPay Transaction Monitoring</h5>
+            </div>
             <h2>Login</h2>
             <form onSubmit={handleSubmit}>
                 <label htmlFor="username">
