@@ -21,6 +21,9 @@ import { AuthProvider } from "./components/auth";
 import { Login } from "./components/Login";
 import { RequireAuth } from "./components/RequireAuth";
 import Register from "./components/Register";
+import CreateRule from "./scenes/create_rule";
+import ViewRules from "./scenes/view-rules";
+import EditRule from "./scenes/edit_rule";
 
 
 function App() {
@@ -53,6 +56,9 @@ function App() {
                   <Route path="/customer" element={<RequireAuth><Customer/></RequireAuth>} />
                   <Route path="/login" element={<Login/>} />
                   <Route path="/register" element={<Register/>} />
+                  <Route path="/create-rule" element={<RequireAuth><CreateRule/></RequireAuth>} />
+                  <Route path="/view-rules" element={<RequireAuth><ViewRules/></RequireAuth>} />
+                  <Route path="/edit-rule" element={<RequireAuth><EditRule/></RequireAuth>} />
               </Routes>
             </main>
           </div>
@@ -61,5 +67,6 @@ function App() {
     </AuthProvider>
   );
 }
+
 
 export default App;
