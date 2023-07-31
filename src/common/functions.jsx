@@ -3,11 +3,11 @@ import { Typography, useTheme } from '@mui/material';
 import {Link} from "react-router-dom";
 import {MenuItem} from "react-pro-sidebar";
 import {tokens} from "../theme";
-import { Message } from '@mui/icons-material';
 
 
 
 export const BASE_URL = "https://s2.transactionmonitor.co.uk";
+export const TOKEN = "mytoken";
 
 export function useWindowDimensions() {
   // the 3rd parameter is optional and only needed for server side rendering
@@ -73,9 +73,10 @@ export function jsonToCSV(dict){
 }
 
 export function sendEmail(email, csv, filename){
-  console.log("Send Email: ", csv, ", EMAIL: ", email);
-    let data = {email: email, csv_file: csv, filename: filename};
-    fetch(BASE_URL + "/send-email", {method: "POST", headers: {'token':'mytoken', 'content-type':'application/json'}, body: JSON.stringify(data)})
+    fetch(BASE_URL + "/send-email", 
+      {method: "POST", headers: {'token':'mytoken', 'content-type':'application/json'}, 
+      body: JSON.stringify({email: email, csv_file: csv, filename: filename})
+    })
             .then(res => {
               window.alert("Email sent to ", email)
             });
@@ -102,13 +103,12 @@ export function getDates(year, month) {
 
 
 export async function fetchData(url){
-    const response = await fetch(url, {headers: {'token':'mytoken'}})
+    const response = await fetch(url, {headers: {'token':TOKEN}})
           .then(
             res => res.json()
             )
           .then(
             (results) => {
-                    console.log("Results: ", results)
                     return results;
             },
             (error) => {
@@ -124,7 +124,7 @@ export async function deleteRule(url, payload){
     body: JSON.stringify(payload),
     headers: {
       "Content-type": "application/json; charset=UTF-8",
-      'token': 'mytoken'
+      'token': TOKEN
     }
   }).then(
     res => res.json()
@@ -145,7 +145,7 @@ export async function postData(url, payload, method){
     body: JSON.stringify(payload),
     headers: {
       "Content-type": "application/json; charset=UTF-8",
-      'token': 'mytoken'
+      'token': TOKEN
     }
   }).then(
     res => res.json()
