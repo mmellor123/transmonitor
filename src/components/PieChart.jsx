@@ -12,13 +12,14 @@ function withMyHook(Component){
     }
 }
 
+const PIE_URL = BASE_URL + "/pie-data-new?"
+
 class PieChart extends Component {
 
     state = {
         datas : [
         
         ],
-        url: BASE_URL + "/pie-data?"
     }
 
     componentDidMount(){
@@ -34,39 +35,8 @@ class PieChart extends Component {
     getRuleData = () =>{
         const startDate = this.props.startDate;
         const endDate = this.props.endDate;
-        fetchData(this.state.url + "start="+startDate+"&end="+endDate).then((results) => {
-            let data = []
-                    data[0] = {
-                        id: "rule1",
-                        label: "rule1",
-                        value: results.rule1
-                    };
-                    data[1] = {
-                        id: "rule2",
-                        label: "rule2",
-                        value: results.rule2
-                    }
-                    data[2] = {
-                        id: "rule3",
-                        label: "rule3",
-                        value: results.rule3
-                    }
-                    data[3] = {
-                        id: "rule4",
-                        label: "rule4",
-                        value: results.rule4
-                    }
-                    data[4] = {
-                        id: "rule5",
-                        label: "rule5",
-                        value: results.rule5
-                    }
-                    data[5] = {
-                        id: "rule6",
-                        label: "rule6",
-                        value: results.rule6
-                    }
-                    this.setState({datas: data});
+        fetchData(PIE_URL + "start="+startDate+"&end="+endDate).then((results) => {
+            this.setState({datas: results})
         });
     }
 

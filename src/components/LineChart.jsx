@@ -30,7 +30,7 @@ class LineChart extends Component {
     }
 
     componentDidUpdate(previousProps){
-        if(!this.props.isDashboard &&(previousProps.startDate !== this.props.startDate || previousProps.endDate !== this.props.endDate)){
+        if(!this.props.isDashboard && (previousProps.startDate !== this.props.startDate || previousProps.endDate !== this.props.endDate)){
             this.getRuleData();     
         }
     }
