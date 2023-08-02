@@ -2,14 +2,9 @@ import { Box, IconButton, Typography, useTheme} from "@mui/material";
 import { tokens } from "../../theme";
 import Header from "../../components/Header";
 import DownloadOutlinedIcon from "@mui/icons-material/DownloadOutlined"
-// import EmailIcon from "@mui/icons-material/Email"
-// import PointOfSaleIcon from "@mui/icons-material/PointOfSale"
-// import PersonAddIcon from "@mui/icons-material/PersonAdd"
-// import TrafficIcon from "@mui/icons-material/Traffic"
 import BarChart from "../../components/BarChart";
 import LineChart from "../../components/LineChart";
-// import StatBox from "../../components/StatBox";
-// import ProgressCircle from "../../components/ProgressCircle";
+
 import Transactions from "../../components/Transactions";
 import React, {Component} from "react";
 import {fetchData,  getDates, monthIndexToString, BASE_URL} from "../../common/functions.jsx";
@@ -30,7 +25,6 @@ function withMyHook(Component){
 class Dashboard extends Component {
     
     state = {
-        numberOfMonthsAgo: 0,
         selectedYear: 2023,
         selectedMonth: 1,
         url: BASE_URL + "/graph-data-new?",
@@ -46,15 +40,6 @@ class Dashboard extends Component {
         this.getRuleData(startDate, endDate);
 
     }
-
-    handlePreviousMonthClick = () => {
-        this.getRuleData(this.state.numberOfMonthsAgo + 1);
-    };
-
-    handleNextMonthClick = () => {
-        let no = this.state.numberOfMonthsAgo;
-        this.getRuleData(no > 0 ? --no : no+=0);
-    };
 
     getRuleData = (startDate, endDate) =>{
         fetchData(this.state.url + "start="+startDate+"T00:00:00&end="+endDate+"T00:00:00").then((results) => {
@@ -74,14 +59,12 @@ class Dashboard extends Component {
     handleSearch = () => {
         let [sDate, eDate] = getDates(this.state.selectedYear, this.state.selectedMonth);
         fetchData(this.state.url + "start="+sDate+"T00:00:00&end="+eDate+"T00:00:00").then((results) => {
-            console.log(results)
             this.setState({datas: results, startDate: sDate, endDate: eDate});
         });
     }
 
     render(){
         const width = window.innerWidth;
-        // const height = window.innerHeight;
         const colors = this.props.colors;
         const startDate = this.state.startDate;
         const endDate = this.state.endDate;
@@ -90,14 +73,6 @@ class Dashboard extends Component {
                 <Box display="flex" justifyContent="space-between" alignItems="center">
                     <Header title="DASHBOARD" subtitle="Welcome to your dashboard"/>
                     <Typography variant="h3" fontWeight="bold">{monthIndexToString(this.state.selectedMonth)} {this.state.selectedYear}</Typography>
-                {/* <Box>
-                    <Button
-                        sx={{backgroundColor: colors.blueAccent[700], color: colors.grey[100], fontSize: "14px", fontWeight: "bold", padding: "10px 20px"}}
-                    >
-                        <DownloadOutlinedIcon sx={{mr: "10px"}}/>
-                        Download Reports
-                    </Button> 
-                </Box> */}
                 </Box>
                 {/* GRID AND CHARTS */}
                 <Box
@@ -123,9 +98,6 @@ class Dashboard extends Component {
                                 <Typography variant="h5" fontWeight="600" color={colors.grey[100]}>
                                     Rules Broken
                                 </Typography>
-                                {/* <Typography variant="h3" fontWeight="bold" color={colors.greenAccent[500]}>
-                                    Total no
-                                </Typography> */}
                             </Box>
 
                             <Box>
@@ -154,9 +126,6 @@ class Dashboard extends Component {
 
                         {/* ROW 3 */}
                         <Box  gridColumn={width > 1000 ? 'span 8' : 'span 12'} gridRow="span 2" backgroundColor={colors.primary[400]} overflow="auto">
-                            {/* <Typography variant="h5" fontWeight="600" sx={{p: "30px 30px 0 30px"}}>
-                                Search Table
-                            </Typography> */}
                             <Box  m="30px 30px 30px 30px">
                             {this.state.startDate ? <Transactions isDashboard={true} startDate={startDate} endDate={endDate} numberOfMonthsAgo={this.state.numberOfMonthsAgo}/> : null}
                             </Box>
@@ -170,7 +139,6 @@ class Dashboard extends Component {
                         >
                             <SetMonth handleSearch={this.handleSearch} handleSelectYear={this.handleSelectYear} handleSelectMonth={this.handleSelectMonth} monthStr={monthIndexToString(this.state.selectedMonth)} selectedYear={this.state.selectedYear}/>
                         </Box>
-                        {/* */}
                 </Box>
             </Box>
         )

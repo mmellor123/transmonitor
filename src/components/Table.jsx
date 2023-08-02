@@ -44,7 +44,6 @@ class Table extends Component {
         Object.entries(this.props.data).forEach(([key, value]) => {
             if(key < 1){
                 Object.entries(this.props.data[key]).forEach(([key1, value1]) => {
-                    console.log("KEY: ", key1)
                     if(key1 === "CIF From" && !this.props.isCustomerPage){
                         columns.push({field: key1, headerName: key1, renderCell: (params) => 
                             <Link to={"/customer?cif=" + params.row[`CIF From`] + "&start="+params.row.From + "&end="+params.row.To+"&type="+params.row.type}>

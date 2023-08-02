@@ -4,16 +4,6 @@ import {fetchData, BASE_URL, deleteRule} from "../../common/functions.jsx";
 import {Box} from "@mui/material";
 import Header from "../../components/Header";
 
-
-
-
-
-
-const INTEGER_REGEX = /^\d+$/;
-const NAME_REGEX = /^([A-Za-z0-9 _]*[A-Za-z0-9][A-Za-z0-9 _]){4,10}$/;
-const ERROR_HEX = "#FFCCCC"
-
-
 class ViewRules extends Component {
 
     state = {
@@ -37,7 +27,6 @@ class ViewRules extends Component {
     }
 
     render(){
-        console.log("Render View Rules");
         return (
             <Box m="20px">
                 <Header title="View Rules" subtitle="View and manage your rules here"/>

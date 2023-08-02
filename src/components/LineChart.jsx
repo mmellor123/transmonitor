@@ -13,32 +13,32 @@ function withMyHook(Component){
     }
 }
 
+const LINE_URL = BASE_URL + "/line-data-new?"
+
 class LineChart extends Component {
 
     state = {
-        numberMonthsAgo: 0,
         datas : [
         
-        ],
-        url: BASE_URL + "/line-data-new?"
+        ]
     }
 
     componentDidMount(){
         if(!this.props.isDashboard){
-            this.getRuleData(this.props.numberOfMonthsAgo);
+            this.getRuleData();
         }
     }
 
     componentDidUpdate(previousProps){
         if(!this.props.isDashboard &&(previousProps.startDate !== this.props.startDate || previousProps.endDate !== this.props.endDate)){
-            this.getRuleData(this.props.numberOfMonthsAgo);     
+            this.getRuleData();     
         }
     }
 
-    getRuleData = (numberMonthsAgo) =>{
+    getRuleData = () =>{
         const startDate = this.props.startDate;
         const endDate = this.props.endDate;
-        fetchData(this.state.url + "start="+startDate+"T00:00:00&end="+endDate+"T00:00:00").then((results) => {
+        fetchData(LINE_URL + "start="+startDate+"T00:00:00&end="+endDate+"T00:00:00").then((results) => {
             this.setState({datas: results});
         });
     }
@@ -52,13 +52,6 @@ class LineChart extends Component {
         }
         return(
             <Box height="100%">
-                {/* {!isDashboard &&
-                    <Typography variant="h3" fontWeight="bold">{startDate} - {endDate}</Typography>
-                } */}
-                {/* {!isDashboard &&
-                    <ChangeMonth handleNextMonthClick={this.handleNextMonthClick} handlePreviousMonthClick={this.handlePreviousMonthClick}/>
-                } */}
-
                 <ResponsiveLine
                     data={data}
                     theme={{

@@ -7,8 +7,6 @@ import {fetchData, BASE_URL, deleteRule} from "../../common/functions.jsx";
 import {Link} from "react-router-dom";
 
 
-
-
 function withMyHook(Component){
     return function WrappedComponent(props){
         const [searchParams, setSearchParams] = useSearchParams();

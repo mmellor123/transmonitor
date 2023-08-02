@@ -1,10 +1,7 @@
 import React, {Component} from "react";
 import {Box} from "@mui/material";
 import Header from "../../components/Header";
-import Dropdown from 'react-bootstrap/Dropdown';
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCheck, faTimes, faInfoCircle } from "@fortawesome/free-solid-svg-icons";
-import {postData, BASE_URL} from "../../common/functions.jsx";
+import {postData, BASE_URL} from  "../../common/functions.jsx";
 import Rule from "../../components/Rule";
 
 
@@ -20,7 +17,7 @@ class CreateRule extends Component {
         periodUnit: "Day",
         isNewCustomer: true,
         isNumberOfTrans: false,
-        // maxPerPeriod: {value: "", isValid: false}
+
         maxPerPeriod: "",
         validMaxPerPeriod: false,
         maxPerPeriodFocus: false,

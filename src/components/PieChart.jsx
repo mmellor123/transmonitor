@@ -15,7 +15,6 @@ function withMyHook(Component){
 class PieChart extends Component {
 
     state = {
-        numberMonthsAgo: 0,
         datas : [
         
         ],
@@ -23,16 +22,16 @@ class PieChart extends Component {
     }
 
     componentDidMount(){
-        this.getRuleData(this.props.numberOfMonthsAgo);
+        this.getRuleData();
     }
 
     componentDidUpdate(previousProps){
         if(previousProps.startDate !== this.props.startDate || previousProps.endDate !== this.props.endDate){
-            this.getRuleData(this.props.numberOfMonthsAgo);     
+            this.getRuleData();     
         }
     }
 
-    getRuleData = (numberMonthsAgo) =>{
+    getRuleData = () =>{
         const startDate = this.props.startDate;
         const endDate = this.props.endDate;
         fetchData(this.state.url + "start="+startDate+"&end="+endDate).then((results) => {
@@ -75,14 +74,6 @@ class PieChart extends Component {
     const colors = this.props.colors;
     return (
         <Box height="100%">
-            {/* {!isDashboard &&
-                <Typography variant="h3" fontWeight="bold">{startDate} - {endDate}</Typography>
-            }
-            {!isDashboard &&
-                <ChangeMonth handleNextMonthClick={this.handleNextMonthClick} handlePreviousMonthClick={this.handlePreviousMonthClick}/>
-            } */}
-            {/* <Typography variant="h3" fontWeight="bold">{startDate} - {endDate}</Typography> */}
-            {/* <ChangeMonth handleNextMonthClick={this.handleNextMonthClick} handlePreviousMonthClick={this.handlePreviousMonthClick}/> */}
             <ResponsivePie
                     data={this.state.datas}
                     theme={{

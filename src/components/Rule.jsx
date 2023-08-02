@@ -1,9 +1,8 @@
 import React, {Component} from "react";
 import {Box} from "@mui/material";
-import Header from "../components/Header";
 import Dropdown from 'react-bootstrap/Dropdown';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCheck, faTimes, faInfoCircle } from "@fortawesome/free-solid-svg-icons";
+import {faInfoCircle } from "@fortawesome/free-solid-svg-icons";
 import {postData, BASE_URL} from "../common/functions.jsx";
 
 
@@ -22,7 +21,7 @@ class Rule extends Component {
         periodUnit: "Day",
         isNewCustomer: true,
         isNumberOfTrans: false,
-        // maxPerPeriod: {value: "", isValid: false}
+        
         maxPerPeriod: "",
         validMaxPerPeriod: false,
         maxPerPeriodFocus: false,
@@ -38,15 +37,14 @@ class Rule extends Component {
         whitelist: [],
         validWhitelist: true,
         whitelistFocus: false
+        
     }
 
-    //TODO MAKE STATE UPDATE BASED ON IF ITS EDIT OR CREATE RULE
     componentDidMount(){
     }
 
     //Updates fields to have data for particular rule
     updateFields(data){
-        console.log("Whitelist: ", data.whitelist)
         this.setState({
             periodUnit: data.period_unit, 
             period:data.period, 
@@ -119,7 +117,6 @@ class Rule extends Component {
         if(!this.state.validMaxPerPeriod || !this.state.validPeriod || !this.state.validMaxPerPeriod){
             return "";
         }
-
         var description  = "More than ";
         if(this.state.isNumberOfTrans){
             description += this.state.maxPerPeriod + " transactions sent ";
@@ -132,7 +129,6 @@ class Rule extends Component {
     }
 
     resetFields = () =>{
-        console.log("Test1")
         this.setState({validWhitelist: false, whitelist: false, validRuleName: false, validPeriod: false, validMaxPerPeriod: false, ruleName: "", period: "", maxPerPeriod: ""});
     }
 

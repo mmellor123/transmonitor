@@ -6,7 +6,6 @@ import { Route, Routes} from "react-router-dom";
 // import Topbar from "./scenes/global/Topbar";
 import SidebarMine from "./scenes/global/Sitebar";
 import  Dashboard  from "./scenes/dashboard";
-import Team from "./scenes/team";
 import  Invoices  from "./scenes/invoices";
 import  Contacts  from "./scenes/contacts";
 import  Bar  from "./scenes/bar";
@@ -28,7 +27,6 @@ import EditRule from "./scenes/edit_rule";
 
 function App() {
   const [theme, colorMode] = useMode();
-  // const [isSidebar, setIsSidebar] = useState(true);
   const [isSidebar] = useState(true);
 
 
@@ -43,7 +41,6 @@ function App() {
               {/* <Topbar setIsSidebar={setIsSidebar}/> */}
               <Routes>
                   <Route path="/" element={<RequireAuth><Dashboard /></RequireAuth>} />
-                  <Route path="/team" element={<RequireAuth><Team/></RequireAuth>}/>
                   <Route path="/contacts" element={<RequireAuth><Contacts/></RequireAuth>}/>
                   <Route path="/invoices" element={<RequireAuth><Invoices/></RequireAuth>} />
                   <Route path="/form" element={<RequireAuth><Form/></RequireAuth>} />

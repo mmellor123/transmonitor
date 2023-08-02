@@ -20,21 +20,19 @@ function withMyHook(Component){
 class Customer extends Component {
 
     state = {
-        numberMonthsAgo: 0,
         datas : [
-        
         ],
         url: BASE_URL + "/transaction_info?cif=" + this.props.cif + "&start=" + this.props.start + "&end=" + this.props.end + "&type=" + this.props.type,
         selectedRule: 1   
     }
 
     componentDidMount(){
-        this.getRuleData(this.state.numberMonthsAgo, this.state.selectedRule);
+        this.getRuleData(this.state.selectedRule);
     }
 
-    getRuleData = (numberMonthsAgo, rule) =>{
+    getRuleData = (rule) =>{
         fetchData(this.state.url).then((results) => {
-            this.setState({datas: results, selectedRule: rule, numberMonthsAgo: numberMonthsAgo});
+            this.setState({datas: results, selectedRule: rule});
         });
     }
 
@@ -46,10 +44,6 @@ class Customer extends Component {
         return (
             <Box m="20px">
                 <Header title="Customer Transactions" subtitle="View Customer Transactions"/>
-                {/* <Box textAlign="right" display="inline-block">
-                    <Button variant="contained" color="error"><CSVLink data={this.state.datas}>Download CSV</CSVLink></Button>
-                </Box> */}
-                {/* <button onClick={() => sendEmail("max.m@kogopay.com", jsonToCSV(this.state.datas), this.props.cif + "_transactions")}>Send Email</button> */}
                 <Box>
                             <input class="emailText" type="text" id="emailAddress"/>
                             <button class="create-rule-submit" onClick={() => sendEmail(this.getEmailAddress(), jsonToCSV(this.state.datas), this.props.cif)}>Send Email</button>

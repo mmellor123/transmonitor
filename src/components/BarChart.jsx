@@ -13,34 +13,34 @@ function withMyHook(Component){
     }
 }
 
+const BAR_URL = BASE_URL + "/bar-data-new?" 
+
 class BarChart extends Component {
 
     state = {
-        numberMonthsAgo: 0,
         datas : [
         
         ],
-        rules: [],
-        url: BASE_URL + "/bar-data-new?"
+        rules: []
     }
 
     componentDidMount(){
         if(!this.props.isDashboard){
-            this.getRuleData(this.props.numberOfMonthsAgo);
+            this.getRuleData();
         }
     }
     
 
     componentDidUpdate(previousProps){
         if(!this.props.isDashboard &&(previousProps.startDate !== this.props.startDate || previousProps.endDate !== this.props.endDate)){
-            this.getRuleData(this.props.numberOfMonthsAgo);     
+            this.getRuleData();     
         }
     }
 
-    getRuleData = (numberMonthsAgo) =>{
+    getRuleData = () =>{
         const startDate = this.props.startDate;
         const endDate = this.props.endDate;
-        fetchData(this.state.url + "start="+startDate+"T00:00:00&end="+endDate+"T00:00:00").then((results) => {
+        fetchData(BAR_URL + "start="+startDate+"T00:00:00&end="+endDate+"T00:00:00").then((results) => {
             this.setState({datas: results});
 
         });
@@ -56,13 +56,6 @@ class BarChart extends Component {
         let {["date"]: _, ...rules} = data.length > 0 ? data[0]: []
         return(
             <Box height="100%">
-                {/* {!isDashboard &&
-                    <Typography variant="h3" fontWeight="bold">{startDate} - {endDate}</Typography>
-                } */}
-                {/* {!isDashboard &&
-                    <ChangeMonth handleNextMonthClick={this.handleNextMonthClick} handlePreviousMonthClick={this.handlePreviousMonthClick}/>
-                } */}
-
                 <ResponsiveBar
                     data={data}
                     theme={{

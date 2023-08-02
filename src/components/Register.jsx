@@ -3,9 +3,11 @@ import { faCheck, faTimes, faInfoCircle } from "@fortawesome/free-solid-svg-icon
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useAuth } from './auth';
 import { useNavigate } from 'react-router-dom';
+import {BASE_URL} from '../common/functions'
 
 const USER_REGEX = /^[a-zA-Z0-9_]{5,}[a-zA-Z]+[0-9]*$/;
 const PWD_REGEX = /^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{6,16}$/;
+const REGISTER_URL = BASE_URL + '/login'
 
 const Register = () => {
     const userRef = useRef();
@@ -58,7 +60,7 @@ const Register = () => {
             setErrMsg("Invalid Entry");
             return;
         }
-        const response = await fetch("http://13.42.24.210:9000/login", {method: 'POST', headers: {'content-type': 'application/json', 'token':'mytoken'}, body: JSON.stringify({username: user, password: pwd})})
+        const response = await fetch(REGISTER_URL, {method: 'POST', headers: {'content-type': 'application/json', 'token':'mytoken'}, body: JSON.stringify({username: user, password: pwd})})
           .then(res => res.json())
           .then(
             (results) => {
@@ -90,7 +92,7 @@ const Register = () => {
         
         <section>
             <p ref={errRef} className={errMsg ? "errmsg": "offscreen"} aria-live="assertive">{errMsg}</p>
-            <h1>Login</h1>
+            <h1>Logins</h1>
             <form onSubmit={handleSubmit}>
                 <label htmlFor="username">
                     Username:

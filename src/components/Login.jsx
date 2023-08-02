@@ -4,13 +4,13 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useAuth } from './auth';
 import { useNavigate } from 'react-router-dom';
 import { ReactComponent as Logo } from "../scenes/global/flower.svg";
+import {BASE_URL} from "../common/functions"
 
 const USER_REGEX = /^[a-zA-Z0-9_]{5,}[a-zA-Z]+[0-9]*$/;
 const PWD_REGEX = /^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{6,16}$/;
 
-export const Login = () => {
-    const BASE_URL = "https://s2.transactionmonitor.co.uk";
 
+export const Login = () => {
     const userRef = useRef();
     const errRef = useRef();
     

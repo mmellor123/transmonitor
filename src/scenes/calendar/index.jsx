@@ -1,6 +1,5 @@
 import { useState } from "react";
 import FullCalendar from "@fullcalendar/react";
-import formatDate from "@fullcalendar/react";
 
 import dayGridPlugin from "@fullcalendar/daygrid";
 import timeGridPlugin from "@fullcalendar/timegrid";
@@ -16,7 +15,6 @@ import {
 } from "@mui/material";
 import Header from "../../components/Header";
 import { tokens } from "../../theme";
-import daygrid from "@fullcalendar/daygrid";
 
 const Calendar = () => {
     const theme = useTheme();
@@ -62,15 +60,6 @@ const Calendar = () => {
                         >
                             <ListItemText
                                 primary={event.title}
-                                // secondary={
-                                //     <Typography>
-                                //         {formatDate(event.start, {
-                                //             year: "numeric",
-                                //             month: "short",
-                                //             day: "numeric",
-                                //         })}
-                                //     </Typography>
-                                // }
                             />
                         </ListItem>
                     ))}
