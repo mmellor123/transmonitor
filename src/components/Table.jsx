@@ -5,6 +5,7 @@ import React, {Component, useState} from "react";
 import {Link} from "react-router-dom";
 import EditIcon from '@mui/icons-material/Edit';
 import ClearIcon from '@mui/icons-material/Clear';
+import CustomConfirmPopup from './CustomConfirmPopup'; // Assuming the file path for CustomConfirmPopup
 
 
 
@@ -21,7 +22,23 @@ function withMyHook(Component){
 class Table extends Component {
 
     state = {
+        showPopup: false
     }
+
+    handleConfirm = () => {
+        // Triggered when the user confirms the selection
+        // Implement your logic here
+        console.log('Selection confirmed!');
+        this.props.handleDelete(this.state.selectedRule);
+        this.setState({ showPopup: false }); // Close the popup after confirmation
+      };
+    
+      handleCancel = () => {
+        // Triggered when the user cancels the selection
+        // Implement your logic here
+        console.log('Selection canceled!');
+        this.setState({ showPopup: false }); // Close the popup after cancellation
+      };
 
     addRuleEditIcons = (columns) => {
         if(this.props.isViewRules){
@@ -31,7 +48,7 @@ class Table extends Component {
                 </Link>
             });
             columns.push({field: "Delete", headerName: "Delete", renderCell: (params) => 
-                <IconButton onClick={() => this.props.handleDelete(params.row.id)} style={{color: "#ff0033"}}>
+                <IconButton onClick={() => this.setState({ showPopup: true, selectedRule: params.row.id})} style={{color: "#ff0033"}}>
                     <ClearIcon/>          
                 </IconButton>
             });
@@ -109,6 +126,14 @@ class Table extends Component {
                         columns={columns}
                         components={{Toolbar: GridToolbar}}
                     />
+                    {this.state.showPopup && (
+                    <CustomConfirmPopup
+                        onConfirm={this.handleConfirm}
+                        onCancel={this.handleCancel}
+                        messageTitle="Confirm Delete?"
+                        messageSubtitle="Are you sure you want to delete this rule?"
+                    />
+                    )}
                 </Box>
         )
     }

@@ -5,6 +5,7 @@ import {fetchData, sendEmail, jsonToCSV, BASE_URL} from "../../common/functions.
 import Table from "../../components/Table";
 import { useSearchParams } from "react-router-dom";
 import Header from "../../components/Header";
+import EmailButton from "../../components/EmailButton";
 
 
 
@@ -44,10 +45,11 @@ class Customer extends Component {
         return (
             <Box m="20px">
                 <Header title="Customer Transactions" subtitle="View Customer Transactions"/>
-                <Box>
+                {/* <Box>
                             <input class="emailText" type="text" id="emailAddress"/>
                             <button class="create-rule-submit" onClick={() => sendEmail(this.getEmailAddress(), jsonToCSV(this.state.datas), this.props.cif)}>Send Email</button>
-                </Box>
+                </Box> */}
+                <EmailButton csv={this.state.datas} csvName={this.props.cif}/>
                 <Table data={this.state.datas} isCustomerPage={true}/>
             </Box>
         )

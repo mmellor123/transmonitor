@@ -140,6 +140,8 @@ export async function deleteRule(url, payload){
 }
 
 export async function postData(url, payload, method){
+  console.log("Url: ", url)
+  console.log("Data: ", payload)
   const response = await fetch(url, {
     method: method,
     body: JSON.stringify(payload),
@@ -152,7 +154,8 @@ export async function postData(url, payload, method){
   )
   .then(
     (results) => {
-      window.alert("Rule Created Successfully!")
+      console.log(results);
+      console.log("Rule Created Successfully!")
     },
     (error) => {
       window.alert("An error occured. Please try again")

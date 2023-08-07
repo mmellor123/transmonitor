@@ -4,6 +4,7 @@ import React, {Component} from "react";
 import {fetchData, BASE_URL} from "../common/functions.jsx";
 import Table from "../components/Table";
 import Dropdown from 'react-bootstrap/Dropdown';
+import EmailButton from "../components/EmailButton";
 
 
 
@@ -80,6 +81,7 @@ class Transactions extends Component {
                     </Dropdown>
                 </Box>
                 <Table data={this.state.datas} isCustomerPage={false}/>
+                <EmailButton csv={this.state.datas} csvName={this.state.selectedRule}/>
             </Box>
         )
     }

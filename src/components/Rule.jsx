@@ -4,6 +4,7 @@ import Dropdown from 'react-bootstrap/Dropdown';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {faInfoCircle } from "@fortawesome/free-solid-svg-icons";
 import {postData, BASE_URL} from "../common/functions.jsx";
+import CustomConfirmPopup from './CustomConfirmPopup'; // Assuming the file path for CustomConfirmPopup
 
 
 
@@ -36,7 +37,9 @@ class Rule extends Component {
 
         whitelist: [],
         validWhitelist: true,
-        whitelistFocus: false
+        whitelistFocus: false,
+
+        showPopup: false
         
     }
 
@@ -149,12 +152,25 @@ class Rule extends Component {
         else if(this.props.endpoint ==="/create-rule"){
             postData(BASE_URL+this.props.endpoint, payload, "POST");
         }
+        this.props.navigate("/view-rules");
     }
+    
+      handleCancel = () => {
+        this.setState({ showPopup: false }); // Close the popup after cancellation
+      };
 
 
     render(){
         return (
             <Box>
+                    {this.state.showPopup && (
+                        <CustomConfirmPopup
+                            onConfirm={this.handleSubmit}
+                            onCancel={this.handleCancel}
+                            messageTitle={this.props.endpoint === "/create-rule" ? "Create Rule?" : "Save Changes?"}
+                            messageSubtitle={this.props.endpoint === "/create-rule" ? "Are you sure you want to create rule?" : "Save changes to this rule?"}
+                        />
+                    )}
                     <div style={{marginTop: "20px"}}>
                         <p className="rule-description"><FontAwesomeIcon icon={faInfoCircle}/> Description: <strong>{this.ruleDescription()}</strong></p>
                     </div>
@@ -267,7 +283,7 @@ class Rule extends Component {
                             All customers will be whitelist if field left blank.
                         </p>
                     </div>
-                    <button onClick={() => this.handleSubmit()} className="create-rule-submit" disabled={!this.state.validWhitelist || !this.state.validMaxPerPeriod || !this.state.validPeriod || !this.state.validRuleName ? true : false}>
+                    <button onClick={() => this.setState({ showPopup: true})} className="create-rule-submit" disabled={!this.state.validWhitelist || !this.state.validMaxPerPeriod || !this.state.validPeriod || !this.state.validRuleName ? true : false}>
                         {this.props.buttonTitle}
                     </button>
             </Box>
