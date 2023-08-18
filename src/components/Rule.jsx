@@ -5,6 +5,8 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {faInfoCircle } from "@fortawesome/free-solid-svg-icons";
 import {postData, BASE_URL} from "../common/functions.jsx";
 import CustomConfirmPopup from './CustomConfirmPopup'; // Assuming the file path for CustomConfirmPopup
+import CustomEditWhitelistPopup from './CustomEditWhitelistPopup'; // Assuming the file path for CustomConfirmPopup
+
 
 
 
@@ -38,8 +40,13 @@ class Rule extends Component {
         whitelist: [],
         validWhitelist: true,
         whitelistFocus: false,
+        whitelistWithName: [],
 
-        showPopup: false
+        showPopup: false,
+
+        showPopupWhitelist: false,
+
+        filter: ""
         
     }
 
@@ -48,20 +55,22 @@ class Rule extends Component {
 
     //Updates fields to have data for particular rule
     updateFields(data){
-        this.setState({
-            periodUnit: data.period_unit, 
-            period:data.period, 
-            ruleName:data.name,
-            maxPerPeriod:data.max_per_period,
-            isNewCustomer:data.new_customer,
-            isNumberOfTrans:data.number,
-            whitelist: data.whitelist,
-            validMaxPerPeriod: true,
-            validRuleName: true,
-            validPeriod: true,
-            validWhitelist: true
+        postData(BASE_URL + "/get-customers-from-cif", {"cif": data.whitelist}, "POST").then((results) => {
+            this.setState({
+                periodUnit: data.period_unit, 
+                period:data.period, 
+                ruleName:data.name,
+                maxPerPeriod:data.max_per_period,
+                isNewCustomer:data.new_customer,
+                isNumberOfTrans:data.number,
+                whitelist: data.whitelist,
+                whitelistWithName: results,
+                validMaxPerPeriod: true,
+                validRuleName: true,
+                validPeriod: true,
+                validWhitelist: true
+            });
         });
-
     }
 
     componentDidUpdate(previousProps){
@@ -70,6 +79,9 @@ class Rule extends Component {
         }
     }
 
+    handleFilter = (query) => {
+        this.setState({filter: query})
+    }
     
 
     handleSelectPeriodUnit = (unit) => {
@@ -159,10 +171,62 @@ class Rule extends Component {
         this.setState({ showPopup: false }); // Close the popup after cancellation
       };
 
+      handleCancelWhitelist = () => {
+        this.setState({showPopupWhitelist: false});
+      }
+
+      handleDeleteWhitelist = (customer) => {
+        var index = this.state.whitelist.indexOf(customer);
+        console.log(index);
+        if (index !== -1) {
+            console.log("True")
+            var arr = this.state.whitelist;
+            arr.splice(index, 1)
+            this.updateWhitelist(arr);
+        }
+      }
+
+      updateWhitelist(arr){
+        postData(BASE_URL + "/get-customers-from-cif", {"cif": arr}, "POST").then((results) => {
+            this.setState({whitelist: arr, whitelistWithName: results})
+        });
+      }
+
+      addCustomer = (cif) => {
+        var arr = this.state.whitelist;
+        arr.push(cif);
+        postData(BASE_URL + "/get-customers-from-cif", {"cif": arr}, "POST").then((results) => {
+            this.setState({whitelist: arr, whitelistWithName: results})
+        });
+      }
+
+      getButtonClass(isEnabled){
+        return isEnabled ? "popup-button-confirm" : "popup-button-disabled";
+      }
+
+      isInvalid(){
+        return !this.state.validWhitelist || !this.state.validMaxPerPeriod || !this.state.validPeriod || !this.state.validRuleName;
+      }
+
 
     render(){
         return (
             <Box>
+                    {this.state.showPopupWhitelist && (
+                        <CustomEditWhitelistPopup
+                            onConfirm={this.handleSubmit}
+                            onCancel={this.handleCancelWhitelist}
+                            messageTitle="Rule Whitelist"
+                            messageSubtitle={"Add customers to whitelist"}
+                            whitelist={this.state.whitelist}
+                            whitelistWithName={this.state.whitelistWithName}
+                            onDeleteWhitelist={this.handleDeleteWhitelist}
+                            addCustomer={this.addCustomer}
+                            filter={this.state.filter}
+                            onFilter={this.handleFilter}
+                        />
+                    )}
+
                     {this.state.showPopup && (
                         <CustomConfirmPopup
                             onConfirm={this.handleSubmit}
@@ -170,7 +234,8 @@ class Rule extends Component {
                             messageTitle={this.props.endpoint === "/create-rule" ? "Create Rule?" : "Save Changes?"}
                             messageSubtitle={this.props.endpoint === "/create-rule" ? "Are you sure you want to create rule?" : "Save changes to this rule?"}
                         />
-                    )}
+                    )}    
+
                     <div style={{marginTop: "20px"}}>
                         <p className="rule-description"><FontAwesomeIcon icon={faInfoCircle}/> Description: <strong>{this.ruleDescription()}</strong></p>
                     </div>
@@ -267,8 +332,9 @@ class Rule extends Component {
                         </div>
                     </div>
                     <div>
-                        <label>Whitelist</label><br></br>
-                        <textarea
+                        {/* <label>Whitelist</label> */}
+                        <br/>
+                        {/* <textarea
                             value={this.state.whitelist}
                             onFocus={() => this.setWhitelistFocus(true)} 
                             onBlur={() => this.setWhitelistFocus(false)} 
@@ -276,16 +342,21 @@ class Rule extends Component {
                             required aria-invalid={this.state.validWhitelist ? "false" : "true"} 
                             id="whitelist"
                             style={{width: "150px", backgroundColor: !this.state.validWhitelist && this.state.whitelistFocus ? ERROR_HEX : ""}}
-                        />
-                        <p id="whitelist-note" className={"instructions"}>
+                        /> */}
+                        <button onClick={() => this.setState({showPopupWhitelist: true})} className="create-rule-submit" style={{margin: "0px"}}>
+                            Edit Whitelist
+                        </button>
+                        {/* <p id="whitelist-note" className={"instructions"}>
                             <FontAwesomeIcon icon={faInfoCircle}/>
                             Enter each CIF number, seperated by comma.
                             All customers will be whitelist if field left blank.
-                        </p>
+                        </p> */}
                     </div>
-                    <button onClick={() => this.setState({ showPopup: true})} className="create-rule-submit" disabled={!this.state.validWhitelist || !this.state.validMaxPerPeriod || !this.state.validPeriod || !this.state.validRuleName ? true : false}>
-                        {this.props.buttonTitle}
-                    </button>
+                    <div style={{paddingTop: "10px"}}>
+                        <button onClick={() => this.setState({ showPopup: true})} className={"popup-button "+this.getButtonClass(!this.isInvalid())} disabled={this.isInvalid() ? true : false}>
+                            {this.props.buttonTitle}
+                        </button>
+                    </div>
             </Box>
         )
     }

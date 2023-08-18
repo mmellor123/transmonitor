@@ -118,6 +118,23 @@ export async function fetchData(url){
     return response;
 }
 
+export async function fetchData2(url, payload){
+  console.log("payload: ", payload)
+  const response = await fetch(url, {method:"POST", body: JSON.stringify(payload), headers: {'token':TOKEN}})
+        .then(
+          res => res.json()
+          )
+        .then(
+          (results) => {
+                  return results;
+          },
+          (error) => {
+            console.log("Error: ", error);
+          }
+        )
+  return response;
+}
+
 export async function deleteRule(url, payload){
   const response = await fetch(url, {
     method: "DELETE",
@@ -156,10 +173,12 @@ export async function postData(url, payload, method){
     (results) => {
       console.log(results);
       console.log("Rule Created Successfully!")
+      return results;
     },
     (error) => {
       window.alert("An error occured. Please try again")
       console.log(error)
     }
   );
+  return response;
 }
