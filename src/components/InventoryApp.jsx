@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import TextField from '@mui/material/TextField';
+import {Paper} from '@mui/material'
 import Autocomplete from '@mui/material/Autocomplete';
 import { styled } from "@mui/material/styles";
 
@@ -92,9 +93,12 @@ const InventoryApp = ({validCif, cif, onChange, onAdd, list, listWithName, onDel
           value={cifList.filter(obj => {
             return obj.cif === cif
           })[0]}
+          PaperComponent={({ children }) => (
+            <Paper style={{ color: "black", background: "white" }}>{children}</Paper>
+          )}
           isOptionEqualToValue={(option, value) => option.cif === value.cif}
           renderInput={(params) => (
-            <TextField {...params} label="CIF" variant="standard" sx={{width:"200px", maxHeight:"0px!important"}}/>
+            <TextField {...params} label="CIF" variant="standard" sx={{width:"200px", bottom: "15px"}}/>
           )}
           onChange={(event, value) => handleChange(value.cif)} 
         />
@@ -106,6 +110,7 @@ const InventoryApp = ({validCif, cif, onChange, onAdd, list, listWithName, onDel
           value={search}
           onChange={(e) => onFilter(e.target.value)}
           className="valid-box"
+          style={{marginRight: "0", marginLeft: "auto"}}
         />
       </div>
       <div className='whitelist-table'>
