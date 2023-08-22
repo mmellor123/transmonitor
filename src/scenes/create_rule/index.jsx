@@ -17,7 +17,7 @@ class CreateRule extends Component {
         return (
             <Box m="20px">
                 <Header title="Create Rule" subtitle="Create your own custom rule"/>
-                <Rule navigate={this.props.navigate} buttonTitle="Save" endpoint="/create-rule"/>
+                <Rule navigate={this.props.navigate} buttonTitle="Create" endpoint="/create-rule"/>
             </Box>
         )
     }
