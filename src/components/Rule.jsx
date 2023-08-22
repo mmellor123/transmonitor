@@ -241,7 +241,8 @@ class Rule extends Component {
                     </div>
                     <div>
                         <label>Name</label><br></br>
-                        <input 
+                        <input
+                            autoComplete="none"
                             value={this.state.ruleName}
                             onFocus={() => this.setRuleNameFocus(true)} 
                             onBlur={() => this.setRuleNameFocus(false)} 
@@ -249,7 +250,7 @@ class Rule extends Component {
                             required 
                             aria-invalid={this.state.validRuleName ? "false" : "true"} 
                             id="rule-name"
-                            style={{backgroundColor: !this.state.validRuleName && this.state.ruleNameFocus ? ERROR_HEX : ""}}
+                            className={this.state.validRuleName ? "valid-box" : "invalid-box"}
                         />
                         <p id="rule-name-note" className={!this.state.validRuleName && this.state.ruleNameFocus ? "instructions" : "offscreen"}>
                             <FontAwesomeIcon icon={faInfoCircle}/>
@@ -258,14 +259,15 @@ class Rule extends Component {
                     </div>
                     <div>
                         <label>Max per period</label><br></br>
-                        <input 
+                        <input
+                            autoComplete="none"
                             value={this.state.maxPerPeriod}
                             onFocus={() => this.setMaxPerPeriodFocus(true)} 
                             onBlur={() => this.setMaxPerPeriodFocus(false)} 
                             onChange={(e) => this.setMaxPerPeriod(e.target.value)} 
                             required aria-invalid={this.state.validMaxPerPeriod ? "false" : "true"} 
                             id="max-per-period"
-                            style={{backgroundColor: !this.state.validMaxPerPeriod && this.state.maxPerPeriodFocus ? ERROR_HEX : ""}}
+                            className={this.state.validMaxPerPeriod ? "valid-box" : "invalid-box"}
                         />
                         <p id="maxperprdnote" className={!this.state.validMaxPerPeriod && this.state.maxPerPeriodFocus ? "instructions" : "offscreen"}>
                             <FontAwesomeIcon icon={faInfoCircle}/>
@@ -277,13 +279,14 @@ class Rule extends Component {
                     <div>
                         <label>Period</label><br></br>
                         <input
+                            autoComplete="none"
                             value={this.state.period}
                             onFocus={() => this.setPeriodFocus(true)} 
                             onBlur={() => this.setPeriodFocus(false)} 
                             onChange={(e) => this.setPeriod(e.target.value)} 
                             required aria-invalid={this.state.validPeriod ? "false" : "true"} 
                             id="period"
-                            style={{backgroundColor: !this.state.validPeriod && this.state.periodFocus ? ERROR_HEX : ""}}
+                            className={this.state.validPeriod ? "valid-box" : "invalid-box"}
                         />
                         <p id="period-note" className={!this.state.validPeriod && this.state.periodFocus ? "instructions" : "offscreen"}>
                             <FontAwesomeIcon icon={faInfoCircle}/>

@@ -151,6 +151,8 @@ label{
 
 .create-rule-dropdown {
   width: 150px !important;
+  background-color: white !important;
+  color: black !important
 }
 
 .delete-rule-button {
@@ -261,6 +263,7 @@ label{
 }
 
 .popup-button {
+  padding: 5px 16px !important;
 	border-radius:3px;
 	border:0px solid #0b0e07;
 	display:inline-block;
@@ -317,6 +320,7 @@ label{
   border: 2px solid #ff5151;
   outline: none;
   border-radius: 3px;
+  background-color: "#FFCCCC";
 }
 
 
