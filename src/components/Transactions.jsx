@@ -5,6 +5,7 @@ import {fetchData, BASE_URL} from "../common/functions.jsx";
 import Table from "../components/Table";
 import Dropdown from 'react-bootstrap/Dropdown';
 import EmailButton from "../components/EmailButton";
+import LoadingCircle from "./LoadingCircle";
 
 
 
@@ -27,7 +28,8 @@ class Transactions extends Component {
         ],
         url: BASE_URL + "/rule",
         selectedType: "2c2p",
-        rules: []
+        rules: [],
+        isLoading: false
     }
 
     componentDidMount(){
@@ -45,8 +47,9 @@ class Transactions extends Component {
     getRuleData = (rule, ruleName) =>{
         const startDate = this.props.startDate;
         const endDate = this.props.endDate;
+        this.setState({isLoading: true})
         fetchData(TRANS_URL +"?rule_id="+rule+ "&start="+startDate+"T00:00:00&end="+endDate+"T00:00:00").then((results) => {
-            this.setState({datas: results,selectedRule: ruleName})
+            this.setState({datas: results,selectedRule: ruleName, isLoading: false})
         });
     }
 
@@ -68,6 +71,7 @@ class Transactions extends Component {
     render(){
         return (
             <Box >
+                {this.state.isLoading && <LoadingCircle/>}
                 <Box >
                     <Dropdown>
                         <Dropdown.Toggle id="nav-dropdown" variant="secondary"  size="sm">

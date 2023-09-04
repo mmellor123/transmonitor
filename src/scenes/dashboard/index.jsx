@@ -4,6 +4,7 @@ import Header from "../../components/Header";
 import DownloadOutlinedIcon from "@mui/icons-material/DownloadOutlined"
 import BarChart from "../../components/BarChart";
 import LineChart from "../../components/LineChart";
+import LoadingCircle from "../../components/LoadingCircle"
 
 import Transactions from "../../components/Transactions";
 import React, {Component} from "react";
@@ -29,7 +30,8 @@ class Dashboard extends Component {
         selectedMonth: 1,
         url: BASE_URL + "/graph-data-new?",
         datas: {'bar': [], 'line': []},
-        rules: []
+        rules: [],
+        isLoading: false
 
     }
 
@@ -42,8 +44,9 @@ class Dashboard extends Component {
     }
 
     getRuleData = (startDate, endDate) =>{
+        this.setState({isLoading: true})
         fetchData(this.state.url + "start="+startDate+"T00:00:00&end="+endDate+"T00:00:00").then((results) => {
-            this.setState({datas: results});
+            this.setState({datas: results, isLoading: false});
         });
     }
 
@@ -58,8 +61,9 @@ class Dashboard extends Component {
 
     handleSearch = () => {
         let [sDate, eDate] = getDates(this.state.selectedYear, this.state.selectedMonth);
+        this.setState({isLoading: true})
         fetchData(this.state.url + "start="+sDate+"T00:00:00&end="+eDate+"T00:00:00").then((results) => {
-            this.setState({datas: results, startDate: sDate, endDate: eDate});
+            this.setState({datas: results, startDate: sDate, endDate: eDate, isLoading: false});
         });
     }
 
@@ -70,6 +74,7 @@ class Dashboard extends Component {
         const endDate = this.state.endDate;
         return (
             <Box m="20px">
+                {this.state.isLoading && <LoadingCircle/>}
                 <Box display="flex" justifyContent="space-between" alignItems="center">
                     <Header title="DASHBOARD" subtitle="Welcome to your dashboard"/>
                     <Typography variant="h3" fontWeight="bold">{monthIndexToString(this.state.selectedMonth)} {this.state.selectedYear}</Typography>

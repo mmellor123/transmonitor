@@ -3,6 +3,7 @@ import { ResponsiveBar } from "@nivo/bar";
 import { tokens } from "../theme";
 import React, {Component} from "react";
 import {fetchData, BASE_URL} from "../common/functions.jsx";
+import LoadingCircle from "./LoadingCircle";
 
 
 function withMyHook(Component){
@@ -21,7 +22,8 @@ class BarChart extends Component {
         datas : [
         
         ],
-        rules: []
+        rules: [],
+        isLoading: false
     }
 
     componentDidMount(){
@@ -40,8 +42,9 @@ class BarChart extends Component {
     getRuleData = () =>{
         const startDate = this.props.startDate;
         const endDate = this.props.endDate;
+        this.setState({isLoading: true})
         fetchData(BAR_URL + "start="+startDate+"T00:00:00&end="+endDate+"T00:00:00").then((results) => {
-            this.setState({datas: results});
+            this.setState({datas: results, isLoading: false});
 
         });
     }
@@ -56,6 +59,7 @@ class BarChart extends Component {
         let {["date"]: _, ...rules} = data.length > 0 ? data[0]: []
         return(
             <Box height="100%">
+                {this.state.isLoading && <LoadingCircle/>}
                 <ResponsiveBar
                     data={data}
                     theme={{

@@ -3,6 +3,7 @@ import { tokens } from "../theme";
 import { useTheme, Box} from "@mui/material";
 import React, {Component} from "react";
 import {fetchData, BASE_URL} from "../common/functions.jsx";
+import LoadingCircle from "./LoadingCircle";
 
 function withMyHook(Component){
     return function WrappedComponent(props){
@@ -20,6 +21,7 @@ class PieChart extends Component {
         datas : [
         
         ],
+        isLoading: false
     }
 
     componentDidMount(){
@@ -35,8 +37,9 @@ class PieChart extends Component {
     getRuleData = () =>{
         const startDate = this.props.startDate;
         const endDate = this.props.endDate;
+        this.setState({isLoading: true})
         fetchData(PIE_URL + "start="+startDate+"&end="+endDate).then((results) => {
-            this.setState({datas: results})
+            this.setState({datas: results, isLoading: false})
         });
     }
 
@@ -44,6 +47,7 @@ class PieChart extends Component {
     const colors = this.props.colors;
     return (
         <Box height="100%">
+            {this.state.isLoading && <LoadingCircle/>}
             <ResponsivePie
                     data={this.state.datas}
                     theme={{

@@ -3,6 +3,7 @@ import { tokens } from "../theme";
 import { ResponsiveLine } from "@nivo/line";
 import React, {Component} from "react";
 import {fetchData, BASE_URL} from "../common/functions.jsx";
+import LoadingCircle from "./LoadingCircle";
 
 
 function withMyHook(Component){
@@ -20,7 +21,8 @@ class LineChart extends Component {
     state = {
         datas : [
         
-        ]
+        ],
+        isLoading: false
     }
 
     componentDidMount(){
@@ -38,8 +40,9 @@ class LineChart extends Component {
     getRuleData = () =>{
         const startDate = this.props.startDate;
         const endDate = this.props.endDate;
+        this.setState({isLoading: true})
         fetchData(LINE_URL + "start="+startDate+"T00:00:00&end="+endDate+"T00:00:00").then((results) => {
-            this.setState({datas: results});
+            this.setState({datas: results, isLoading: false});
         });
     }
 
@@ -52,6 +55,7 @@ class LineChart extends Component {
         }
         return(
             <Box height="100%">
+                {this.state.isLoading && <LoadingCircle/>}
                 <ResponsiveLine
                     data={data}
                     theme={{
