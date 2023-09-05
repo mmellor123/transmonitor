@@ -136,7 +136,7 @@ export async function fetchData2(url, payload){
 }
 
 export async function deleteRule(url, payload){
-  const response = await fetch(url, {
+  await fetch(url, {
     method: "DELETE",
     body: JSON.stringify(payload),
     headers: {

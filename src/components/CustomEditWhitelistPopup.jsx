@@ -1,5 +1,4 @@
 import React from 'react';
-import RemoveIcon from '@mui/icons-material/Remove';
 import {faInfoCircle } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import InventoryApp from "./InventoryApp"
@@ -9,8 +8,6 @@ import { fetchData, postData, BASE_URL} from '../common/functions';
 
 
 const INTEGER_REGEX = /^[0-9]{8,15}$/;
-const ERROR_HEX = "#FFCCCC"
-
 
 class CustomEditWhitelistPopup extends React.Component {
 
@@ -64,7 +61,7 @@ class CustomEditWhitelistPopup extends React.Component {
       postData(BASE_URL + "/get-customers-from-cif", {"cif": [cif]}, "POST").then((results) => {
         var result = false;
         if(results.length === 1){
-          var result = true;
+          result = true;
         }
         console.log(results)
         this.setState({cif: cif, validCif: result});

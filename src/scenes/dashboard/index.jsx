@@ -87,7 +87,6 @@ class Dashboard extends Component {
                     gap="20px"
                 >
                     <Box
-                        
                         gridColumn={width > 1000 ? 'span 6' : 'span 12'}
                         gridRow="span 2"
                         backgroundColor={colors.primary[400]}

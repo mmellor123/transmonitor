@@ -1,7 +1,7 @@
 import {Box, useTheme} from "@mui/material";
 import { tokens } from "../../theme";
 import React, {Component} from "react";
-import {fetchData, sendEmail, jsonToCSV, BASE_URL} from "../../common/functions.jsx";
+import {fetchData, BASE_URL} from "../../common/functions.jsx";
 import Table from "../../components/Table";
 import { useSearchParams } from "react-router-dom";
 import Header from "../../components/Header";

@@ -12,7 +12,7 @@ import { useNavigate } from "react-router-dom";
 
 function withMyHook(Component){
     return function WrappedComponent(props){
-        const [searchParams, setSearchParams] = useSearchParams();
+        const [searchParams] = useSearchParams();
         const navigate = useNavigate();
         return <Component {...props} searchParams={searchParams} navigate={navigate}/>
     }

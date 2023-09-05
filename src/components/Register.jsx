@@ -30,7 +30,7 @@ const Register = () => {
     const [matchFocus, setMatchFocus] = useState(false);
 
     const [errMsg, setErrMsg] = useState(false);
-    const [success, setSuccess] = useState(false);
+    const [success] = useState(false);
 
     useEffect(() => {
         userRef.current.focus();
@@ -60,11 +60,11 @@ const Register = () => {
             setErrMsg("Invalid Entry");
             return;
         }
-        const response = await fetch(REGISTER_URL, {method: 'POST', headers: {'content-type': 'application/json', 'token':'mytoken'}, body: JSON.stringify({username: user, password: pwd})})
+        await fetch(REGISTER_URL, {method: 'POST', headers: {'content-type': 'application/json', 'token':'mytoken'}, body: JSON.stringify({username: user, password: pwd})})
           .then(res => res.json())
           .then(
             (results) => {
-                    if(results['status'] == "success"){
+                    if(results['status'] === "success"){
                         auth.login(user);
                         navigate('/', {replace: true})
                     }
@@ -85,7 +85,7 @@ const Register = () => {
                 <section>
                     <h1>Success!</h1>
                     <p>
-                        <a href="#">Sign In</a>
+                        <a href="/login">Sign In</a>
                     </p>
                 </section>
             ) : (

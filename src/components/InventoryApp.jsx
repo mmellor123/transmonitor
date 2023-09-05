@@ -1,12 +1,8 @@
-import React, { useState } from 'react';
+import React from 'react';
 import TextField from '@mui/material/TextField';
 import {Paper} from '@mui/material'
 import Autocomplete from '@mui/material/Autocomplete';
 import { styled } from "@mui/material/styles";
-
-
-
-const INTEGER_REGEX = /^[0-9]{8}$/;
 
 
 const InventoryEntry = ({ entry, index, onDelete }) => {

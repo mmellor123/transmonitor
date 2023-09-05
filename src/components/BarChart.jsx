@@ -50,7 +50,7 @@ class BarChart extends Component {
     }
 
     render(){
-        const colors = this.props.colors;    
+        const colors = this.props.colors;
         const isDashboard = this.props.isDashboard;
         let data = this.state.datas;
         if(isDashboard){
