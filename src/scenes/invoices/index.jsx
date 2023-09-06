@@ -44,7 +44,7 @@ class Invoices extends Component {
     render(){
         return (
             <Box m="20px">
-                <Header title="TRANSACTIONS TEST" subtitle="Transactions breaking rules"/>
+                <Header title="TRANSACTIONS" subtitle="Transactions breaking rules"/>
                 <SetMonth handleSearch={this.handleSearch} handleSelectYear={this.handleSelectYear} handleSelectMonth={this.handleSelectMonth} monthStr={monthIndexToString(this.state.selectedMonth)} selectedYear={this.state.selectedYear}/>
                 {this.state.startDate ? <Transactions startDate={this.state.startDate} endDate={this.state.endDate} isDashboard={false} numberOfMonthsAgo={this.state.numberOfMonthsAgo}/> : null}
             </Box>
