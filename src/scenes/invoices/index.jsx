@@ -19,7 +19,7 @@ function withMyHook(Component){
 class Invoices extends Component {
 
     state = {
-        numberOfMonthsAgo: 0,
+        numberOfMonthsAgo: 0
     }
 
     componentDidMount(){

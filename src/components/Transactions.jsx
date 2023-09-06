@@ -39,7 +39,7 @@ class Transactions extends Component {
 
     componentDidUpdate(previousProps){
         if(previousProps.startDate !== this.props.startDate || previousProps.endDate !== this.props.endDate){
-            this.getRuleData(this.state.selectedRule);
+            this.getRuleData(this.state.selectedRuleId, this.state.selectedRule);
             this.getRules();
         }
     }
@@ -49,7 +49,7 @@ class Transactions extends Component {
         const endDate = this.props.endDate;
         this.setState({isLoading: true})
         fetchData(TRANS_URL +"?rule_id="+rule+ "&start="+startDate+"T00:00:00&end="+endDate+"T00:00:00").then((results) => {
-            this.setState({datas: results,selectedRule: ruleName, isLoading: false})
+            this.setState({datas: results, selectedRule: ruleName, selectedRuleId: rule, isLoading: false})
         });
     }
 
