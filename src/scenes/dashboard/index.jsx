@@ -9,8 +9,12 @@ import LoadingCircle from "../../components/LoadingCircle"
 import Transactions from "../../components/Transactions";
 import React, {Component} from "react";
 import {fetchData,  getDates, monthIndexToString, BASE_URL} from "../../common/functions.jsx";
+import Dropdown from 'react-bootstrap/Dropdown';
 
 import SetMonth from "../../components/SetMonth";
+
+const TRANS_URL = BASE_URL + '/get-rule-data'
+const RULES_URL = BASE_URL + '/get-rules'
 
 
 
@@ -36,17 +40,19 @@ class Dashboard extends Component {
     }
 
     componentDidMount(){
-        const d = new Date();
-        let [startDate, endDate] = getDates(d.getFullYear(), d.getMonth());
-        this.setState({startDate: startDate, endDate: endDate, selectedMonth: d.getMonth(), selectedYear: d.getFullYear()});
-        this.getRuleData(startDate, endDate);
+        this.getRules();
 
     }
 
-    getRuleData = (startDate, endDate) =>{
+    getRuleData = (startDate, endDate, r) =>{
+        if(r.length ===  0){
+            return
+        }
+        const ruleName = r[0]["name"]
+        const rule = r[0]["id"]
         this.setState({isLoading: true})
-        fetchData(this.state.url + "start="+startDate+"T00:00:00&end="+endDate+"T00:00:00").then((results) => {
-            this.setState({datas: results, isLoading: false});
+        fetchData(this.state.url + "start="+startDate+"T00:00:00&end="+endDate+"T00:00:00&rule="+rule).then((results) => {
+            this.setState({datas: results, isLoading: false, rule: rule, ruleName: ruleName, rules: r});
         });
     }
 
@@ -62,8 +68,22 @@ class Dashboard extends Component {
     handleSearch = () => {
         let [sDate, eDate] = getDates(this.state.selectedYear, this.state.selectedMonth);
         this.setState({isLoading: true})
-        fetchData(this.state.url + "start="+sDate+"T00:00:00&end="+eDate+"T00:00:00").then((results) => {
+        fetchData(this.state.url + "start="+sDate+"T00:00:00&end="+eDate+"T00:00:00&rule="+this.state.rule).then((results) => {
             this.setState({datas: results, startDate: sDate, endDate: eDate, isLoading: false});
+        });
+    }
+
+    handleSelectRule = (rule, ruleName) => {
+        this.setState({rule: rule, ruleName: ruleName});
+    }
+
+    getRules = () =>{
+        const d = new Date();
+        let [startDate, endDate] = getDates(d.getFullYear(), d.getMonth());
+        this.setState({startDate: startDate, endDate: endDate, selectedMonth: d.getMonth(), selectedYear: d.getFullYear()});
+        fetchData(RULES_URL).then((results) => {
+                // this.setState({rules: results, ruleName: results[0]["name"], rule: results[0]["id"]})
+            this.getRuleData(startDate, endDate, results);
         });
     }
 
@@ -131,7 +151,7 @@ class Dashboard extends Component {
                         {/* ROW 3 */}
                         <Box  gridColumn={width > 1000 ? 'span 8' : 'span 12'} gridRow="span 2" backgroundColor={colors.primary[400]} overflow="auto">
                             <Box  m="30px 30px 30px 30px">
-                            {this.state.startDate ? <Transactions isDashboard={true} startDate={startDate} endDate={endDate} numberOfMonthsAgo={this.state.numberOfMonthsAgo}/> : null}
+                            {this.state.startDate ? <Transactions rule={this.state.rule} ruleName={this.state.ruleName} isDashboard={true} startDate={startDate} endDate={endDate} numberOfMonthsAgo={this.state.numberOfMonthsAgo}/> : null}
                             </Box>
                         </Box>
                         
@@ -142,6 +162,17 @@ class Dashboard extends Component {
                             padding="30px"
                         >
                             <SetMonth handleSearch={this.handleSearch} handleSelectYear={this.handleSelectYear} handleSelectMonth={this.handleSelectMonth} monthStr={monthIndexToString(this.state.selectedMonth)} selectedYear={this.state.selectedYear}/>
+                            <Dropdown>
+                                <Dropdown.Toggle id="nav-dropdown" variant="secondary"  size="sm">
+                                    {this.state.ruleName ? this.state.ruleName : "Select Rule"}
+                                </Dropdown.Toggle>
+                                <Dropdown.Menu variant="dark">
+                                    {this.state.rules.map((rule, index) => {
+                                        return <Dropdown.Item onClick={() => this.handleSelectRule(rule.id, rule.name)}>{rule.name}</Dropdown.Item>
+                                    })}
+                                </Dropdown.Menu>
+                            </Dropdown>
+
                         </Box>
                 </Box>
             </Box>

@@ -38,8 +38,10 @@ class Transactions extends Component {
     }
 
     componentDidUpdate(previousProps){
-        if(previousProps.startDate !== this.props.startDate || previousProps.endDate !== this.props.endDate){
-            this.getRuleData(this.state.selectedRuleId, this.state.selectedRule);
+        if(previousProps.rule !== this.props.rule || previousProps.ruleName !== this.props.ruleName || previousProps.startDate !== this.props.startDate || previousProps.endDate !== this.props.endDate){
+            console.log("Did update")
+            // this.getRuleData(this.state.selectedRuleId, this.state.selectedRule);
+            this.getRuleData(this.props.rule, this.props.ruleName)
             this.getRules();
         }
     }
@@ -48,6 +50,7 @@ class Transactions extends Component {
         const startDate = this.props.startDate;
         const endDate = this.props.endDate;
         this.setState({isLoading: true})
+        console.log("URL: ", TRANS_URL +"?rule_id="+rule+ "&start="+startDate+"T00:00:00&end="+endDate+"T00:00:00")
         fetchData(TRANS_URL +"?rule_id="+rule+ "&start="+startDate+"T00:00:00&end="+endDate+"T00:00:00").then((results) => {
             this.setState({datas: results, selectedRule: ruleName, selectedRuleId: rule, isLoading: false})
         });
@@ -73,7 +76,7 @@ class Transactions extends Component {
             <Box >
                 {this.state.isLoading && <LoadingCircle/>}
                 <Box >
-                    <Dropdown>
+                    {/* <Dropdown>
                         <Dropdown.Toggle id="nav-dropdown" variant="secondary"  size="sm">
                             {this.state.selectedRule ? this.state.selectedRule : "Select Rule"}
                         </Dropdown.Toggle>
@@ -82,7 +85,7 @@ class Transactions extends Component {
                                 return <Dropdown.Item onClick={() => this.handleSelectRule(rule.id, rule.name)}>{rule.name}</Dropdown.Item>
                             })}
                         </Dropdown.Menu>
-                    </Dropdown>
+                    </Dropdown> */}
                 </Box>
                 <Table data={this.state.datas} isCustomerPage={false}/>
                 <EmailButton csv={this.state.datas} csvName={this.state.selectedRule}/>
