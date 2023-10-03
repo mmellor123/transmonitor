@@ -96,8 +96,8 @@ class Dashboard extends Component {
             <Box m="20px">
                 {this.state.isLoading && <LoadingCircle/>}
                 <Box display="flex" justifyContent="space-between" alignItems="center">
-                    <Header title="DASHBOARD BRANCH" subtitle="Welcome to your dashboard"/>
-                    <Typography variant="h3" fontWeight="bold">{monthIndexToString(this.state.selectedMonth)} {this.state.selectedYear}</Typography>
+                    <Header title="DASHBOARD" subtitle="Welcome to your dashboard"/>
+                    <Typography color={colors.grey[100]} variant="h3" fontWeight="bold">{monthIndexToString(this.state.selectedMonth)} {this.state.selectedYear}</Typography>
                 </Box>
                 {/* GRID AND CHARTS */}
                 <Box
@@ -139,7 +139,7 @@ class Dashboard extends Component {
 
                         {/*TRANSACTIONS*/}
                         <Box gridColumn={width > 1000 ? 'span 6' : 'span 12'} gridRow="span 2" backgroundColor={colors.primary[400]} overflow="auto">
-                                <Typography variant="h5" fontWeight="600" sx={{p: "30px 30px 0 30px"}}>
+                                <Typography variant="h5" fontWeight="600" sx={{p: "30px 30px 0 30px"}} color={colors.grey[100]}>
                                     Bar Chart
                                 </Typography>
                                 
