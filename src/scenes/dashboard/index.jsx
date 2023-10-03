@@ -120,7 +120,7 @@ class Dashboard extends Component {
                         >
                             <Box>
                                 <Typography variant="h5" fontWeight="600" color={colors.grey[100]}>
-                                    Rules Broken
+                                    Line Chart
                                 </Typography>
                             </Box>
 
@@ -161,6 +161,11 @@ class Dashboard extends Component {
                             backgroundColor={colors.primary[400]}
                             padding="30px"
                         >
+                            <Box sx={{pb: "20px"}}>
+                                <Typography variant="h5" fontWeight="600" color={colors.grey[100]}>
+                                    Options
+                                </Typography>
+                            </Box>
                             <SetMonth handleSearch={this.handleSearch} handleSelectYear={this.handleSelectYear} handleSelectMonth={this.handleSelectMonth} monthStr={monthIndexToString(this.state.selectedMonth)} selectedYear={this.state.selectedYear}/>
                             <Dropdown>
                                 <Dropdown.Toggle id="nav-dropdown" variant="secondary"  size="sm">
