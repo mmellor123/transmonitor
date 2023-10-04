@@ -106,6 +106,31 @@ class Dashboard extends Component {
                     gridAutoRows="140px"
                     gap="20px"
                 >
+
+                        <Box
+                            gridColumn={width > 1000 ? 'span 12' : 'span 12'}
+                            gridRow="span 1"
+                            backgroundColor={colors.primary[400]}
+                            padding="30px"
+                        >
+                            <Box sx={{pb: "20px"}}>
+                                <Typography variant="h5" fontWeight="600" color={colors.grey[100]}>
+                                    Options
+                                </Typography>
+                            </Box>
+                            <SetMonth handleSearch={this.handleSearch} handleSelectYear={this.handleSelectYear} handleSelectMonth={this.handleSelectMonth} monthStr={monthIndexToString(this.state.selectedMonth)} selectedYear={this.state.selectedYear}/>
+                            <Dropdown>
+                                <Dropdown.Toggle id="nav-dropdown" variant="secondary"  size="sm">
+                                    {this.state.ruleName ? this.state.ruleName : "Select Rule"}
+                                </Dropdown.Toggle>
+                                <Dropdown.Menu variant="dark">
+                                    {this.state.rules.map((rule, index) => {
+                                        return <Dropdown.Item onClick={() => this.handleSelectRule(rule.id, rule.name)}>{rule.name}</Dropdown.Item>
+                                    })}
+                                </Dropdown.Menu>
+                            </Dropdown>
+
+                        </Box>
                     <Box
                         gridColumn={width > 1000 ? 'span 6' : 'span 12'}
                         gridRow="span 2"
@@ -149,36 +174,13 @@ class Dashboard extends Component {
                         </Box>
 
                         {/* ROW 3 */}
-                        <Box  gridColumn={width > 1000 ? 'span 8' : 'span 12'} gridRow="span 2" backgroundColor={colors.primary[400]} overflow="auto">
+                        <Box  gridColumn={width > 1000 ? 'span 12' : 'span 12'} gridRow="span 2" backgroundColor={colors.primary[400]} overflow="auto">
                             <Box  m="30px 30px 30px 30px">
                             {this.state.startDate ? <Transactions rule={this.state.rule} ruleName={this.state.ruleName} isDashboard={true} startDate={startDate} endDate={endDate} numberOfMonthsAgo={this.state.numberOfMonthsAgo}/> : null}
                             </Box>
                         </Box>
                         
-                        <Box
-                            gridColumn={width > 1000 ? 'span 4' : 'span 12'}
-                            gridRow="span 1"
-                            backgroundColor={colors.primary[400]}
-                            padding="30px"
-                        >
-                            <Box sx={{pb: "20px"}}>
-                                <Typography variant="h5" fontWeight="600" color={colors.grey[100]}>
-                                    Options
-                                </Typography>
-                            </Box>
-                            <SetMonth handleSearch={this.handleSearch} handleSelectYear={this.handleSelectYear} handleSelectMonth={this.handleSelectMonth} monthStr={monthIndexToString(this.state.selectedMonth)} selectedYear={this.state.selectedYear}/>
-                            <Dropdown>
-                                <Dropdown.Toggle id="nav-dropdown" variant="secondary"  size="sm">
-                                    {this.state.ruleName ? this.state.ruleName : "Select Rule"}
-                                </Dropdown.Toggle>
-                                <Dropdown.Menu variant="dark">
-                                    {this.state.rules.map((rule, index) => {
-                                        return <Dropdown.Item onClick={() => this.handleSelectRule(rule.id, rule.name)}>{rule.name}</Dropdown.Item>
-                                    })}
-                                </Dropdown.Menu>
-                            </Dropdown>
-
-                        </Box>
+                        
                 </Box>
             </Box>
         )
