@@ -112,6 +112,7 @@ class Dashboard extends Component {
                             gridRow="span 1"
                             backgroundColor={colors.primary[400]}
                             padding="30px"
+                            className={"shadowed-box"}
                         >
                             <Box sx={{pb: "20px"}}>
                                 <Typography variant="h5" fontWeight="600" color={colors.grey[100]}>
@@ -135,6 +136,7 @@ class Dashboard extends Component {
                         gridColumn={width > 1000 ? 'span 6' : 'span 12'}
                         gridRow="span 2"
                         backgroundColor={colors.primary[400]}
+                        className={"shadowed-box"}
                     >
                         <Box
                             mt="25px"
@@ -163,7 +165,7 @@ class Dashboard extends Component {
                         </Box>
 
                         {/*TRANSACTIONS*/}
-                        <Box gridColumn={width > 1000 ? 'span 6' : 'span 12'} gridRow="span 2" backgroundColor={colors.primary[400]} overflow="auto">
+                        <Box className={"shadowed-box"} gridColumn={width > 1000 ? 'span 6' : 'span 12'} gridRow="span 2" backgroundColor={colors.primary[400]} overflow="auto">
                                 <Typography variant="h5" fontWeight="600" sx={{p: "30px 30px 0 30px"}} color={colors.grey[100]}>
                                     Bar Chart
                                 </Typography>
@@ -174,7 +176,7 @@ class Dashboard extends Component {
                         </Box>
 
                         {/* ROW 3 */}
-                        <Box  gridColumn={width > 1000 ? 'span 12' : 'span 12'} gridRow="span 2" backgroundColor={colors.primary[400]} overflow="auto">
+                        <Box  className={"shadowed-box"} gridColumn={width > 1000 ? 'span 12' : 'span 12'} gridRow="span 2" backgroundColor={colors.primary[400]} overflow="auto">
                             <Box  m="30px 30px 30px 30px">
                             {this.state.startDate ? <Transactions rule={this.state.rule} ruleName={this.state.ruleName} isDashboard={true} startDate={startDate} endDate={endDate} numberOfMonthsAgo={this.state.numberOfMonthsAgo}/> : null}
                             </Box>

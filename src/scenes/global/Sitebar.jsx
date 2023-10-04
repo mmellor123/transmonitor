@@ -44,6 +44,7 @@ const SidebarMine = () => {
                 },
             }}
             display='flex' height='100%'
+            boxShadow="0px 4px 19px 0px #aaaaaa"
         >
             {auth.user && (
             <Sidebar backgroundColor={colors.primary[400]} collapsed={collapsed}>
