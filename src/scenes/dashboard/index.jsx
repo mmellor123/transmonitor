@@ -108,7 +108,7 @@ class Dashboard extends Component {
                 >
 
                         <Box
-                            gridColumn={width > 1000 ? 'span 12' : 'span 12'}
+                            gridColumn={width > 1000 ? 'span 6' : 'span 12'}
                             gridRow="span 1"
                             backgroundColor={colors.primary[400]}
                             padding="30px"
@@ -135,6 +135,7 @@ class Dashboard extends Component {
                     <Box
                         gridColumn={width > 1000 ? 'span 6' : 'span 12'}
                         gridRow="span 2"
+                        sx={{gridRowEnd: 4}}
                         backgroundColor={colors.primary[400]}
                         className={"shadowed-box"}
                     >
@@ -165,7 +166,7 @@ class Dashboard extends Component {
                         </Box>
 
                         {/*TRANSACTIONS*/}
-                        <Box className={"shadowed-box"} gridColumn={width > 1000 ? 'span 6' : 'span 12'} gridRow="span 2" backgroundColor={colors.primary[400]} overflow="auto">
+                        <Box className={"shadowed-box"} sx={{gridRowEnd: 4}} gridColumn={width > 1000 ? 'span 6' : 'span 12'} gridRow="span 2" backgroundColor={colors.primary[400]} overflow="auto">
                                 <Typography variant="h5" fontWeight="600" sx={{p: "30px 30px 0 30px"}} color={colors.grey[100]}>
                                     Bar Chart
                                 </Typography>
