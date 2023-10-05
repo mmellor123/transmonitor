@@ -15,7 +15,7 @@ import SetMonth from "../../components/SetMonth";
 
 const TRANS_URL = BASE_URL + '/get-rule-data'
 const RULES_URL = BASE_URL + '/get-rules'
-
+const MAX_WIDTH = 960;
 
 
 
@@ -29,20 +29,36 @@ function withMyHook(Component){
 
 class Dashboard extends Component {
     
-    state = {
-        selectedYear: 2023,
-        selectedMonth: 1,
-        url: BASE_URL + "/graph-data-new?",
-        datas: {'bar': [], 'line': []},
-        rules: [],
-        isLoading: false
+    // state = {
+    //     selectedYear: 2023,
+    //     selectedMonth: 1,
+    //     url: BASE_URL + "/graph-data-new?",
+    //     datas: {'bar': [], 'line': []},
+    //     rules: [],
+    //     isLoading: false
 
+    // }
+
+    constructor(){
+        super();
+        this.state= {
+            selectedYear: 2023,
+            selectedMonth: 1,
+            url: BASE_URL + "/graph-data-new?",
+            datas: {'bar': [], 'line': []},
+            rules: [],
+            isLoading: false,
+            WindowSize: window.innerWidth
+        }
+        this.handleResize = this.handleResize.bind(this);
     }
 
     componentDidMount(){
+        window.addEventListener("resize", this.handleResize);
         this.getRules();
-
     }
+
+    
 
     getRuleData = (startDate, endDate, r) =>{
         if(r.length ===  0){
@@ -87,6 +103,11 @@ class Dashboard extends Component {
         });
     }
 
+    handleResize(WindowSize, event){
+        console.log("Resizing")
+        this.setState({WindowSize: window.innerWidth})
+    }
+
     render(){
         const width = window.innerWidth;
         const colors = this.props.colors;
@@ -101,21 +122,21 @@ class Dashboard extends Component {
                 </Box>
                 {/* GRID AND CHARTS */}
                 <Box
-                    display="grid"
+                    display={width > MAX_WIDTH ? "grid" : ""}
                     gridTemplateColumns="repeat(12, 1fr)"
                     gridAutoRows="140px"
                     gap="20px"
                 >
 
                         <Box
-                            gridColumn={width > 1000 ? 'span 6' : 'span 12'}
-                            gridRow="span 1"
+                            gridColumn={width > MAX_WIDTH ? 'span 6' : 'span 12'}
+                            gridRow={width > MAX_WIDTH ? 'span 1' : 'span 1'}
                             backgroundColor={colors.primary[400]}
                             padding="30px"
                             className={"shadowed-box"}
                         >
                             <Box
-                                display="grid"
+                                display={width > MAX_WIDTH ? "grid" : ""}
                                 gridTemplateColumns="repeat(5, 1fr)"
                                 gridAutoRows="20px"
                                 gap="20px"
@@ -149,7 +170,7 @@ class Dashboard extends Component {
                             </Box>
                         </Box>
                     <Box
-                        gridColumn={width > 1000 ? 'span 6' : 'span 12'}
+                        gridColumn={width > MAX_WIDTH ? 'span 6' : 'span 12'}
                         gridRow="span 2"
                         sx={{gridRowEnd: 4}}
                         backgroundColor={colors.primary[400]}
@@ -182,7 +203,7 @@ class Dashboard extends Component {
                         </Box>
 
                         {/*TRANSACTIONS*/}
-                        <Box className={"shadowed-box"} sx={{gridRowEnd: 4}} gridColumn={width > 1000 ? 'span 6' : 'span 12'} gridRow="span 2" backgroundColor={colors.primary[400]} overflow="auto">
+                        <Box className={"shadowed-box"} sx={{gridRowEnd: 4}} gridColumn={width > MAX_WIDTH ? 'span 6' : 'span 12'} gridRow="span 2" backgroundColor={colors.primary[400]} overflow="auto">
                                 <Typography variant="h5" fontWeight="600" sx={{p: "30px 30px 0 30px"}} color={colors.grey[100]}>
                                     BAR CHART
                                 </Typography>
@@ -193,7 +214,7 @@ class Dashboard extends Component {
                         </Box>
 
                         {/* ROW 3 */}
-                        <Box  className={"shadowed-box"} gridColumn={width > 1000 ? 'span 12' : 'span 12'} gridRow="span 2" backgroundColor={colors.primary[400]} overflow="auto">
+                        <Box  className={"shadowed-box"} gridColumn={width > MAX_WIDTH ? 'span 12' : 'span 12'} gridRow="span 2" backgroundColor={colors.primary[400]} overflow="auto">
                             <Box  m="30px 30px 30px 30px">
                             {this.state.startDate ? <Transactions rule={this.state.rule} ruleName={this.state.ruleName} isDashboard={true} startDate={startDate} endDate={endDate} numberOfMonthsAgo={this.state.numberOfMonthsAgo}/> : null}
                             </Box>
