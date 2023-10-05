@@ -8,7 +8,7 @@ import LoadingCircle from "../../components/LoadingCircle"
 
 import Transactions from "../../components/Transactions";
 import React, {Component} from "react";
-import {fetchData,  getDates, monthIndexToString, BASE_URL} from "../../common/functions.jsx";
+import {fetchData,  getDates, monthIndexToString, BASE_URL, debounce} from "../../common/functions.jsx";
 import Dropdown from 'react-bootstrap/Dropdown';
 
 import SetMonth from "../../components/SetMonth";
@@ -50,11 +50,11 @@ class Dashboard extends Component {
             isLoading: false,
             WindowSize: window.innerWidth
         }
-        this.handleResize = this.handleResize.bind(this);
+        this.debounceHandleResize = this.debounceHandleResize.bind(this);
     }
 
     componentDidMount(){
-        window.addEventListener("resize", this.handleResize);
+        window.addEventListener("resize", this.debounceHandleResize);
         this.getRules();
     }
 
@@ -103,9 +103,14 @@ class Dashboard extends Component {
         });
     }
 
-    handleResize(WindowSize, event){
-        console.log("Resizing")
+    handleResize = () => {
+        console.log("Resize"); 
         this.setState({WindowSize: window.innerWidth})
+    }
+
+    debounceHandleResize(WindowSize, event){
+        console.log("Resizing debounce")
+        debounce(this.handleResize(), 1000)
     }
 
     render(){
@@ -146,8 +151,8 @@ class Dashboard extends Component {
                                         OPTIONS
                                     </Typography>
                                 </Box>
-                                <Box gridColumn="span 1" gridRow="span 1">
-                                    <Typography color={"black"}>Rule</Typography>
+                                <Box gridColumn="span 1" gridRow="span 1" paddingBottom={"20px"}>
+                                    <Typography fontWeight={"strong"} color={"black"}>Rule</Typography>
                                     <Dropdown>
                                         <Dropdown.Toggle id="nav-dropdown" variant="secondary"  size="sm">
                                             {this.state.ruleName ? this.state.ruleName : "Select Rule"}
@@ -159,7 +164,7 @@ class Dashboard extends Component {
                                         </Dropdown.Menu>
                                     </Dropdown>
                                 </Box>
-                                <Box gridColumn="span 3" gridRow="span 2">
+                                <Box gridColumn="span 3" gridRow="span 2" paddingBottom={"20px"}>
                                     <Typography color={"black"}>Date</Typography>
                                     <SetMonth handleSearch={this.handleSearch} handleSelectYear={this.handleSelectYear} handleSelectMonth={this.handleSelectMonth} monthStr={monthIndexToString(this.state.selectedMonth)} selectedYear={this.state.selectedYear}/>
                                 </Box>

@@ -14,6 +14,17 @@ export function useWindowDimensions() {
   return useSyncExternalStore(subscribe, getSnapshot, getServerSnapshot);
 }
 
+export function debounce(fn, ms) {
+  let timer
+  return _ => {
+    clearTimeout(timer)
+    timer = setTimeout(_ => {
+      timer = null
+      fn.apply(this, arguments)
+    }, ms)
+  };
+}
+
 export const Item = ({ title, to, icon, selected, setSelected }) => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
