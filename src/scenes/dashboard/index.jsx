@@ -113,6 +113,10 @@ class Dashboard extends Component {
         debounce(this.handleResize(), 1000)
     }
 
+    isWidescreen(){
+        return window.innerWidth > MAX_WIDTH;
+    }
+
     render(){
         const width = window.innerWidth;
         const colors = this.props.colors;
@@ -127,24 +131,22 @@ class Dashboard extends Component {
                 </Box>
                 {/* GRID AND CHARTS */}
                 <Box
-                    display={width > MAX_WIDTH ? "grid" : ""}
+                    display={this.isWidescreen() ? "grid" : ""}
                     gridTemplateColumns="repeat(12, 1fr)"
                     gridAutoRows="140px"
                     gap="20px"
                 >
 
                         <Box
-                            gridColumn={width > MAX_WIDTH ? 'span 6' : 'span 12'}
-                            gridRow={width > MAX_WIDTH ? 'span 1' : 'span 1'}
+                            gridColumn={this.isWidescreen() ? 'span 6' : 'span 12'}
+                            gridRow={this.isWidescreen() ? 'span 1' : 'span 1'}
                             backgroundColor={colors.primary[400]}
                             padding="30px"
                             className={"shadowed-box"}
                         >
                             <Box
-                                display={width > MAX_WIDTH ? "grid" : ""}
-                                gridTemplateColumns="repeat(5, 1fr)"
-                                gridAutoRows="20px"
-                                gap="20px"
+                                display={this.isWidescreen() ? "grid" : ""}
+                                
                             >
                                 <Box sx={{pb: "20px"}} gridColumn="span 5">
                                     <Typography variant="h5" fontWeight="600" color={colors.grey[100]}>
@@ -175,7 +177,7 @@ class Dashboard extends Component {
                             </Box>
                         </Box>
                     <Box
-                        gridColumn={width > MAX_WIDTH ? 'span 6' : 'span 12'}
+                        gridColumn={this.isWidescreen() ? 'span 6' : 'span 12'}
                         gridRow="span 2"
                         sx={{gridRowEnd: 4}}
                         backgroundColor={colors.primary[400]}
@@ -208,7 +210,7 @@ class Dashboard extends Component {
                         </Box>
 
                         {/*TRANSACTIONS*/}
-                        <Box className={"shadowed-box"} sx={{gridRowEnd: 4}} gridColumn={width > MAX_WIDTH ? 'span 6' : 'span 12'} gridRow="span 2" backgroundColor={colors.primary[400]} overflow="auto">
+                        <Box className={"shadowed-box"} sx={{gridRowEnd: 4, mt: this.isWidescreen()? "0px" : "30px"}} gridColumn={this.isWidescreen() ? 'span 6' : 'span 12'} gridRow="span 2" backgroundColor={colors.primary[400]} overflow="auto">
                                 <Typography variant="h5" fontWeight="600" sx={{p: "30px 30px 0 30px"}} color={colors.grey[100]}>
                                     BAR CHART
                                 </Typography>
@@ -219,7 +221,7 @@ class Dashboard extends Component {
                         </Box>
 
                         {/* ROW 3 */}
-                        <Box  className={"shadowed-box"} gridColumn={width > MAX_WIDTH ? 'span 12' : 'span 12'} gridRow="span 2" backgroundColor={colors.primary[400]} overflow="auto">
+                        <Box  className={"shadowed-box"} sx={{mt: this.isWidescreen()? "0px" : "30px"}} gridColumn={this.isWidescreen() ? 'span 12' : 'span 12'} gridRow="span 2" backgroundColor={colors.primary[400]} overflow="auto">
                             <Box  m="30px 30px 30px 30px">
                             {this.state.startDate ? <Transactions rule={this.state.rule} ruleName={this.state.ruleName} isDashboard={true} startDate={startDate} endDate={endDate} numberOfMonthsAgo={this.state.numberOfMonthsAgo}/> : null}
                             </Box>
