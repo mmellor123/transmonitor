@@ -114,23 +114,39 @@ class Dashboard extends Component {
                             padding="30px"
                             className={"shadowed-box"}
                         >
-                            <Box sx={{pb: "20px"}}>
-                                <Typography variant="h5" fontWeight="600" color={colors.grey[100]}>
-                                    Options
-                                </Typography>
+                            <Box
+                                display="grid"
+                                gridTemplateColumns="repeat(5, 1fr)"
+                                gridAutoRows="20px"
+                                gap="20px"
+                            >
+                                <Box sx={{pb: "20px"}} gridColumn="span 5">
+                                    <Typography variant="h5" fontWeight="600" color={colors.grey[100]}>
+                                        OPTIONS
+                                    </Typography>
+                                </Box>
+                                <Box gridColumn="span 1" gridRow="span 1">
+                                    <Typography color={"black"}>Rule</Typography>
+                                    <Dropdown>
+                                        <Dropdown.Toggle id="nav-dropdown" variant="secondary"  size="sm">
+                                            {this.state.ruleName ? this.state.ruleName : "Select Rule"}
+                                        </Dropdown.Toggle>
+                                        <Dropdown.Menu variant="dark">
+                                            {this.state.rules.map((rule, index) => {
+                                                return <Dropdown.Item onClick={() => this.handleSelectRule(rule.id, rule.name)}>{rule.name}</Dropdown.Item>
+                                            })}
+                                        </Dropdown.Menu>
+                                    </Dropdown>
+                                </Box>
+                                <Box gridColumn="span 3" gridRow="span 2">
+                                    <Typography color={"black"}>Date</Typography>
+                                    <SetMonth handleSearch={this.handleSearch} handleSelectYear={this.handleSelectYear} handleSelectMonth={this.handleSelectMonth} monthStr={monthIndexToString(this.state.selectedMonth)} selectedYear={this.state.selectedYear}/>
+                                </Box>
+                                <Box gridColumn="span 1" gridRow="span 1">
+                                    <Typography>Search</Typography>
+                                    <button className="myButton">SEARCH</button>
+                                </Box>
                             </Box>
-                            <SetMonth handleSearch={this.handleSearch} handleSelectYear={this.handleSelectYear} handleSelectMonth={this.handleSelectMonth} monthStr={monthIndexToString(this.state.selectedMonth)} selectedYear={this.state.selectedYear}/>
-                            <Dropdown>
-                                <Dropdown.Toggle id="nav-dropdown" variant="secondary"  size="sm">
-                                    {this.state.ruleName ? this.state.ruleName : "Select Rule"}
-                                </Dropdown.Toggle>
-                                <Dropdown.Menu variant="dark">
-                                    {this.state.rules.map((rule, index) => {
-                                        return <Dropdown.Item onClick={() => this.handleSelectRule(rule.id, rule.name)}>{rule.name}</Dropdown.Item>
-                                    })}
-                                </Dropdown.Menu>
-                            </Dropdown>
-
                         </Box>
                     <Box
                         gridColumn={width > 1000 ? 'span 6' : 'span 12'}
@@ -148,7 +164,7 @@ class Dashboard extends Component {
                         >
                             <Box>
                                 <Typography variant="h5" fontWeight="600" color={colors.grey[100]}>
-                                    Line Chart
+                                    LINE CHART
                                 </Typography>
                             </Box>
 
@@ -168,7 +184,7 @@ class Dashboard extends Component {
                         {/*TRANSACTIONS*/}
                         <Box className={"shadowed-box"} sx={{gridRowEnd: 4}} gridColumn={width > 1000 ? 'span 6' : 'span 12'} gridRow="span 2" backgroundColor={colors.primary[400]} overflow="auto">
                                 <Typography variant="h5" fontWeight="600" sx={{p: "30px 30px 0 30px"}} color={colors.grey[100]}>
-                                    Bar Chart
+                                    BAR CHART
                                 </Typography>
                                 
                                 <Box height="250px" mt="-20px">

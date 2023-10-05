@@ -21,7 +21,8 @@ export const Item = ({ title, to, icon, selected, setSelected }) => {
     <MenuItem
       active={selected === title}
       style={{
-        color: colors.grey[100],
+        color: selected === title ? "white" : colors.grey[100],
+        backgroundColor: selected === title ? "#93AE73" : ""
       }}
       onClick={() => setSelected(title)}
       icon={icon}

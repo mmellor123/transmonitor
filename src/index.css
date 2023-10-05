@@ -110,7 +110,7 @@ label{
 }
 
 .myButton {
-	background:linear-gradient(to bottom, #0c6588 5%, #0c6588 100%);
+	background:linear-gradient(to bottom, #93AE73 5%, #93AE73 100%);
 	border-radius:3px;
 	border:0px solid #0b0e07;
 	display:inline-block;
@@ -121,7 +121,7 @@ label{
 	text-decoration:none
 }
 .myButton:hover {
-	background:linear-gradient(to bottom, #094861 5%, #094861 100%);
+	background:linear-gradient(to bottom, #798f5f 5%, #798f5f 100%);
 }
 .myButton:active {
 	position:relative;
