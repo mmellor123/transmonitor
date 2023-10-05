@@ -144,7 +144,7 @@ class Dashboard extends Component {
                                 </Box>
                                 <Box gridColumn="span 1" gridRow="span 1">
                                     <Typography>Search</Typography>
-                                    <button className="myButton">SEARCH</button>
+                                    <button onClick={this.handleSearch} className="myButton">SEARCH</button>
                                 </Box>
                             </Box>
                         </Box>

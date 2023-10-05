@@ -43,7 +43,7 @@ class SetMonth extends Component{
                                         </Dropdown.Menu>
                                     </Dropdown>
                                 </Box>
-                                <button class="myButton" onClick={this.props.handleSearch}>Search</button>
+                                {/* <button class="myButton" onClick={this.props.handleSearch}>Search</button> */}
                 </Box>
             </Box>
         )
