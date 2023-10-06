@@ -1,7 +1,7 @@
 import { Box, useTheme, Typography } from "@mui/material";
 import { tokens } from "../../theme";
 import React, { Component } from "react";
-import { getDates, monthIndexToString, fetchData, BASE_URL, debounce, MAX_WIDTH} from "../../common/functions.jsx";
+import { getDates, monthIndexToString, fetchData, BASE_URL } from "../../common/functions.jsx";
 import Dropdown from 'react-bootstrap/Dropdown';
 import Transactions from "../../components/Transactions";
 import Header from "../../components/Header";
@@ -18,21 +18,17 @@ function withMyHook(Component) {
 }
 
 const RULES_URL = BASE_URL + '/get-rules'
+const MAX_WIDTH = 960;
+
 
 class Invoices extends Component {
 
-    constructor() {
-        super();
-        this.state = {
-            numberOfMonthsAgo: 0,
-            rules: [],
-            WindowSize: window.innerWidth
-        }
-        this.debounceHandleResize = this.debounceHandleResize.bind(this);
+    state = {
+        numberOfMonthsAgo: 0,
+        rules: []
     }
 
     componentDidMount() {
-        window.addEventListener("resize", this.debounceHandleResize);
         this.getRules();
     }
 
@@ -78,16 +74,6 @@ class Invoices extends Component {
         return window.innerWidth > MAX_WIDTH;
     }
 
-    handleResize = () => {
-        console.log("Resize");
-        this.setState({ WindowSize: window.innerWidth })
-    }
-
-    debounceHandleResize(WindowSize, event) {
-        console.log("Resizing debounce")
-        debounce(this.handleResize(), 1000)
-    }
-
     render() {
         const colors = this.props.colors;
         return (
@@ -100,12 +86,12 @@ class Invoices extends Component {
                     gap="20px"
                 >
                     <Box
-                        gridColumn={this.isWidescreen() ? 'span 6' : 'span 12'}
-                        gridRow={this.isWidescreen() ? 'span 1' : 'span 1'}
-                        backgroundColor={colors.primary[400]}
-                        padding="30px"
-                        className={"shadowed-box"}
-                    >
+                            gridColumn={this.isWidescreen() ? 'span 6' : 'span 12'}
+                            gridRow={this.isWidescreen() ? 'span 1' : 'span 1'}
+                            backgroundColor={colors.primary[400]}
+                            padding="30px"
+                            className={"shadowed-box"}
+                        >
                         <Box
                             display={this.isWidescreen() ? "grid" : ""}
 
@@ -138,11 +124,11 @@ class Invoices extends Component {
                             </Box>
                         </Box>
                     </Box>
-                    <Box className={"shadowed-box"} sx={{ mt: this.isWidescreen() ? "0px" : "20px" }} gridColumn={this.isWidescreen() ? 'span 12' : 'span 12'} gridRow="span 4" backgroundColor={colors.primary[400]} overflow="auto">
-                        <Box m="30px 30px 30px 30px">
-                            {this.state.startDate ? <Transactions rule={this.state.rule} startDate={this.state.startDate} endDate={this.state.endDate} isDashboard={false} numberOfMonthsAgo={this.state.numberOfMonthsAgo} /> : null}
-                        </Box>
+                    <Box  className={"shadowed-box"} sx={{mt: this.isWidescreen()? "0px" : "20px"}} gridColumn={this.isWidescreen() ? 'span 12' : 'span 12'} gridRow="span 4" backgroundColor={colors.primary[400]} overflow="auto">
+                    <Box  m="30px 30px 30px 30px">
+                    {this.state.startDate ? <Transactions rule={this.state.rule} startDate={this.state.startDate} endDate={this.state.endDate} isDashboard={false} numberOfMonthsAgo={this.state.numberOfMonthsAgo} /> : null}
                     </Box>
+                </Box>
                 </Box>
             </Box>
         )
