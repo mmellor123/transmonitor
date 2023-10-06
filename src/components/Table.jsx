@@ -72,7 +72,7 @@ class Table extends Component {
                         columns = this.addRuleEditIcons(columns);
                     }
                     else{
-                        columns.push({field: key1, headerName: key1});
+                        columns.push({field: key1, headerName: key1, minWidth: 150});
                     }
                 });
             }
@@ -91,9 +91,11 @@ class Table extends Component {
                     m="10px 0 0 0"
                     height="75vh"
                     sx={{
+                        "border": 1,
                         "& .MuiDataGrid-root": {
-                            border: "none",
-                            color: "#000"
+                            color: "#000",
+                            borderWidth: 0,
+                            borderColor: "#93AE73"
                         },
                         "& .MuiDataGrid-cell": {
                             borderBottom: "none"
@@ -102,15 +104,20 @@ class Table extends Component {
                             color: colors.greenAccent[300]
                         },
                         "& .MuiDataGrid-columnHeaders": {
-                            backgroundColor: colors.blueAccent[700],
-                            borderBottom: "none"
+                            backgroundColor: "#93AE73",
+                            fontWeight: "bold"
                         },
-                        "& .MuiDataGrid-virtualScroller": {
-                            backgroundColor: colors.primary[400]
+                        "& .MuiDataGrid-columnHeaderTitle": {
+                            fontWeight: "400",
+                            fontSize: "15px",
+                            color: "white"
+                        },
+                        "& .MuiDataGrid-cellContent": {
+                            fontSize: "15px"
                         },
                         "& .MuiDataGrid-footerContainer": {
                             borderTop: "none",
-                            backgroundColor: colors.blueAccent[700]
+                            backgroundColor: "#93AE73"
                         },
                         "& .MuiCheckbox-root": {
                             color: `${colors.greenAccent[200]} !important`
