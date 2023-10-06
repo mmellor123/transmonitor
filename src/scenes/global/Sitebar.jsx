@@ -23,7 +23,7 @@ const SidebarMine = () => {
     const { collapseSidebar, collapsed } = useProSidebar();
     const [selected, setSelected] = useState("Dashboard");
     const auth = useAuth();
-
+    const sidebarHeight = window.outerHeight;
     return (
         <Box
             sx={{
@@ -43,7 +43,7 @@ const SidebarMine = () => {
                     color: "#6870fa !important"
                 },
             }}
-            display='flex' height='100%'
+            display='flex'
             boxShadow="0px 4px 19px 0px #aaaaaa"
         >
             {auth.user && (
