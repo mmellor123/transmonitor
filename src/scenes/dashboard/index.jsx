@@ -223,7 +223,7 @@ class Dashboard extends Component {
                         {/* ROW 3 */}
                         <Box  className={"shadowed-box"} sx={{mt: this.isWidescreen()? "0px" : "30px"}} gridColumn={this.isWidescreen() ? 'span 12' : 'span 12'} gridRow="span 2" backgroundColor={colors.primary[400]} overflow="auto">
                             <Box  m="30px 30px 30px 30px">
-                            {this.state.startDate ? <Transactions rule={this.state.rule} ruleName={this.state.ruleName} isDashboard={true} startDate={startDate} endDate={endDate} numberOfMonthsAgo={this.state.numberOfMonthsAgo}/> : null}
+                                {this.state.startDate ? <Transactions rule={this.state.rule} ruleName={this.state.ruleName} isDashboard={true} startDate={startDate} endDate={endDate} numberOfMonthsAgo={this.state.numberOfMonthsAgo}/> : null}
                             </Box>
                         </Box>
                         
