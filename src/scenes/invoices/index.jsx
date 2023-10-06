@@ -21,7 +21,7 @@ const RULES_URL = BASE_URL + '/get-rules'
 
 class Invoices extends Component {
 
-    constructor(){
+    constructor() {
         super();
         this.state = {
             numberOfMonthsAgo: 0,
@@ -80,12 +80,10 @@ class Invoices extends Component {
     }
 
     handleResize = () => {
-        console.log("Resize"); 
-        this.setState({WindowSize: window.innerWidth})
+        this.setState({ WindowSize: window.innerWidth })
     }
 
-    debounceHandleResize(WindowSize, event){
-        console.log("Resizing debounce")
+    debounceHandleResize(WindowSize, event) {
         debounce(this.handleResize(), 1000)
     }
 
@@ -101,12 +99,12 @@ class Invoices extends Component {
                     gap="20px"
                 >
                     <Box
-                            gridColumn={this.isWidescreen() ? 'span 6' : 'span 12'}
-                            gridRow={this.isWidescreen() ? 'span 1' : 'span 1'}
-                            backgroundColor={colors.primary[400]}
-                            padding="30px"
-                            className={"shadowed-box"}
-                        >
+                        gridColumn={this.isWidescreen() ? 'span 6' : 'span 12'}
+                        gridRow={this.isWidescreen() ? 'span 1' : 'span 1'}
+                        backgroundColor={colors.primary[400]}
+                        padding="30px"
+                        className={"shadowed-box"}
+                    >
                         <Box
                             display={this.isWidescreen() ? "grid" : ""}
 
@@ -139,18 +137,15 @@ class Invoices extends Component {
                             </Box>
                         </Box>
                     </Box>
-                    <Box  className={"shadowed-box"} sx={{mt: this.isWidescreen()? "0px" : "20px"}} gridColumn={this.isWidescreen() ? 'span 12' : 'span 12'} gridRow="span 4" backgroundColor={colors.primary[400]} overflow="auto">
-                    <Box  m="30px 30px 30px 30px">
-                    {this.state.startDate ? <Transactions rule={this.state.rule} startDate={this.state.startDate} endDate={this.state.endDate} isDashboard={false} numberOfMonthsAgo={this.state.numberOfMonthsAgo} /> : null}
+                    <Box className={"shadowed-box"} sx={{ mt: this.isWidescreen() ? "0px" : "20px" }} gridColumn={this.isWidescreen() ? 'span 12' : 'span 12'} gridRow="span 4" backgroundColor={colors.primary[400]} overflow="auto">
+                        <Box m="30px 30px 30px 30px">
+                            {this.state.startDate ? <Transactions rule={this.state.rule} startDate={this.state.startDate} endDate={this.state.endDate} isDashboard={false} numberOfMonthsAgo={this.state.numberOfMonthsAgo} /> : null}
+                        </Box>
                     </Box>
-                </Box>
                 </Box>
             </Box>
         )
     }
-
-
-
 
 }
 
