@@ -39,8 +39,6 @@ class Transactions extends Component {
 
     componentDidUpdate(previousProps){
         if(previousProps.rule !== this.props.rule || previousProps.ruleName !== this.props.ruleName || previousProps.startDate !== this.props.startDate || previousProps.endDate !== this.props.endDate){
-            console.log("Did update")
-            // this.getRuleData(this.state.selectedRuleId, this.state.selectedRule);
             this.getRuleData(this.props.rule, this.props.ruleName)
             this.getRules();
         }
@@ -50,7 +48,6 @@ class Transactions extends Component {
         const startDate = this.props.startDate;
         const endDate = this.props.endDate;
         this.setState({isLoading: true})
-        console.log("URL: ", TRANS_URL +"?rule_id="+rule+ "&start="+startDate+"T00:00:00&end="+endDate+"T00:00:00")
         fetchData(TRANS_URL +"?rule_id="+rule+ "&start="+startDate+"T00:00:00&end="+endDate+"T00:00:00").then((results) => {
             this.setState({datas: results, selectedRule: ruleName, selectedRuleId: rule, isLoading: false})
         });
