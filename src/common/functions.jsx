@@ -8,6 +8,7 @@ import {tokens} from "../theme";
 
 export const BASE_URL = "https://s2.transactionmonitor.co.uk";
 export const TOKEN = "mytoken";
+export const MAX_WIDTH = 960;
 
 export function useWindowDimensions() {
   // the 3rd parameter is optional and only needed for server side rendering

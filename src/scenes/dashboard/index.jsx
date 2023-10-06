@@ -8,15 +8,13 @@ import LoadingCircle from "../../components/LoadingCircle"
 
 import Transactions from "../../components/Transactions";
 import React, {Component} from "react";
-import {fetchData,  getDates, monthIndexToString, BASE_URL, debounce} from "../../common/functions.jsx";
+import {fetchData,  getDates, monthIndexToString, BASE_URL, debounce, MAX_WIDTH} from "../../common/functions.jsx";
 import Dropdown from 'react-bootstrap/Dropdown';
 
 import SetMonth from "../../components/SetMonth";
 
 const TRANS_URL = BASE_URL + '/get-rule-data'
 const RULES_URL = BASE_URL + '/get-rules'
-const MAX_WIDTH = 960;
-
 
 
 function withMyHook(Component){
@@ -154,7 +152,7 @@ class Dashboard extends Component {
                                     </Typography>
                                 </Box>
                                 <Box gridColumn="span 1" gridRow="span 1" paddingBottom={"20px"}>
-                                    <Typography fontWeight={"strong"} color={"black"}>Rule</Typography>
+                                    <Typography fontWeight="strong" color={"black"}>Rule</Typography>
                                     <Dropdown>
                                         <Dropdown.Toggle id="nav-dropdown" variant="secondary"  size="sm">
                                             {this.state.ruleName ? this.state.ruleName : "Select Rule"}
@@ -210,7 +208,7 @@ class Dashboard extends Component {
                         </Box>
 
                         {/*TRANSACTIONS*/}
-                        <Box className={"shadowed-box"} sx={{gridRowEnd: 4, mt: this.isWidescreen()? "0px" : "30px"}} gridColumn={this.isWidescreen() ? 'span 6' : 'span 12'} gridRow="span 2" backgroundColor={colors.primary[400]} overflow="auto">
+                        <Box className={"shadowed-box"} sx={{gridRowEnd: 4, mt: this.isWidescreen()? "0px" : "20px"}} gridColumn={this.isWidescreen() ? 'span 6' : 'span 12'} gridRow="span 2" backgroundColor={colors.primary[400]} overflow="auto">
                                 <Typography variant="h5" fontWeight="600" sx={{p: "30px 30px 0 30px"}} color={colors.grey[100]}>
                                     BAR CHART
                                 </Typography>
@@ -221,7 +219,7 @@ class Dashboard extends Component {
                         </Box>
 
                         {/* ROW 3 */}
-                        <Box  className={"shadowed-box"} sx={{mt: this.isWidescreen()? "0px" : "30px"}} gridColumn={this.isWidescreen() ? 'span 12' : 'span 12'} gridRow="span 2" backgroundColor={colors.primary[400]} overflow="auto">
+                        <Box  className={"shadowed-box"} sx={{mt: this.isWidescreen()? "0px" : "20px"}} gridColumn={this.isWidescreen() ? 'span 12' : 'span 12'} gridRow="span 2" backgroundColor={colors.primary[400]} overflow="auto">
                             <Box  m="30px 30px 30px 30px">
                                 {this.state.startDate ? <Transactions rule={this.state.rule} ruleName={this.state.ruleName} isDashboard={true} startDate={startDate} endDate={endDate} numberOfMonthsAgo={this.state.numberOfMonthsAgo}/> : null}
                             </Box>
