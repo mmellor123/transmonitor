@@ -1,7 +1,7 @@
 import { Box, useTheme, Typography } from "@mui/material";
 import { tokens } from "../../theme";
 import React, { Component } from "react";
-import { getDates, monthIndexToString, fetchData, BASE_URL } from "../../common/functions.jsx";
+import { getDates, monthIndexToString, fetchData, BASE_URL, debounce, MAX_WIDTH } from "../../common/functions.jsx";
 import Dropdown from 'react-bootstrap/Dropdown';
 import Transactions from "../../components/Transactions";
 import Header from "../../components/Header";
@@ -18,17 +18,22 @@ function withMyHook(Component) {
 }
 
 const RULES_URL = BASE_URL + '/get-rules'
-const MAX_WIDTH = 960;
-
 
 class Invoices extends Component {
 
-    state = {
-        numberOfMonthsAgo: 0,
-        rules: []
+    constructor(){
+        super();
+        this.state = {
+            numberOfMonthsAgo: 0,
+            rules: [],
+            WindowSize: window.innerWidth
+        }
+        this.debounceHandleResize = this.debounceHandleResize.bind(this);
     }
 
+
     componentDidMount() {
+        window.addEventListener("resize", this.debounceHandleResize);
         this.getRules();
     }
 
@@ -72,6 +77,16 @@ class Invoices extends Component {
 
     isWidescreen() {
         return window.innerWidth > MAX_WIDTH;
+    }
+
+    handleResize = () => {
+        console.log("Resize"); 
+        this.setState({WindowSize: window.innerWidth})
+    }
+
+    debounceHandleResize(WindowSize, event){
+        console.log("Resizing debounce")
+        debounce(this.handleResize(), 1000)
     }
 
     render() {
