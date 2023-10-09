@@ -5,6 +5,8 @@ import { useAuth } from './auth';
 import { useNavigate } from 'react-router-dom';
 import { ReactComponent as Logo } from "../scenes/global/flower.svg";
 import {BASE_URL} from "../common/functions"
+import {Box} from '@mui/material';
+
 
 const USER_REGEX = /^[a-zA-Z0-9_]{5,}[a-zA-Z]+[0-9]*$/;
 const PWD_REGEX = /^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{6,16}$/;
@@ -88,24 +90,28 @@ export const Login = () => {
                 </section>
             ) : (
         
-        <div  style={{position: "fixed", top: "50%", left: "50%", marginTop: "-185px", marginLeft: "-200px", }}>
+        <div style={{boxShadow: "2px 5px 20px 0px #999999", backgroundColor: "#E4E4E4", position: "fixed", top: "50%", left: "50%", marginTop: "-185px", marginLeft: "-200px", }}>
             <section>
                 <p ref={errRef} className={errMsg ? "errmsg": "offscreen"} aria-live="assertive">{errMsg}</p>
-                <div style={{display:"flex"}}>
+                <Box sx={{textAlign: "center"}}>
                     <Logo/>
-                    <h5 className="login-title">KogoPay Transaction Monitoring</h5>
+                </Box>
+                <div>
+                    <p className="login-title">KogoPay Transaction Monitoring</p>
                 </div>
-                <h2>Login</h2>
                 <form onSubmit={handleSubmit}>
-                    <label htmlFor="username">
+                    {/* <label htmlFor="username">
                         <span className={validName ? "valid": "hide"}>
                             <FontAwesomeIcon icon={faCheck}/>
                         </span>
                         <span className={validName || !user ? "hide": "invalid"}>
                             <FontAwesomeIcon icon={faTimes}/>
                         </span>
-                    </label>
-                    <input 
+                    </label> */}
+                    <input
+                        className="height-login"
+                        placeholder="Username"
+                        height="30px"
                         type="text"
                         id="username"
                         ref={userRef}
@@ -124,15 +130,17 @@ export const Login = () => {
                         Letters, numbers, underscores, hyphens allowed.
                     </p>
 
-                    <label htmlFor="password">
+                    {/* <label htmlFor="password">
                         <span className={validPwd ? "valid": "hide"}>
                             <FontAwesomeIcon icon={faCheck}/>
                         </span>
                         <span className={validPwd || !pwd ? "hide": "invalid"}>
                             <FontAwesomeIcon icon={faTimes}/>
                         </span>
-                    </label>
-                    <input 
+                    </label> */}
+                    <input
+                        className="height-login"
+                        placeholder="Password"
                         type="password"
                         id="password"
                         onChange={(e) => setPwd(e.target.value)}
@@ -149,7 +157,7 @@ export const Login = () => {
                         Allowed special characters: <span aria-label="exclamation mark">!</span><span aria-label="at symbol">@</span><span aria-label="hashtag">#</span><span aria-label="dollar sign">$</span><span aria-label="percent">%</span>
                     </p>
 
-                    <button disabled={!validName || !validPwd ? true : false}>
+                    <button className="login-button" disabled={!validName || !validPwd ? true : false}>
                         Log In
                     </button>
                 </form>
