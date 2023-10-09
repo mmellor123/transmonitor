@@ -88,73 +88,73 @@ export const Login = () => {
                 </section>
             ) : (
         
-        <section>
-            <p ref={errRef} className={errMsg ? "errmsg": "offscreen"} aria-live="assertive">{errMsg}</p>
-            <div style={{display:"flex"}}>
-                <Logo/>
-                <h5 className="login-title">KogoPay Transaction Monitoring</h5>
-            </div>
-            <h2>Login</h2>
-            <form onSubmit={handleSubmit}>
-                <label htmlFor="username">
-                    Username:
-                    <span className={validName ? "valid": "hide"}>
-                        <FontAwesomeIcon icon={faCheck}/>
-                    </span>
-                    <span className={validName || !user ? "hide": "invalid"}>
-                        <FontAwesomeIcon icon={faTimes}/>
-                    </span>
-                </label>
-                <input 
-                    type="text"
-                    id="username"
-                    ref={userRef}
-                    autoComplete="false"
-                    onChange={(e) => setUser(e.target.value)}
-                    required
-                    aria-invalid={validName ? "false": "true"}
-                    aria-describedby="uidnote"
-                    onFocus={() => setUserFocus(true)}
-                    onBlur={() => setUserFocus(false)}
-                />
-                <p id="uidnote" className={userFocus && user && !validName ? "instructions" : "offscreen"}>
-                    <FontAwesomeIcon icon={faInfoCircle}/>
-                    4 to 24 characters. <br/>
-                    Must begin with a letter. <br />
-                    Letters, numbers, underscores, hyphens allowed.
-                </p>
+        <div  style={{position: "fixed", top: "50%", left: "50%", marginTop: "-185px", marginLeft: "-200px", }}>
+            <section>
+                <p ref={errRef} className={errMsg ? "errmsg": "offscreen"} aria-live="assertive">{errMsg}</p>
+                <div style={{display:"flex"}}>
+                    <Logo/>
+                    <h5 className="login-title">KogoPay Transaction Monitoring</h5>
+                </div>
+                <h2>Login</h2>
+                <form onSubmit={handleSubmit}>
+                    <label htmlFor="username">
+                        <span className={validName ? "valid": "hide"}>
+                            <FontAwesomeIcon icon={faCheck}/>
+                        </span>
+                        <span className={validName || !user ? "hide": "invalid"}>
+                            <FontAwesomeIcon icon={faTimes}/>
+                        </span>
+                    </label>
+                    <input 
+                        type="text"
+                        id="username"
+                        ref={userRef}
+                        autoComplete="false"
+                        onChange={(e) => setUser(e.target.value)}
+                        required
+                        aria-invalid={validName ? "false": "true"}
+                        aria-describedby="uidnote"
+                        onFocus={() => setUserFocus(true)}
+                        onBlur={() => setUserFocus(false)}
+                    />
+                    <p id="uidnote" className={userFocus && user && !validName ? "instructions" : "offscreen"}>
+                        <FontAwesomeIcon icon={faInfoCircle}/>
+                        4 to 24 characters. <br/>
+                        Must begin with a letter. <br />
+                        Letters, numbers, underscores, hyphens allowed.
+                    </p>
 
-                <label htmlFor="password">
-                    Password:
-                    <span className={validPwd ? "valid": "hide"}>
-                        <FontAwesomeIcon icon={faCheck}/>
-                    </span>
-                    <span className={validPwd || !pwd ? "hide": "invalid"}>
-                        <FontAwesomeIcon icon={faTimes}/>
-                    </span>
-                </label>
-                <input 
-                    type="password"
-                    id="password"
-                    onChange={(e) => setPwd(e.target.value)}
-                    required
-                    aria-invalid={validPwd ? "false": "true"}
-                    aria-describedby="pwdnote"
-                    onFocus={() => setPwdFocus(true)}
-                    onBlur={() => setPwdFocus(false)}
-                />
-                <p id="pwdnote" className={pwdFocus && !validPwd? "instructions" : "offscreen"}>
-                    <FontAwesomeIcon icon={faInfoCircle}/>
-                    8 to 24 characters. <br/>
-                    Must include uppercase and lowercase letters, a number and a special character. <br />
-                    Allowed special characters: <span aria-label="exclamation mark">!</span><span aria-label="at symbol">@</span><span aria-label="hashtag">#</span><span aria-label="dollar sign">$</span><span aria-label="percent">%</span>
-                </p>
+                    <label htmlFor="password">
+                        <span className={validPwd ? "valid": "hide"}>
+                            <FontAwesomeIcon icon={faCheck}/>
+                        </span>
+                        <span className={validPwd || !pwd ? "hide": "invalid"}>
+                            <FontAwesomeIcon icon={faTimes}/>
+                        </span>
+                    </label>
+                    <input 
+                        type="password"
+                        id="password"
+                        onChange={(e) => setPwd(e.target.value)}
+                        required
+                        aria-invalid={validPwd ? "false": "true"}
+                        aria-describedby="pwdnote"
+                        onFocus={() => setPwdFocus(true)}
+                        onBlur={() => setPwdFocus(false)}
+                    />
+                    <p id="pwdnote" className={pwdFocus && !validPwd? "instructions" : "offscreen"}>
+                        <FontAwesomeIcon icon={faInfoCircle}/>
+                        8 to 24 characters. <br/>
+                        Must include uppercase and lowercase letters, a number and a special character. <br />
+                        Allowed special characters: <span aria-label="exclamation mark">!</span><span aria-label="at symbol">@</span><span aria-label="hashtag">#</span><span aria-label="dollar sign">$</span><span aria-label="percent">%</span>
+                    </p>
 
-                <button disabled={!validName || !validPwd ? true : false}>
-                    Sign In
-                </button>
-            </form>
-        </section>
+                    <button disabled={!validName || !validPwd ? true : false}>
+                        Log In
+                    </button>
+                </form>
+            </section>
+        </div>
         )}
          </>
     )
