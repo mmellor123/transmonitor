@@ -6,6 +6,7 @@ import {Link} from "react-router-dom";
 import EditIcon from '@mui/icons-material/Edit';
 import ClearIcon from '@mui/icons-material/Clear';
 import CustomConfirmPopup from './CustomConfirmPopup'; // Assuming the file path for CustomConfirmPopup
+import { NoEncryption } from "@mui/icons-material";
 
 
 
@@ -94,11 +95,15 @@ class Table extends Component {
                         "border": 1,
                         "& .MuiDataGrid-root": {
                             color: "#000",
+                            border: 'none',
                             borderWidth: 0,
                             borderColor: "#93AE73"
                         },
+                        '.MuiDataGrid-columnSeparator': {
+                            display: 'none',
+                          },
                         "& .MuiDataGrid-cell": {
-                            borderBottom: "none"
+                            borderBottomColor: "#d4d4d4"
                         },
                         "& .name-column--cell": {
                             color: colors.greenAccent[300]
