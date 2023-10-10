@@ -32,6 +32,7 @@ section {
   color: #565656;
   font-size: 19px;
   font-weight: bold;
+  text-align: center;
 }
 
 .height-login {
@@ -41,13 +42,25 @@ section {
   box-shadow: 2px;
 }
 
+.login-div {
+  box-shadow: 2px 5px 20px 0px #999999;
+  background-color: #E4E4E4;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  margin-top: -200px;
+  margin-left: -150px;
+  width: 300px;
+  height: 400px;
+  
+}
+
 .login-button {
   background: #0C6588;
   color: #FFFFFF;
   font-weight: bold;
-  font-size: 11px;
-  border-radius: 2px;
-  margin-top: 60px;
+  font-size: 15px !important;
+  border-radius: 5px;
 }
 
 .login-button:hover {

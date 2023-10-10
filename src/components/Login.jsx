@@ -79,6 +79,9 @@ export const Login = () => {
           )
     }
 
+    const height = window.innerHeight;
+    const width = window.innerWidth;
+
     return (
         <>
             {success ? (
@@ -90,7 +93,7 @@ export const Login = () => {
                 </section>
             ) : (
         
-        <div style={{boxShadow: "2px 5px 20px 0px #999999", backgroundColor: "#E4E4E4", position: "fixed", top: "50%", left: "50%", marginTop: "-185px", marginLeft: "-200px", }}>
+        <div className="login-div">
             <section>
                 <p ref={errRef} className={errMsg ? "errmsg": "offscreen"} aria-live="assertive">{errMsg}</p>
                 <Box sx={{textAlign: "center"}}>
@@ -150,12 +153,12 @@ export const Login = () => {
                         onFocus={() => setPwdFocus(true)}
                         onBlur={() => setPwdFocus(false)}
                     />
-                    <p id="pwdnote" className={pwdFocus && !validPwd? "instructions" : "offscreen"}>
+                    {/* <p id="pwdnote" className={pwdFocus && !validPwd? "instructions" : "offscreen"}>
                         <FontAwesomeIcon icon={faInfoCircle}/>
                         8 to 24 characters. <br/>
                         Must include uppercase and lowercase letters, a number and a special character. <br />
                         Allowed special characters: <span aria-label="exclamation mark">!</span><span aria-label="at symbol">@</span><span aria-label="hashtag">#</span><span aria-label="dollar sign">$</span><span aria-label="percent">%</span>
-                    </p>
+                    </p> */}
 
                     <button className="login-button" disabled={!validName || !validPwd ? true : false}>
                         Log In
