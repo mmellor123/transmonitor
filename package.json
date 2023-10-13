@@ -17,11 +17,11 @@
     "@mui/icons-material": "^5.11.9",
     "@mui/material": "^5.11.9",
     "@mui/x-data-grid": "^5.17.23",
-    "@nivo/bar": "^0.80.0",
+    "@nivo/bar": "^0.63.0",
     "@nivo/core": "*",
-    "@nivo/geo": "^0.80.0",
-    "@nivo/line": "^0.80.0",
-    "@nivo/pie": "^0.80.0",
+    "@nivo/geo": "^0.63.0",
+    "@nivo/line": "^0.83.0",
+    "@nivo/pie": "^0.63.0",
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
@@ -46,7 +46,7 @@
   "eslintConfig": {
     "extends": [
       "react-app"
-      ]
+    ]
   },
   "browserslist": {
     "production": [
