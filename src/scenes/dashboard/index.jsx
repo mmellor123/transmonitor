@@ -15,6 +15,7 @@ import SetMonth from "../../components/SetMonth";
 
 const TRANS_URL = BASE_URL + '/get-rule-data'
 const RULES_URL = BASE_URL + '/get-rules'
+const ENV_URL = BASE_URL + '/get-environment'
 
 
 function withMyHook(Component){
@@ -46,7 +47,8 @@ class Dashboard extends Component {
             datas: {'bar': [], 'line': []},
             rules: [],
             isLoading: false,
-            WindowSize: window.innerWidth
+            WindowSize: window.innerWidth,
+            environment: ""
         }
         this.debounceHandleResize = this.debounceHandleResize.bind(this);
     }
@@ -54,6 +56,7 @@ class Dashboard extends Component {
     componentDidMount(){
         window.addEventListener("resize", this.debounceHandleResize);
         this.getRules();
+        this.getEnvironment();
     }
 
     
@@ -79,6 +82,13 @@ class Dashboard extends Component {
         this.setState({selectedYear: year});
     }
 
+    getEnvironment = () => {
+        fetchData(ENV_URL).then((result) => {
+            console.log("Env Results: ", result)
+            this.setState({environment: result['environment']})
+        })
+    }
+
     handleSearch = () => {
         let [sDate, eDate] = getDates(this.state.selectedYear, this.state.selectedMonth);
         this.setState({isLoading: true})
@@ -96,7 +106,6 @@ class Dashboard extends Component {
         let [startDate, endDate] = getDates(d.getFullYear(), d.getMonth());
         this.setState({startDate: startDate, endDate: endDate, selectedMonth: d.getMonth(), selectedYear: d.getFullYear()});
         fetchData(RULES_URL).then((results) => {
-                // this.setState({rules: results, ruleName: results[0]["name"], rule: results[0]["id"]})
             this.getRuleData(startDate, endDate, results);
         });
     }
@@ -124,7 +133,7 @@ class Dashboard extends Component {
             <Box m="20px">
                 {this.state.isLoading && <LoadingCircle/>}
                 <Box display="flex" justifyContent="space-between" alignItems="center">
-                    <Header title="DASHBOARD" subtitle="Welcome to your dashboard"/>
+                    <Header title={"DASHBOARD (" + this.state.environment+")"} subtitle="Welcome to your dashboard"/>
                     <Typography color={colors.grey[100]} variant="h3" fontWeight="bold">{monthIndexToString(this.state.selectedMonth)} {this.state.selectedYear}</Typography>
                 </Box>
                 {/* GRID AND CHARTS */}
