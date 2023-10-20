@@ -90,6 +90,7 @@ class Dashboard extends Component {
     }
 
     handleSearch = () => {
+        console.log("Handle Search")
         let [sDate, eDate] = getDates(this.state.selectedYear, this.state.selectedMonth);
         this.setState({isLoading: true})
         fetchData(this.state.url + "start="+sDate+"T00:00:00&end="+eDate+"T00:00:00&rule="+this.state.rule).then((results) => {
@@ -131,7 +132,7 @@ class Dashboard extends Component {
         const endDate = this.state.endDate;
         return (
             <Box m="20px">
-                {this.state.isLoading && <LoadingCircle/>}
+                {/* {this.state.isLoading && <LoadingCircle/>} */}
                 <Box display="flex" justifyContent="space-between" alignItems="center">
                     <Header title={"DASHBOARD (" + this.state.environment+")"} subtitle="Welcome to your dashboard"/>
                     <Typography color={colors.grey[100]} variant="h3" fontWeight="bold">{monthIndexToString(this.state.selectedMonth)} {this.state.selectedYear}</Typography>
@@ -155,6 +156,7 @@ class Dashboard extends Component {
                                 display={this.isWidescreen() ? "grid" : ""}
                                 
                             >
+                                {/* {this.state.isLoading && <LoadingCircle/>} */}
                                 <Box sx={{pb: "20px"}} gridColumn="span 5">
                                     <Typography variant="h5" fontWeight="600" color={colors.grey[100]}>
                                         OPTIONS
@@ -179,7 +181,7 @@ class Dashboard extends Component {
                                 </Box>
                                 <Box gridColumn="span 1" gridRow="span 1">
                                     <Typography>Search</Typography>
-                                    <button onClick={this.handleSearch} className="myButton">SEARCH</button>
+                                    <button disabled={this.state.isLoading} onClick={this.handleSearch} className="myButton">SEARCH</button>
                                 </Box>
                             </Box>
                         </Box>
@@ -190,6 +192,8 @@ class Dashboard extends Component {
                         backgroundColor={colors.primary[400]}
                         className={"shadowed-box"}
                     >
+                        {this.state.isLoading ? <LoadingCircle/> : 
+                        <div>
                         <Box
                             mt="25px"
                             p="0 30px"
@@ -214,10 +218,14 @@ class Dashboard extends Component {
                         <Box height="250px" mt="-20px">
                             <LineChart isDashboard={true} numberOfMonthsAgo={this.state.numberOfMonthsAgo} data={this.state.datas['line']}/>
                         </Box>
+                        </div>
+                        }
                         </Box>
 
                         {/*TRANSACTIONS*/}
                         <Box className={"shadowed-box"} sx={{gridRowEnd: 4, mt: this.isWidescreen()? "0px" : "20px"}} gridColumn={this.isWidescreen() ? 'span 6' : 'span 12'} gridRow="span 2" backgroundColor={colors.primary[400]} overflow="auto">
+                                {this.state.isLoading ? <LoadingCircle/> : 
+                                <div>
                                 <Typography variant="h5" fontWeight="600" sx={{p: "30px 30px 0 30px"}} color={colors.grey[100]}>
                                     BAR CHART
                                 </Typography>
@@ -225,13 +233,19 @@ class Dashboard extends Component {
                                 <Box height="250px" mt="-20px">
                                     <BarChart isDashboard={true} numberOfMonthsAgo={this.state.numberOfMonthsAgo} data={this.state.datas['bar']}/>
                                 </Box>
+                                </div>
+                                }
                         </Box>
 
                         {/* ROW 3 */}
                         <Box  className={"shadowed-box"} sx={{mt: this.isWidescreen()? "0px" : "20px"}} gridColumn={this.isWidescreen() ? 'span 12' : 'span 12'} gridRow="span 2" backgroundColor={colors.primary[400]} overflow="auto">
-                            <Box  m="30px 30px 30px 30px">
-                                {this.state.startDate ? <Transactions rule={this.state.rule} ruleName={this.state.ruleName} isDashboard={true} startDate={startDate} endDate={endDate} numberOfMonthsAgo={this.state.numberOfMonthsAgo}/> : null}
-                            </Box>
+                            {this.state.isLoading ? <LoadingCircle/> : 
+                                <div>
+                                <Box  m="30px 30px 30px 30px">
+                                    {this.state.startDate ? <Transactions rule={this.state.rule} ruleName={this.state.ruleName} isDashboard={true} startDate={startDate} endDate={endDate} numberOfMonthsAgo={this.state.numberOfMonthsAgo}/> : null}
+                                </Box>
+                                </div>
+                            }
                         </Box>
                         
                         
