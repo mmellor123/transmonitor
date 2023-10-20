@@ -1,8 +1,8 @@
 import { useSyncExternalStore } from 'react';
 import { Typography, useTheme } from '@mui/material';
-import {Link} from "react-router-dom";
-import {MenuItem} from "react-pro-sidebar";
-import {tokens} from "../theme";
+import { Link } from "react-router-dom";
+import { MenuItem } from "react-pro-sidebar";
+import { tokens } from "../theme";
 
 
 
@@ -26,6 +26,10 @@ export function debounce(fn, ms) {
   };
 }
 
+export function isWidescreen() {
+  return window.innerWidth > MAX_WIDTH;
+}
+
 export const Item = ({ title, to, icon, selected, setSelected }) => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
@@ -38,7 +42,7 @@ export const Item = ({ title, to, icon, selected, setSelected }) => {
       }}
       onClick={() => setSelected(title)}
       icon={icon}
-      component={<Link to={to}/>}
+      component={<Link to={to} />}
     >
       <Typography>{title}</Typography>
     </MenuItem>
@@ -56,28 +60,28 @@ function getSnapshot() {
 
 function getServerSnapshot() {
   return {
-      width: 0,
-      height: 0,
+    width: 0,
+    height: 0,
   };
 }
 
 export function getStartAndEndDates(numberMonthsAgo) {
-        let startDate = new Date();
-        let endDate = new Date();
+  let startDate = new Date();
+  let endDate = new Date();
 
-        startDate.setMonth(startDate.getMonth() - ((numberMonthsAgo) + 1));
-        endDate.setMonth(endDate.getMonth() - (numberMonthsAgo));
-        return [startDate.toISOString().split('T')[0], endDate.toISOString().split('T')[0]];
-    }
+  startDate.setMonth(startDate.getMonth() - ((numberMonthsAgo) + 1));
+  endDate.setMonth(endDate.getMonth() - (numberMonthsAgo));
+  return [startDate.toISOString().split('T')[0], endDate.toISOString().split('T')[0]];
+}
 
-export function jsonToCSV(dict){
+export function jsonToCSV(dict) {
   let fields = ''
-  if(dict.length > 0){
-    fields = Object.keys(dict[0]).join(',')+'\n';
+  if (dict.length > 0) {
+    fields = Object.keys(dict[0]).join(',') + '\n';
   }
-  
-  const rows = Object.keys(dict).map(function(k){
-    const p = Object.keys(dict[k]).map(function(j){
+
+  const rows = Object.keys(dict).map(function (k) {
+    const p = Object.keys(dict[k]).map(function (j) {
       return dict[k][j];
     }).join(',');
     return p;
@@ -85,18 +89,19 @@ export function jsonToCSV(dict){
   return fields + rows;
 }
 
-export function sendEmail(email, csv, filename){
-    fetch(BASE_URL + "/send-email", 
-      {method: "POST", headers: {'token':'mytoken', 'content-type':'application/json'}, 
-      body: JSON.stringify({email: email, csv_file: csv, filename: filename})
+export function sendEmail(email, csv, filename) {
+  fetch(BASE_URL + "/send-email",
+    {
+      method: "POST", headers: { 'token': 'mytoken', 'content-type': 'application/json' },
+      body: JSON.stringify({ email: email, csv_file: csv, filename: filename })
     })
-            .then(res => {
-              window.alert("Email sent to ", email)
-            });
+    .then(res => {
+      window.alert("Email sent to ", email)
+    });
 }
 
-export function monthIndexToString(month){
-  const months = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
+export function monthIndexToString(month) {
+  const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
   return months[month - 1];
 }
 
@@ -109,46 +114,46 @@ export function getDates(year, month) {
   startDate.setDate(1);
   endDate.setDate(1);
 
-  startDate.setMonth(month-1);
+  startDate.setMonth(month - 1);
   endDate.setMonth(month);
   return [startDate.toISOString().split('T')[0], endDate.toISOString().split('T')[0]];
 }
 
 
-export async function fetchData(url){
-    const response = await fetch(url, {headers: {'token':TOKEN}})
-          .then(
-            res => res.json()
-            )
-          .then(
-            (results) => {
-                    return results;
-            },
-            (error) => {
-              console.log("Error: ", error);
-            }
-          )
-    return response;
-}
-
-export async function fetchData2(url, payload){
-  console.log("payload: ", payload)
-  const response = await fetch(url, {method:"POST", body: JSON.stringify(payload), headers: {'token':TOKEN}})
-        .then(
-          res => res.json()
-          )
-        .then(
-          (results) => {
-                  return results;
-          },
-          (error) => {
-            console.log("Error: ", error);
-          }
-        )
+export async function fetchData(url) {
+  const response = await fetch(url, { headers: { 'token': TOKEN } })
+    .then(
+      res => res.json()
+    )
+    .then(
+      (results) => {
+        return results;
+      },
+      (error) => {
+        console.log("Error: ", error);
+      }
+    )
   return response;
 }
 
-export async function deleteRule(url, payload){
+export async function fetchData2(url, payload) {
+  console.log("payload: ", payload)
+  const response = await fetch(url, { method: "POST", body: JSON.stringify(payload), headers: { 'token': TOKEN } })
+    .then(
+      res => res.json()
+    )
+    .then(
+      (results) => {
+        return results;
+      },
+      (error) => {
+        console.log("Error: ", error);
+      }
+    )
+  return response;
+}
+
+export async function deleteRule(url, payload) {
   await fetch(url, {
     method: "DELETE",
     body: JSON.stringify(payload),
@@ -159,17 +164,17 @@ export async function deleteRule(url, payload){
   }).then(
     res => res.json()
   )
-  .then(
-    (results) => {
-      window.alert("Rule Deleted Successfully!")
-    },
-    (error) => {
-      window.alert("An error occured. Please try again")
-    }
-  );
+    .then(
+      (results) => {
+        window.alert("Rule Deleted Successfully!")
+      },
+      (error) => {
+        window.alert("An error occured. Please try again")
+      }
+    );
 }
 
-export async function postData(url, payload, method){
+export async function postData(url, payload, method) {
   console.log("Url: ", url)
   console.log("Data: ", payload)
   const response = await fetch(url, {
@@ -182,16 +187,16 @@ export async function postData(url, payload, method){
   }).then(
     res => res.json()
   )
-  .then(
-    (results) => {
-      console.log(results);
-      console.log("Rule Created Successfully!")
-      return results;
-    },
-    (error) => {
-      window.alert("An error occured. Please try again")
-      console.log(error)
-    }
-  );
+    .then(
+      (results) => {
+        console.log(results);
+        console.log("Rule Created Successfully!")
+        return results;
+      },
+      (error) => {
+        window.alert("An error occured. Please try again")
+        console.log(error)
+      }
+    );
   return response;
 }
