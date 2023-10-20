@@ -71,21 +71,12 @@ class Transactions extends Component {
     render(){
         return (
             <Box >
-                {this.state.isLoading && <LoadingCircle/>}
-                <Box >
-                    {/* <Dropdown>
-                        <Dropdown.Toggle id="nav-dropdown" variant="secondary"  size="sm">
-                            {this.state.selectedRule ? this.state.selectedRule : "Select Rule"}
-                        </Dropdown.Toggle>
-                        <Dropdown.Menu variant="dark">
-                            {this.state.rules.map((rule, index) => {
-                                return <Dropdown.Item onClick={() => this.handleSelectRule(rule.id, rule.name)}>{rule.name}</Dropdown.Item>
-                            })}
-                        </Dropdown.Menu>
-                    </Dropdown> */}
-                </Box>
+                {this.state.isLoading ? <LoadingCircle/> : 
+                <div>
                 <Table data={this.state.datas} isCustomerPage={false}/>
                 <EmailButton csv={this.state.datas} csvName={this.state.selectedRule}/>
+                </div>
+            }
 g            </Box>
         )
     }
