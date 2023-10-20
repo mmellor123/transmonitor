@@ -56,6 +56,7 @@ class BarChart extends Component {
         if(isDashboard){
             data = this.props.data;
         }
+        console.log("Bar Data: ", this.state.datas);
         let {["date"]: _, ...rules} = data.length > 0 ? data[0]: []
         return(
             <Box height="100%">

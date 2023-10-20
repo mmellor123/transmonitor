@@ -1,14 +1,17 @@
-import {Box} from "@mui/material";
+import {Box, Typography, useTheme} from "@mui/material";
 import Header from "../../components/Header";
+import { tokens } from "../../theme";
 import LineChart from "../../components/LineChart";
 import React, {Component} from "react";
-import {getDates, monthIndexToString} from "../../common/functions.jsx";
+import {getDates, monthIndexToString, debounce, MAX_WIDTH} from "../../common/functions.jsx";
 import SetMonth from "../../components/SetMonth";
 
 
 function withMyHook(Component){
     return function WrappedComponent(props){
-        return <Component {...props}/>
+        const theme = useTheme();
+        const colors = tokens(theme.palette.mode);
+        return <Component {...props} colors={colors}/>
     }
 }
 
@@ -23,6 +26,18 @@ class Line extends Component {
         const d = new Date();
         let [startDate, endDate] = getDates(d.getFullYear(), d.getMonth());
         this.setState({startDate: startDate, endDate: endDate, selectedMonth: d.getMonth(), selectedYear: d.getFullYear()});
+    }
+
+    isWidescreen() {
+        return window.innerWidth > MAX_WIDTH;
+    }
+
+    handleResize = () => {
+        this.setState({ WindowSize: window.innerWidth })
+    }
+
+    debounceHandleResize(WindowSize, event) {
+        debounce(this.handleResize(), 1000)
     }
 
 
@@ -40,12 +55,45 @@ class Line extends Component {
     }
 
     render(){
+        const colors = this.props.colors;
         return (
             <Box m="20px">
-                <Header title="Line Chart" subtitle="Simple Line Chart"/>
-                <Box height="75vh">
-                    <SetMonth handleSearch={this.handleSearch} handleSelectYear={this.handleSelectYear} handleSelectMonth={this.handleSelectMonth} monthStr={monthIndexToString(this.state.selectedMonth)} selectedYear={this.state.selectedYear}/>
-                    {this.state.startDate ? <LineChart startDate={this.state.startDate} endDate={this.state.endDate} isDashboard={false} numberOfMonthsAgo={this.state.numberOfMonthsAgo}/>:null}
+                <Header title="Line Chart" subtitle="Simple Line Chart" />
+                <Box
+                    display={this.isWidescreen() ? "grid" : ""}
+                    gridTemplateColumns="repeat(12, 1fr)"
+                    gridAutoRows="140px"
+                    gap="20px"
+                >
+                    <Box
+                        gridColumn={this.isWidescreen() ? 'span 6' : 'span 12'}
+                        gridRow={this.isWidescreen() ? 'span 1' : 'span 1'}
+                        backgroundColor={colors.primary[400]}
+                        padding="30px"
+                        className={"shadowed-box"}
+                    >
+                        <Box
+                            display={this.isWidescreen() ? "grid" : ""}
+
+                        >
+                            <Box sx={{ pb: "20px" }} gridColumn="span 5">
+                                <Typography variant="h5" fontWeight="600" color={colors.grey[100]}>
+                                    OPTIONS
+                                </Typography>
+                            </Box>
+                            <Box gridColumn="span 3" gridRow="span 2" paddingBottom={"20px"}>
+                                <Typography color={"black"}>Date</Typography>
+                                <SetMonth handleSearch={this.handleSearch} handleSelectYear={this.handleSelectYear} handleSelectMonth={this.handleSelectMonth} monthStr={monthIndexToString(this.state.selectedMonth)} selectedYear={this.state.selectedYear} />
+                            </Box>
+                            <Box gridColumn="span 1" gridRow="span 1">
+                                <Typography>Search</Typography>
+                                <button onClick={this.handleSearch} className="myButton">SEARCH</button>
+                            </Box>
+                        </Box>
+                    </Box>
+                    <Box className={"shadowed-box"} sx={{ mt: this.isWidescreen() ? "0px" : "20px" }} gridColumn={this.isWidescreen() ? 'span 12' : 'span 12'} gridRow="span 4" backgroundColor={colors.primary[400]} overflow="auto">
+                        {this.state.startDate && this.state.endDate ? <LineChart startDate={this.state.startDate} endDate={this.state.endDate} isDashboard={false} numberOfMonthsAgo={this.state.numberOfMonthsAgo}/>:null}
+                    </Box>
                 </Box>
             </Box>
         )
