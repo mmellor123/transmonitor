@@ -1,8 +1,8 @@
 import React from 'react';
-import {faInfoCircle } from "@fortawesome/free-solid-svg-icons";
+import { faInfoCircle } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import InventoryApp from "./InventoryApp"
-import { fetchData, postData, BASE_URL} from '../common/functions';
+import { fetchData, postData, BASE_URL } from '../common/functions';
 
 
 
@@ -19,68 +19,65 @@ class CustomEditWhitelistPopup extends React.Component {
   }
 
 
-  componentDidMount(){
+  componentDidMount() {
     fetchData(BASE_URL + "/get-customers").then((results) => {
-      this.setState({cifList: results})
+      this.setState({ cifList: results })
     });
   }
 
-  componentDidUpdate(){
+  componentDidUpdate() {
   }
 
 
-  handleDeleteWhitelist = (customer) =>{
+  handleDeleteWhitelist = (customer) => {
   }
 
   handleAddCustomer = () => {
-    if(this.props.whitelist.includes(this.state.cif)){
+    if (this.props.whitelist.includes(this.state.cif)) {
       window.alert("CIF already added")
     }
 
-    else{
+    else {
       this.props.addCustomer(this.state.cif)
-      this.setState({cif: "", validCif: false})
+      this.setState({ cif: "", validCif: false })
     }
   }
 
   doesCustomerExist(cif) {
-    console.log("Checking if customer exists")
-    postData(BASE_URL + "/get-customers-from-cif", {"cif": [cif]}, "POST").then((results) => {
-      if(results.length === 1){
-        console.log("True")
+    postData(BASE_URL + "/get-customers-from-cif", { "cif": [cif] }, "POST").then((results) => {
+      if (results.length === 1) {
         return true;
       }
-      else{
+      else {
         return false;
       }
-  });
+    });
   }
 
-  handleChangeCif =(cif) =>{
-    if(INTEGER_REGEX.test(cif) && !this.props.whitelist.includes(cif)){
-      postData(BASE_URL + "/get-customers-from-cif", {"cif": [cif]}, "POST").then((results) => {
+  handleChangeCif = (cif) => {
+    if (INTEGER_REGEX.test(cif) && !this.props.whitelist.includes(cif)) {
+      postData(BASE_URL + "/get-customers-from-cif", { "cif": [cif] }, "POST").then((results) => {
         var result = false;
-        if(results.length === 1){
+        if (results.length === 1) {
           result = true;
         }
-        console.log(results)
-        this.setState({cif: cif, validCif: result});
+        this.setState({ cif: cif, validCif: result });
       });
     }
-    else{
-      this.setState({cif:cif, validCif: false});
+    else {
+      this.setState({ cif: cif, validCif: false });
     }
   }
 
 
 
   render() {
-    const {onCancel, messageTitle, messageSubtitle, whitelist, whitelistWithName, onDeleteWhitelist, filter, onFilter} = this.props;
+    const { onCancel, messageTitle, messageSubtitle, whitelist, whitelistWithName, onDeleteWhitelist, filter, onFilter } = this.props;
 
     return (
       <div className="custom-confirm-popup">
         {/* Popup content */}
-        <div style={{width: "700px"}} className="popup-content">
+        <div style={{ width: "700px" }} className="popup-content">
           <h2>{messageTitle}</h2>
           <p>{messageSubtitle}</p>
 
@@ -98,11 +95,11 @@ class CustomEditWhitelistPopup extends React.Component {
               </div> 
             ))}
           </div> */}
-          <InventoryApp validCif={this.state.validCif} cif={this.state.cif} onChange={this.handleChangeCif} onAdd={this.handleAddCustomer} listWithName={whitelistWithName} list={whitelist} onDelete={onDeleteWhitelist} search={filter} onFilter={onFilter} cifList={this.state.cifList}/>
+          <InventoryApp validCif={this.state.validCif} cif={this.state.cif} onChange={this.handleChangeCif} onAdd={this.handleAddCustomer} listWithName={whitelistWithName} list={whitelist} onDelete={onDeleteWhitelist} search={filter} onFilter={onFilter} cifList={this.state.cifList} />
 
           {/* Search for CIF to add */}
-          <div style={{paddingTop: "10px", paddingBottom: "20px"}}>
-             {/* <input
+          <div style={{ paddingTop: "10px", paddingBottom: "20px" }}>
+            {/* <input
               value={this.state.cif}
               onChange={(e) => this.handleChangeCif(e.target.value)}
               onBlur={() => {this.setState({cifFocus: false})}}
@@ -110,11 +107,11 @@ class CustomEditWhitelistPopup extends React.Component {
               className={this.state.validCif ? "valid-box" : "invalid-box"}
              />
              <button disabled={!this.state.validCif? true : false} className='popup-button popup-button-confirm' style={{paddingTop: "5px", paddingBottom: "5px"}} onClick={() => this.handleAddCustomer()}>Add</button> */}
-              <p id="cif-note" className={!this.state.validCif ? "instructions" : "offscreen"}>
-                <FontAwesomeIcon icon={faInfoCircle}/>
-                    CIF must be a 8 digit number.
-                    Each CIF must be unique.
-              </p>
+            <p id="cif-note" className={!this.state.validCif ? "instructions" : "offscreen"}>
+              <FontAwesomeIcon icon={faInfoCircle} />
+              CIF must be a 8 digit number.
+              Each CIF must be unique.
+            </p>
           </div>
 
           {/* Buttons */}
