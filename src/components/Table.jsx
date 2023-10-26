@@ -6,7 +6,6 @@ import {Link} from "react-router-dom";
 import EditIcon from '@mui/icons-material/Edit';
 import ClearIcon from '@mui/icons-material/Clear';
 import CustomConfirmPopup from './CustomConfirmPopup'; // Assuming the file path for CustomConfirmPopup
-import { NoEncryption } from "@mui/icons-material";
 
 
 
@@ -58,14 +57,19 @@ class Table extends Component {
     }
 
     getColumns = () => {
+        //TODO Add type to backend response
         var columns = []
         Object.entries(this.props.data).forEach(([key, value]) => {
             if(key < 1){
+                if(this.props.data[key].hasOwnProperty('Start Date') && this.props.data[key].hasOwnProperty('End Date')){
+                    var start = this.props.data[key]['Start Date'].replace(" ", 'T');
+                    var end = this.props.data[key]['End Date'].replace(" ", 'T');
+                }
                 Object.entries(this.props.data[key]).forEach(([key1, value1]) => {
-                    if(key1 === "CIF From" && !this.props.isCustomerPage){
+                    if(key1 === "Customer CIF" && !this.props.isCustomerPage){
                         columns.push({field: key1, headerName: key1, renderCell: (params) => 
-                            <Link to={"/customer?cif=" + params.row[`CIF From`] + "&start="+params.row.From + "&end="+params.row.To+"&type="+params.row.type}>
-                                {params.row[`CIF From`]}
+                            <Link to={"/customer?cif=" + params.row[`Customer CIF`] + "&start="+start + "&end="+end+"&type="+params.row.Type}>
+                                {params.row[`Customer CIF`]}
                             </Link>
                         });
                     }
