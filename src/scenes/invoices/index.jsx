@@ -1,7 +1,7 @@
 import { Box, useTheme, Typography } from "@mui/material";
 import { tokens } from "../../theme";
 import React, { Component } from "react";
-import { getDates, monthIndexToString, fetchData, BASE_URL, debounce, MAX_WIDTH } from "../../common/functions.jsx";
+import { getDates, monthIndexToString, fetchData, BASE_URL, debounce, isWidescreen} from "../../common/functions.jsx";
 import Dropdown from 'react-bootstrap/Dropdown';
 import Transactions from "../../components/Transactions";
 import Header from "../../components/Header";
@@ -75,10 +75,6 @@ class Invoices extends Component {
         });
     }
 
-    isWidescreen() {
-        return window.innerWidth > MAX_WIDTH;
-    }
-
     handleResize = () => {
         this.setState({ WindowSize: window.innerWidth })
     }
@@ -93,20 +89,20 @@ class Invoices extends Component {
             <Box m="20px">
                 <Header title="Transactions" subtitle="Transactions breaking rules" />
                 <Box
-                    display={this.isWidescreen() ? "grid" : ""}
+                    display={isWidescreen() ? "grid" : ""}
                     gridTemplateColumns="repeat(12, 1fr)"
                     gridAutoRows="140px"
                     gap="20px"
                 >
                     <Box
-                        gridColumn={this.isWidescreen() ? 'span 6' : 'span 12'}
-                        gridRow={this.isWidescreen() ? 'span 1' : 'span 1'}
+                        gridColumn={isWidescreen() ? 'span 6' : 'span 12'}
+                        gridRow={isWidescreen() ? 'span 1' : 'span 1'}
                         backgroundColor={colors.primary[400]}
                         padding="30px"
                         className={"shadowed-box"}
                     >
                         <Box
-                            display={this.isWidescreen() ? "grid" : ""}
+                            display={isWidescreen() ? "grid" : ""}
 
                         >
                             <Box sx={{ pb: "20px" }} gridColumn="span 5">
@@ -137,7 +133,7 @@ class Invoices extends Component {
                             </Box>
                         </Box>
                     </Box>
-                    <Box className={"shadowed-box"} sx={{ mt: this.isWidescreen() ? "0px" : "20px" }} gridColumn={this.isWidescreen() ? 'span 12' : 'span 12'} gridRow="span 4" backgroundColor={colors.primary[400]} overflow="auto">
+                    <Box className={"shadowed-box"} sx={{ mt: isWidescreen() ? "0px" : "20px" }} gridColumn={isWidescreen() ? 'span 12' : 'span 12'} gridRow="span 4" backgroundColor={colors.primary[400]} overflow="auto">
                         <Box m="30px 30px 30px 30px">
                             {this.state.startDate ? <Transactions rule={this.state.rule} startDate={this.state.startDate} endDate={this.state.endDate} isDashboard={false} numberOfMonthsAgo={this.state.numberOfMonthsAgo} /> : null}
                         </Box>

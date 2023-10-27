@@ -44,11 +44,7 @@ class Customer extends Component {
     render(){
         return (
             <Box m="20px">
-                <Header title="Customer Transactions" subtitle="View Customer Transactions"/>
-                {/* <Box>
-                            <input class="emailText" type="text" id="emailAddress"/>
-                            <button class="create-rule-submit" onClick={() => sendEmail(this.getEmailAddress(), jsonToCSV(this.state.datas), this.props.cif)}>Send Email</button>
-                </Box> */}
+                <Header title="Customer Transactiions" subtitle="View Customer Transactions"/>
                 <EmailButton csv={this.state.datas} csvName={this.props.cif}/>
                 <Table data={this.state.datas} isCustomerPage={true}/>
             </Box>
