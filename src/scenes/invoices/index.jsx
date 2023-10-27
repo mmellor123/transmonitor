@@ -91,7 +91,7 @@ class Invoices extends Component {
         const colors = this.props.colors;
         return (
             <Box m="20px">
-                <Header title="TRANSACTIONS" subtitle="Transactions breaking rules" />
+                <Header title="Transactions" subtitle="Transactions breaking rules" />
                 <Box
                     display={this.isWidescreen() ? "grid" : ""}
                     gridTemplateColumns="repeat(12, 1fr)"

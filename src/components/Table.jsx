@@ -101,7 +101,7 @@ class Table extends Component {
                             color: "#000",
                             border: 'none',
                             borderWidth: 0,
-                            borderColor: "#93AE73"
+                            borderColor: "#0C6588"
                         },
                         '.MuiDataGrid-columnSeparator': {
                             display: 'none',
@@ -113,7 +113,7 @@ class Table extends Component {
                             color: colors.greenAccent[300]
                         },
                         "& .MuiDataGrid-columnHeaders": {
-                            backgroundColor: "#93AE73",
+                            backgroundColor: "#0C6588",
                             fontWeight: "bold"
                         },
                         "& .MuiDataGrid-columnHeaderTitle": {
@@ -126,7 +126,7 @@ class Table extends Component {
                         },
                         "& .MuiDataGrid-footerContainer": {
                             borderTop: "none",
-                            backgroundColor: "#93AE73"
+                            backgroundColor: "#0C6588"
                         },
                         "& .MuiCheckbox-root": {
                             color: `${colors.greenAccent[200]} !important`

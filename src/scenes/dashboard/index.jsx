@@ -133,7 +133,7 @@ class Dashboard extends Component {
             <Box m="20px">
                 {/* {this.state.isLoading && <LoadingCircle/>} */}
                 <Box display="flex" justifyContent="space-between" alignItems="center">
-                    <Header title={"DASHBOARD (" + this.state.environment + ")"} subtitle="Welcome to your dashboard" />
+                    <Header title={"Dashboard (" + this.state.environment + ")"} subtitle="Welcome to your dashboard" />
                     <Typography color={colors.grey[100]} variant="h3" fontWeight="bold">{monthIndexToString(this.state.selectedMonth)} {this.state.selectedYear}</Typography>
                 </Box>
                 {/* GRID AND CHARTS */}
