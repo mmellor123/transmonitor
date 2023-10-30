@@ -81,32 +81,11 @@ class CustomEditWhitelistPopup extends React.Component {
           <h2>{messageTitle}</h2>
           <p>{messageSubtitle}</p>
 
-          {/* Field to look at whitelist so far */}
-          {/* <div className='grid-container'>
-
-            {this.props.whitelist.map((customer) => (
-              <div className='item1'>
-                <div onClick={() => {this.props.onDeleteWhitelist(customer)}} style={{cursor: "pointer", position: "absolute", right: 10}}>
-                    <RemoveIcon style={{fontSize: "large"}}/>
-                </div>
-                <div>
-                    {customer}
-                </div>
-              </div> 
-            ))}
-          </div> */}
           <InventoryApp validCif={this.state.validCif} cif={this.state.cif} onChange={this.handleChangeCif} onAdd={this.handleAddCustomer} listWithName={whitelistWithName} list={whitelist} onDelete={onDeleteWhitelist} search={filter} onFilter={onFilter} cifList={this.state.cifList} />
 
           {/* Search for CIF to add */}
           <div style={{ paddingTop: "10px", paddingBottom: "20px" }}>
-            {/* <input
-              value={this.state.cif}
-              onChange={(e) => this.handleChangeCif(e.target.value)}
-              onBlur={() => {this.setState({cifFocus: false})}}
-              onFocus={() => {this.setState({cifFocus: true})}}
-              className={this.state.validCif ? "valid-box" : "invalid-box"}
-             />
-             <button disabled={!this.state.validCif? true : false} className='popup-button popup-button-confirm' style={{paddingTop: "5px", paddingBottom: "5px"}} onClick={() => this.handleAddCustomer()}>Add</button> */}
+            
             <p id="cif-note" className={!this.state.validCif ? "instructions" : "offscreen"}>
               <FontAwesomeIcon icon={faInfoCircle} />
               CIF must be a 8 digit number.
@@ -117,7 +96,6 @@ class CustomEditWhitelistPopup extends React.Component {
           {/* Buttons */}
           <div className="buttons">
             <button className='popup-button popup-button-confirm' onClick={() => onCancel()}>Close</button>
-            {/* <button className='popup-button popup-button-cancel' onClick={() => this.props.onCancel()}>Cancel</button> */}
           </div>
         </div>
       </div>

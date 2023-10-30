@@ -28,7 +28,6 @@ class Table extends Component {
     handleConfirm = () => {
         // Triggered when the user confirms the selection
         // Implement your logic here
-        console.log('Selection confirmed!');
         this.props.handleDelete(this.state.selectedRule);
         this.setState({ showPopup: false }); // Close the popup after confirmation
       };
@@ -36,7 +35,6 @@ class Table extends Component {
       handleCancel = () => {
         // Triggered when the user cancels the selection
         // Implement your logic here
-        console.log('Selection canceled!');
         this.setState({ showPopup: false }); // Close the popup after cancellation
       };
 
