@@ -238,6 +238,17 @@ class Dashboard extends Component {
                     <Box className={"shadowed-box"} sx={{ mt: this.isWidescreen() ? "0px" : "20px" }} gridColumn={this.isWidescreen() ? 'span 12' : 'span 12'} gridRow="span 2" backgroundColor={colors.primary[400]} overflow="auto">
                         {this.state.isLoading ? <LoadingCircle /> :
                             <div>
+                                <Box
+                                    mt="25px"
+                                    p="0 30px"
+                                    display="flex"
+                                    justifyContent="space-between"
+                                    alignItems="center"
+                                >
+                                    <Typography variant="h5" fontWeight="600" color={colors.grey[100]}>
+                                        TRANSACTIONS TABLE
+                                    </Typography>
+                                </Box>
                                 <Box m="30px 30px 30px 30px">
                                     {this.state.startDate ? <Transactions rule={this.state.rule} ruleName={this.state.ruleName} isDashboard={true} startDate={startDate} endDate={endDate} numberOfMonthsAgo={this.state.numberOfMonthsAgo} /> : null}
                                 </Box>
