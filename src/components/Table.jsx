@@ -113,7 +113,7 @@ class Table extends Component {
                             color: colors.greenAccent[300]
                         },
                         "& .MuiDataGrid-columnHeaders": {
-                            backgroundColor: "#0C6588",
+                            backgroundColor: "#3E3E3E",
                             fontWeight: "bold"
                         },
                         "& .MuiDataGrid-columnHeaderTitle": {
@@ -126,7 +126,7 @@ class Table extends Component {
                         },
                         "& .MuiDataGrid-footerContainer": {
                             borderTop: "none",
-                            backgroundColor: "#0C6588"
+                            backgroundColor: "#8A8A8A"
                         },
                         "& .MuiCheckbox-root": {
                             color: `${colors.greenAccent[200]} !important`

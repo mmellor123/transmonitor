@@ -111,12 +111,10 @@ class Dashboard extends Component {
     }
 
     handleResize = () => {
-        console.log("Resize");
         this.setState({ WindowSize: window.innerWidth })
     }
 
     debounceHandleResize(WindowSize, event) {
-        console.log("Resizing debounce")
         debounce(this.handleResize(), 1000)
     }
 
