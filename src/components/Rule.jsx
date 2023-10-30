@@ -336,23 +336,9 @@ class Rule extends Component {
                     <div>
                         {/* <label>Whitelist</label> */}
                         <br/>
-                        {/* <textarea
-                            value={this.state.whitelist}
-                            onFocus={() => this.setWhitelistFocus(true)} 
-                            onBlur={() => this.setWhitelistFocus(false)} 
-                            onChange={(e) => this.setWhitelist(e.target.value)} 
-                            required aria-invalid={this.state.validWhitelist ? "false" : "true"} 
-                            id="whitelist"
-                            style={{width: "150px", backgroundColor: !this.state.validWhitelist && this.state.whitelistFocus ? ERROR_HEX : ""}}
-                        /> */}
                         <button onClick={() => this.setState({showPopupWhitelist: true})} className="create-rule-submit" style={{margin: "0px"}}>
                             Edit Whitelist
                         </button>
-                        {/* <p id="whitelist-note" className={"instructions"}>
-                            <FontAwesomeIcon icon={faInfoCircle}/>
-                            Enter each CIF number, seperated by comma.
-                            All customers will be whitelist if field left blank.
-                        </p> */}
                     </div>
                     <div style={{paddingTop: "10px"}}>
                         <button onClick={() => this.setState({ showPopup: true})} className={"popup-button "+this.getButtonClass(!this.isInvalid())} disabled={this.isInvalid() ? true : false}>
