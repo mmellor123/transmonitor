@@ -26,6 +26,7 @@ class CreateRule extends Component {
                     padding="30px"
                     className={"shadowed-box"}
                     width="50%"
+                    minWidth="300px"
                     >
                     <Rule navigate={this.props.navigate} buttonTitle="Create" endpoint="/create-rule"/>
                 </Box>

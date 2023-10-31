@@ -4,7 +4,7 @@ import {Box, useTheme} from "@mui/material";
 import Dropdown from 'react-bootstrap/Dropdown';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {faInfoCircle } from "@fortawesome/free-solid-svg-icons";
-import {postData, BASE_URL, isWidescreen} from "../common/functions.jsx";
+import {postData, BASE_URL, isWidescreen, debounce} from "../common/functions.jsx";
 import CustomConfirmPopup from './CustomConfirmPopup'; // Assuming the file path for CustomConfirmPopup
 import CustomEditWhitelistPopup from './CustomEditWhitelistPopup'; // Assuming the file path for CustomConfirmPopup
 
@@ -26,38 +26,42 @@ function withMyHook(Component) {
 }
 
 class Rule extends Component {
+
+    constructor() {
+        super();
+        this.state ={
+            periodUnit: "Day",
+            isNewCustomer: true,
+            isNumberOfTrans: false,
+            
+            maxPerPeriod: "",
+            validMaxPerPeriod: false,
+            maxPerPeriodFocus: false,
     
-    state ={
-        periodUnit: "Day",
-        isNewCustomer: true,
-        isNumberOfTrans: false,
-        
-        maxPerPeriod: "",
-        validMaxPerPeriod: false,
-        maxPerPeriodFocus: false,
-
-        ruleName: "",
-        validRuleName: false,
-        ruleNameFocus: false,
-
-        period: "",
-        validPeriod: false,
-        periodFocus: false,
-
-        whitelist: [],
-        validWhitelist: true,
-        whitelistFocus: false,
-        whitelistWithName: [],
-
-        showPopup: false,
-
-        showPopupWhitelist: false,
-
-        filter: ""
-        
+            ruleName: "",
+            validRuleName: false,
+            ruleNameFocus: false,
+    
+            period: "",
+            validPeriod: false,
+            periodFocus: false,
+    
+            whitelist: [],
+            validWhitelist: true,
+            whitelistFocus: false,
+            whitelistWithName: [],
+    
+            showPopup: false,
+    
+            showPopupWhitelist: false,
+    
+            filter: ""
+        }
+        this.debounceHandleResize = this.debounceHandleResize.bind(this);
     }
 
     componentDidMount(){
+        window.addEventListener("resize", this.debounceHandleResize);
     }
 
     //Updates fields to have data for particular rule
@@ -75,9 +79,19 @@ class Rule extends Component {
                 validMaxPerPeriod: true,
                 validRuleName: true,
                 validPeriod: true,
-                validWhitelist: true
+                validWhitelist: true,
+                WindowSize: window.innerWidth
             });
         });
+        this.debounceHandleResize = this.debounceHandleResize.bind(this);
+    }
+
+    handleResize = () => {
+        this.setState({ WindowSize: window.innerWidth })
+    }
+
+    debounceHandleResize(WindowSize, event) {
+        debounce(this.handleResize(), 1000)
     }
 
     componentDidUpdate(previousProps){

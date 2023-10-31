@@ -72,6 +72,7 @@ class EditRule extends Component {
                     padding="30px"
                     className={"shadowed-box"}
                     width="50%"
+                    minWidth="300px"
                     >
                     <Rule navigate={this.props.navigate} buttonTitle="Save Changes" endpoint="/update-rule" ruleId={this.props.searchParams.get("id")} data={this.state.data}/>
                     <Link to={"/view-rules"}>

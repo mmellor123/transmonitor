@@ -8,12 +8,11 @@ import LoadingCircle from "../../components/LoadingCircle"
 
 import Transactions from "../../components/Transactions";
 import React, { Component } from "react";
-import { fetchData, getDates, monthIndexToString, BASE_URL, debounce, MAX_WIDTH } from "../../common/functions.jsx";
+import { fetchData, getDates, monthIndexToString, BASE_URL, debounce, MAX_WIDTH, isWidescreen } from "../../common/functions.jsx";
 import Dropdown from 'react-bootstrap/Dropdown';
 
 import SetMonth from "../../components/SetMonth";
 
-const TRANS_URL = BASE_URL + '/get-rule-data'
 const RULES_URL = BASE_URL + '/get-rules'
 const ENV_URL = BASE_URL + '/get-environment'
 
@@ -27,16 +26,6 @@ function withMyHook(Component) {
 }
 
 class Dashboard extends Component {
-
-    // state = {
-    //     selectedYear: 2023,
-    //     selectedMonth: 1,
-    //     url: BASE_URL + "/graph-data-new?",
-    //     datas: {'bar': [], 'line': []},
-    //     rules: [],
-    //     isLoading: false
-
-    // }
 
     constructor() {
         super();
@@ -118,10 +107,6 @@ class Dashboard extends Component {
         debounce(this.handleResize(), 1000)
     }
 
-    isWidescreen() {
-        return window.innerWidth > MAX_WIDTH;
-    }
-
     render() {
         const width = window.innerWidth;
         const colors = this.props.colors;
@@ -136,21 +121,21 @@ class Dashboard extends Component {
                 </Box>
                 {/* GRID AND CHARTS */}
                 <Box
-                    display={this.isWidescreen() ? "grid" : ""}
+                    display={isWidescreen() ? "grid" : ""}
                     gridTemplateColumns="repeat(12, 1fr)"
                     gridAutoRows="140px"
                     gap="20px"
                 >
 
                     <Box
-                        gridColumn={this.isWidescreen() ? 'span 6' : 'span 12'}
-                        gridRow={this.isWidescreen() ? 'span 1' : 'span 1'}
+                        gridColumn={isWidescreen() ? 'span 6' : 'span 12'}
+                        gridRow={isWidescreen() ? 'span 1' : 'span 1'}
                         backgroundColor={colors.primary[400]}
                         padding="30px"
                         className={"shadowed-box"}
                     >
                         <Box
-                            display={this.isWidescreen() ? "grid" : ""}
+                            display={isWidescreen() ? "grid" : ""}
 
                         >
                             {/* {this.state.isLoading && <LoadingCircle/>} */}
@@ -183,7 +168,7 @@ class Dashboard extends Component {
                         </Box>
                     </Box>
                     <Box
-                        gridColumn={this.isWidescreen() ? 'span 6' : 'span 12'}
+                        gridColumn={isWidescreen() ? 'span 6' : 'span 12'}
                         gridRow="span 2"
                         sx={{ gridRowEnd: 4 }}
                         backgroundColor={colors.primary[400]}
@@ -220,7 +205,7 @@ class Dashboard extends Component {
                     </Box>
 
                     {/*TRANSACTIONS*/}
-                    <Box className={"shadowed-box"} sx={{ gridRowEnd: 4, mt: this.isWidescreen() ? "0px" : "20px" }} gridColumn={this.isWidescreen() ? 'span 6' : 'span 12'} gridRow="span 2" backgroundColor={colors.primary[400]} overflow="auto">
+                    <Box className={"shadowed-box"} sx={{ gridRowEnd: 4, mt: isWidescreen() ? "0px" : "20px" }} gridColumn={isWidescreen() ? 'span 6' : 'span 12'} gridRow="span 2" backgroundColor={colors.primary[400]} overflow="auto">
                         {this.state.isLoading ? <LoadingCircle /> :
                             <div>
                                 <Typography variant="h5" fontWeight="600" sx={{ p: "30px 30px 0 30px" }} color={colors.grey[100]}>
@@ -235,7 +220,7 @@ class Dashboard extends Component {
                     </Box>
 
                     {/* ROW 3 */}
-                    <Box className={"shadowed-box"} sx={{ mt: this.isWidescreen() ? "0px" : "20px" }} gridColumn={this.isWidescreen() ? 'span 12' : 'span 12'} gridRow="span 2" backgroundColor={colors.primary[400]} overflow="auto">
+                    <Box className={"shadowed-box"} sx={{ mt: isWidescreen() ? "0px" : "20px" }} gridColumn={isWidescreen() ? 'span 12' : 'span 12'} gridRow="span 2" backgroundColor={colors.primary[400]} overflow="auto">
                         {this.state.isLoading ? <LoadingCircle /> :
                             <div>
                                 <Box
