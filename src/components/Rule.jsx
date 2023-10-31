@@ -1,9 +1,10 @@
 import React, {Component} from "react";
-import {Box} from "@mui/material";
+import { tokens } from "../theme";
+import {Box, useTheme} from "@mui/material";
 import Dropdown from 'react-bootstrap/Dropdown';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {faInfoCircle } from "@fortawesome/free-solid-svg-icons";
-import {postData, BASE_URL} from "../common/functions.jsx";
+import {postData, BASE_URL, isWidescreen} from "../common/functions.jsx";
 import CustomConfirmPopup from './CustomConfirmPopup'; // Assuming the file path for CustomConfirmPopup
 import CustomEditWhitelistPopup from './CustomEditWhitelistPopup'; // Assuming the file path for CustomConfirmPopup
 
@@ -16,6 +17,13 @@ const WHITELIST_REGEX = /^[0-9]+(,[0-9]+)*$/;
 const NAME_REGEX = /^[A-Za-z0-9 ]{5,15}$/;
 const EMPTY_REGEX = /^$/
 
+function withMyHook(Component) {
+    return function WrappedComponent(props) {
+        const theme = useTheme();
+        const colors = tokens(theme.palette.mode);
+        return <Component {...props} theme={theme} colors={colors} />
+    }
+}
 
 class Rule extends Component {
     
@@ -209,8 +217,10 @@ class Rule extends Component {
 
 
     render(){
+        const colors = this.props.colors
         return (
             <Box>
+                    
                     {this.state.showPopupWhitelist && (
                         <CustomEditWhitelistPopup
                             onConfirm={this.handleSubmit}
@@ -233,31 +243,52 @@ class Rule extends Component {
                             messageTitle={this.props.endpoint === "/create-rule" ? "Create Rule?" : "Save Changes?"}
                             messageSubtitle={this.props.endpoint === "/create-rule" ? "Are you sure you want to create rule?" : "Save changes to this rule?"}
                         />
-                    )}    
+                    )} 
 
+                <Box>
+                    <Box>
                     <div style={{marginTop: "20px"}}>
                         <p className="rule-description"><FontAwesomeIcon icon={faInfoCircle}/> Description: <strong>{this.ruleDescription()}</strong></p>
                     </div>
+                    <Box
+                        display={isWidescreen() ? "grid" : ""}
+                        gridTemplateColumns="repeat(12, 1fr)"
+                        gridAutoRows="50px"
+                        gap="30px"
+                    > 
+                    <Box
+                        gridColumn={isWidescreen() ? 'span 6' : 'span 12'}
+                        gridRow={isWidescreen() ? 'span 1' : 'span 1'}
+                        backgroundColor={colors.primary[400]}
+                        
+                    >
+                        <div>
+                            <label><strong>Name</strong></label><br></br>
+                            <input
+                                autoComplete="none"
+                                value={this.state.ruleName}
+                                onFocus={() => this.setRuleNameFocus(true)} 
+                                onBlur={() => this.setRuleNameFocus(false)} 
+                                onChange={(e) => this.setRuleName(e.target.value)} 
+                                required 
+                                aria-invalid={this.state.validRuleName ? "false" : "true"} 
+                                id="rule-name"
+                                className={this.state.validRuleName ? "input-box valid-box" : "input-box invalid-box"}
+                            />
+                            <p id="rule-name-note" className={!this.state.validRuleName && this.state.ruleNameFocus ? "instructions" : "offscreen"}>
+                                <FontAwesomeIcon icon={faInfoCircle}/>
+                                Name of the rule as will be shown 
+                            </p>
+                        </div>
+                    </Box>
+                    <Box
+                        gridColumn={isWidescreen() ? 'span 6' : 'span 12'}
+                        gridRow={isWidescreen() ? 'span 1' : 'span 1'}
+                        backgroundColor={colors.primary[400]}
+                        
+                    >
                     <div>
-                        <label>Name</label><br></br>
-                        <input
-                            autoComplete="none"
-                            value={this.state.ruleName}
-                            onFocus={() => this.setRuleNameFocus(true)} 
-                            onBlur={() => this.setRuleNameFocus(false)} 
-                            onChange={(e) => this.setRuleName(e.target.value)} 
-                            required 
-                            aria-invalid={this.state.validRuleName ? "false" : "true"} 
-                            id="rule-name"
-                            className={this.state.validRuleName ? "valid-box" : "invalid-box"}
-                        />
-                        <p id="rule-name-note" className={!this.state.validRuleName && this.state.ruleNameFocus ? "instructions" : "offscreen"}>
-                            <FontAwesomeIcon icon={faInfoCircle}/>
-                            Name of the rule as will be shown 
-                        </p>
-                    </div>
-                    <div>
-                        <label>Max per period</label><br></br>
+                        <label><strong>Max per period</strong></label><br></br>
                         <input
                             autoComplete="none"
                             value={this.state.maxPerPeriod}
@@ -266,7 +297,7 @@ class Rule extends Component {
                             onChange={(e) => this.setMaxPerPeriod(e.target.value)} 
                             required aria-invalid={this.state.validMaxPerPeriod ? "false" : "true"} 
                             id="max-per-period"
-                            className={this.state.validMaxPerPeriod ? "valid-box" : "invalid-box"}
+                            className={this.state.validMaxPerPeriod ? "input-box valid-box" : "input-box invalid-box"}
                         />
                         <p id="maxperprdnote" className={!this.state.validMaxPerPeriod && this.state.maxPerPeriodFocus ? "instructions" : "offscreen"}>
                             <FontAwesomeIcon icon={faInfoCircle}/>
@@ -275,8 +306,15 @@ class Rule extends Component {
                             If rule is set to 'Frequency', this is the maximum # of transactions a customer can send. <br/>
                         </p>
                     </div>
+                    </Box>
+                    <Box
+                        gridColumn={isWidescreen() ? 'span 6' : 'span 12'}
+                        gridRow={isWidescreen() ? 'span 1' : 'span 1'}
+                        backgroundColor={colors.primary[400]}
+                        
+                    >
                     <div>
-                        <label>Period</label><br></br>
+                        <label><strong>Period</strong></label><br></br>
                         <input
                             autoComplete="none"
                             value={this.state.period}
@@ -285,7 +323,7 @@ class Rule extends Component {
                             onChange={(e) => this.setPeriod(e.target.value)} 
                             required aria-invalid={this.state.validPeriod ? "false" : "true"} 
                             id="period"
-                            className={this.state.validPeriod ? "valid-box" : "invalid-box"}
+                            className={this.state.validPeriod ? "input-box valid-box" : "input-box invalid-box"}
                         />
                         <p id="period-note" className={!this.state.validPeriod && this.state.periodFocus ? "instructions" : "offscreen"}>
                             <FontAwesomeIcon icon={faInfoCircle}/>
@@ -293,9 +331,15 @@ class Rule extends Component {
                             E.g. If set to 2 with 'Period Unit' set to 'week', then rule will look at data within 2 weeks 
                         </p>
                     </div>
-                    <div style={{padding: "0px"}}>
-                        <div >
-                            <label>Period Unit</label><br></br>
+                    </Box>
+                    <Box
+                        gridColumn={isWidescreen() ? 'span 6' : 'span 12'}
+                        gridRow={isWidescreen() ? 'span 1' : 'span 1'}
+                        backgroundColor={colors.primary[400]}
+                        
+                    >
+                        <div>
+                            <label><strong>Period Unit</strong></label><br></br>
                             <Dropdown id="period-unit">
                                 <Dropdown.Toggle className="create-rule-dropdown" variant="secondary"  size="sm">
                                         {this.state.periodUnit}
@@ -308,8 +352,15 @@ class Rule extends Component {
                                 </Dropdown.Menu>
                             </Dropdown>
                         </div>
+                    </Box>
+                    <Box
+                        gridColumn={isWidescreen() ? 'span 6' : 'span 12'}
+                        gridRow={isWidescreen() ? 'span 1' : 'span 1'}
+                        backgroundColor={colors.primary[400]}
+                        
+                    >
                         <div >
-                            <label>New Customer?</label><br></br>
+                            <label><strong>New Customer?</strong></label><br></br>
                             <Dropdown id="is-new-customer">
                                 <Dropdown.Toggle className="create-rule-dropdown" variant="secondary"  size="sm">
                                         {this.state.isNewCustomer ? "Yes" : "No"}
@@ -320,8 +371,15 @@ class Rule extends Component {
                                 </Dropdown.Menu>
                             </Dropdown>
                         </div>
+                    </Box>
+                    <Box
+                        gridColumn={isWidescreen() ? 'span 6' : 'span 12'}
+                        gridRow={isWidescreen() ? 'span 1' : 'span 1'}
+                        backgroundColor={colors.primary[400]}
+                        
+                    >
                         <div >
-                            <label>Amount or Frequency?</label><br></br>
+                            <label><strong>Amount or Frequency?</strong></label><br></br>
                             <Dropdown id="is-num-of-trans">
                                 <Dropdown.Toggle className="create-rule-dropdown" variant="secondary"  size="sm">
                                         {this.state.isNumberOfTrans ? "Frequency" : "Amount"}
@@ -332,22 +390,29 @@ class Rule extends Component {
                                 </Dropdown.Menu>
                             </Dropdown>
                         </div>
-                    </div>
-                    <div>
-                        {/* <label>Whitelist</label> */}
-                        <br/>
-                        <button onClick={() => this.setState({showPopupWhitelist: true})} className="create-rule-submit" style={{margin: "0px"}}>
-                            Edit Whitelist
-                        </button>
-                    </div>
-                    <div style={{paddingTop: "10px"}}>
+                    </Box>
+                    <Box
+                        gridColumn={isWidescreen() ? 'span 2' : 'span 12'}
+                        gridRow={isWidescreen() ? 'span 1' : 'span 1'}
+                        backgroundColor={colors.primary[400]}
+                    >
+                        <div>
+                            <button onClick={() => this.setState({showPopupWhitelist: true})} className="cancel-button">
+                                Edit Whitelist
+                            </button>
+                        </div>
+                    </Box>
+                    </Box> 
+                    <Box marginTop="40px">
                         <button onClick={() => this.setState({ showPopup: true})} className={"popup-button "+this.getButtonClass(!this.isInvalid())} disabled={this.isInvalid() ? true : false}>
                             {this.props.buttonTitle}
                         </button>
-                    </div>
+                    </Box>
+                    </Box>
+                    </Box>
             </Box>
         )
     }
 }
 
-export default Rule;
+export default withMyHook(Rule);

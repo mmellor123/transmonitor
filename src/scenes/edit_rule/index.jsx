@@ -1,5 +1,6 @@
 import React, {Component} from "react";
-import {Box} from "@mui/material";
+import {Box, useTheme} from "@mui/material";
+import { tokens} from "../../theme";
 import Header from "../../components/Header";
 import Rule from "../../components/Rule";
 import { useSearchParams } from "react-router-dom";
@@ -14,7 +15,9 @@ function withMyHook(Component){
     return function WrappedComponent(props){
         const [searchParams] = useSearchParams();
         const navigate = useNavigate();
-        return <Component {...props} searchParams={searchParams} navigate={navigate}/>
+        const theme = useTheme();
+        const colors = tokens(theme.palette.mode);
+        return <Component {...props} searchParams={searchParams} navigate={navigate} colors={colors}/>
     }
 }
 
@@ -50,8 +53,10 @@ class EditRule extends Component {
     }
 
     render(){
+        const colors = this.props.colors;
         return (
             <Box m="20px">
+                
                 {this.state.showPopup && (
                     <CustomConfirmPopup
                         onConfirm={this.handleConfirm}
@@ -60,14 +65,21 @@ class EditRule extends Component {
                         messageSubtitle="Are you sure you want to delete this rule?"
                     />
                 )}
-                <Header title="Edit Rule" subtitle="Edit an existing rule here"/>
-                <Rule navigate={this.props.navigate} buttonTitle="Save Changes" endpoint="/update-rule" ruleId={this.props.searchParams.get("id")} data={this.state.data}/>
+                <Header title="Edit Rule" subtitle="Edit an existing rule"/>
                 
-                <Link to={"/view-rules"}>
-                    <button className="cancel-button">Cancel</button>
-                </Link><br/>
+                <Box
+                    backgroundColor={colors.primary[400]}
+                    padding="30px"
+                    className={"shadowed-box"}
+                    width="50%"
+                    >
+                    <Rule navigate={this.props.navigate} buttonTitle="Save Changes" endpoint="/update-rule" ruleId={this.props.searchParams.get("id")} data={this.state.data}/>
+                    <Link to={"/view-rules"}>
+                        <button className="cancel-button">Cancel</button>
+                    </Link><br/>
 
-                <button onClick={() => this.setState({ showPopup: true})} className="delete-rule-button">Delete</button>
+                    <button onClick={() => this.setState({ showPopup: true})} className="delete-rule-button">Delete</button>
+                </Box>
             </Box>
         )
     }

@@ -191,19 +191,22 @@ label{
 }
 
 .create-rule-dropdown {
-  width: 150px !important;
-  background-color: white !important;
-  color: black !important
+  width: 100%;
+  padding: 5px 0px !important;
+  border-width: 0px !important;
+  font-size: 15px !important;
+  color: rgb(12,101,136) !important;
+  background: rgba(12,101,136, 0.12) !important;
 }
 
 .delete-rule-button {
   width: 100px !important;
-  background-color: firebrick;
+  background-color: #fff;
 	border-radius:3px;
-	border:0px solid #0b0e07;
+	border:1px solid firebrick;
 	display:inline-block;
 	cursor:pointer;
-	color:#fff;
+	color:firebrick;
   font-weight: bold;
 	padding:5px 16px;
 	text-decoration:none;
@@ -218,27 +221,32 @@ label{
 }
 
 .cancel-button {
-  background:linear-gradient(to bottom, #0c6588 5%, #0c6588 100%);
-	background-color:#0c6588;
+  background:linear-gradient(to bottom, #FFFFFF 5%, #FFFFFF 100%);
+	background-color:#FFFFFF;
 	border-radius:3px;
-	border:0px solid #0b0e07;
+	border:1px solid #0C6588;
 	display:inline-block;
 	cursor:pointer;
-	color:#fff;
+	color:#0C6588;
   font-weight: bold;
-	padding:5px 16px;
+	padding:2px 16px;
 	text-decoration:none;
   margin-top: 10px;
   width: 100px;
 }
 .create-rule-submit:hover,
-.cancel-button:hover,
 .popup-button-confirm:hover {
 	background:linear-gradient(to bottom, #094861 5%, #094861 100%);
 }
 
+.cancel-button:hover{
+	background:linear-gradient(to bottom, #e6e6e6 5%, #e6e6e6 100%);
+}
+
+
 .delete-rule-button:hover {
-	background:linear-gradient(to bottom, rgb(145, 28, 28) 5%, rgb(145, 28, 28) 100%);
+	background:linear-gradient(to bottom, firebrick 5%, firebrick 100%);
+  color:#fff
 }
 
 .create-rule-submit {
@@ -259,7 +267,7 @@ label{
 .rule-description {
   font-size: 0.75rem;
   border-radius: 0.5rem;
-  background: rgb(148, 0, 0);
+  background: rgb(0, 0, 0);
   color: #fff;
   padding: 0.5rem;
   position: relative;
@@ -311,6 +319,7 @@ label{
   font-weight: bold;
 	text-decoration:none;
   margin: none !important;
+  margin-top: 10px;
 
 }
 
@@ -356,6 +365,17 @@ label{
   outline: none;
   border-radius: 3px;
 }
+
+.input-box {
+  width: 100%;
+  border-radius: 3px;
+  border-width: 0px;
+  padding: 5px 5px;
+  color: #0C6588;
+  background: rgba(12,101,136, 0.12);
+  font-size: 15px;
+}
+
 
 .invalid-box:focus {
   border: 2px solid #ff5151;
