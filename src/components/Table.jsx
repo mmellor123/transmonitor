@@ -67,7 +67,7 @@ class Table extends Component {
                     if(key1 === "Customer CIF" && !this.props.isCustomerPage){
                         columns.push({field: key1, headerName: key1, renderCell: (params) => 
                             <Link to={"/customer?cif=" + params.row[`Customer CIF`] + "&start="+start + "&end="+end+"&type="+params.row.Type}>
-                                {params.row[`Customer CIF`]}
+                                <p style={{fontSize: "16px", margin: 0}}>{params.row[`Customer CIF`]}</p>
                             </Link>
                         });
                     }
@@ -98,7 +98,7 @@ class Table extends Component {
                         "& .MuiDataGrid-root": {
                             color: "#000",
                             border: 'none',
-                            borderWidth: 0,
+                            borderWidth: "1px",
                             borderColor: "#0C6588"
                         },
                         '.MuiDataGrid-columnSeparator': {
@@ -116,15 +116,15 @@ class Table extends Component {
                         },
                         "& .MuiDataGrid-columnHeaderTitle": {
                             fontWeight: "400",
-                            fontSize: "15px",
+                            fontSize: "16px",
                             color: "white"
                         },
                         "& .MuiDataGrid-cellContent": {
-                            fontSize: "15px"
+                            fontSize: "16px"
                         },
                         "& .MuiDataGrid-footerContainer": {
                             borderTop: "none",
-                            backgroundColor: "#8A8A8A"
+                            backgroundColor: "#000"
                         },
                         "& .MuiCheckbox-root": {
                             color: `${colors.greenAccent[200]} !important`
