@@ -8,11 +8,11 @@ import { styled } from "@mui/material/styles";
 const InventoryEntry = ({ entry, index, onDelete }) => {
 
   return (
-    <tr style={{ backgroundColor: index % 2 > 0 ? "#efefef" : "white" }}>
+    <tr style={{ backgroundColor: index % 2 > 0 ? "white" : "#F3F3F3" }}>
       <td>{entry.cif}</td>
       <td>{entry.name} {entry.sname}</td>
       <td>
-        <button className="popup-button popup-button-confirm" onClick={() => onDelete(entry.cif)}>Remove</button>
+        <button className="delete-rule-button" onClick={() => onDelete(entry.cif)}>Remove</button>
       </td>
     </tr>
   );
@@ -34,6 +34,7 @@ const InventoryApp = ({ validCif, cif, onChange, onAdd, list, listWithName, onDe
       color: "black",
       padding: "0px!important",
       height: "30px",
+      borderWidth: "1px",
       // This matches the specificity of the default styles at https://github.com/mui-org/material-ui/blob/v4.11.3/packages/material-ui-lab/src/Autocomplete/Autocomplete.js#L90
       '&[class*="MuiOutlinedInput-root"] .MuiAutocomplete-input:first-of-type': {
         height: "30px",

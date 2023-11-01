@@ -319,8 +319,6 @@ label{
   font-weight: bold;
 	text-decoration:none;
   margin: none !important;
-  margin-top: 10px;
-
 }
 
 .popup-button-cancel {
@@ -405,6 +403,16 @@ label{
 .whitelist-table {
   overflow: scroll;
   max-height: 400px;
+}
+
+.whitelist-table th {
+  background: white;
+  color: black;
+  border: 1px solid #A1A1A1;
+}
+
+.whitelist-table td {
+  border: 1px solid #A1A1A1;
 }
 
 table {
