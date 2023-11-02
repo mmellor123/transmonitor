@@ -75,7 +75,7 @@ class Table extends Component {
                         columns = this.addRuleEditIcons(columns);
                     }
                     else{
-                        columns.push({field: key1, headerName: key1, minWidth: 150});
+                        columns.push({field: key1, headerName: key1, flex: 1});
                     }
                 });
             }
