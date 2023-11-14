@@ -30,17 +30,17 @@ export function isWidescreen() {
   return window.innerWidth > MAX_WIDTH;
 }
 
-export const Item = ({ title, to, icon, selected, setSelected }) => {
+export const Item = ({ title, to, icon, location}) => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
+  //If redirect, then propSelect is used as selector. Then set selected to propSelected.
   return (
     <MenuItem
-      active={selected === title}
+      active={location === to}
       style={{
-        color: selected === title ? "white" : colors.grey[100],
-        backgroundColor: selected === title ? "#93AE73" : ""
+        color: location === to ? "white" : colors.grey[100],
+        backgroundColor: location === to ? "#93AE73" : ""
       }}
-      onClick={() => setSelected(title)}
       icon={icon}
       component={<Link to={to} />}
     >
@@ -175,8 +175,6 @@ export async function deleteRule(url, payload) {
 }
 
 export async function postData(url, payload, method) {
-  console.log("Url: ", url)
-  console.log("Data: ", payload)
   const response = await fetch(url, {
     method: method,
     body: JSON.stringify(payload),

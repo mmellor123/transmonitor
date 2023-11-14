@@ -6,6 +6,7 @@ import {fetchData, BASE_URL} from "../common/functions.jsx";
 import LoadingCircle from "./LoadingCircle";
 
 
+
 function withMyHook(Component){
     return function WrappedComponent(props){
         const theme = useTheme();
@@ -56,7 +57,6 @@ class BarChart extends Component {
         if(isDashboard){
             data = this.props.data;
         }
-        console.log("Bar Data: ", this.state.datas);
         let {["date"]: _, ...rules} = data.length > 0 ? data[0]: []
         return(
             <Box height="100%">

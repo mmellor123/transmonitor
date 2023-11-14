@@ -15,15 +15,16 @@ import EditIcon from '@mui/icons-material/Edit';
 import { useAuth } from "../../components/auth";
 import { Item } from "../../common/functions";
 import { ReactComponent as Logo } from "./flower.svg";
+import { useLocation } from "react-router-dom";
 
 
-const SidebarMine = () => {
+const SidebarMine = ({isSidebar}) => {
     const theme = useTheme();
     const colors = tokens(theme.palette.mode);
     const { collapseSidebar, collapsed } = useProSidebar();
-    const [selected, setSelected] = useState("Dashboard");
     const auth = useAuth();
-    const sidebarHeight = window.outerHeight;
+    const location = useLocation();
+
     return (
         <Box
             sx={{
@@ -103,8 +104,8 @@ const SidebarMine = () => {
                                 title="Dashboard"
                                 to="/"
                                 icon={<HomeOutlinedIcon/>}
-                                selected={selected}
-                                setSelected={setSelected}
+                                location={location.pathname}
+
                             />
 
                             <Typography
@@ -118,15 +119,12 @@ const SidebarMine = () => {
                                 title="Manage Team"
                                 to="/team"
                                 icon={<PeopleOutlinedIcon/>}
-                                selected={selected}
-                                setSelected={setSelected}
                             /> */}
                             <Item
                                 title="Transactions"
                                 to="/invoices"
                                 icon={<ReceiptOutlinedIcon/>}
-                                selected={selected}
-                                setSelected={setSelected}
+                                location={location.pathname}
                             />
                             
                             <Typography
@@ -140,22 +138,16 @@ const SidebarMine = () => {
                                 title="Profile Form"
                                 to="/form"
                                 icon={<PersonOutlinedIcon />}
-                                selected={selected}
-                                setSelected={setSelected}
                             /> */}
                             {/* <Item
                                 title="Calendar"
                                 to="/calendar"
                                 icon={<CalendarTodayOutlinedIcon />}
-                                selected={selected}
-                                setSelected={setSelected}
                             /> */}
                             {/* <Item
                                 title="FAQ Page"
                                 to="/faq"
                                 icon={<HelpOutlineOutlinedIcon  yOutlinedIcon />}
-                                selected={selected}
-                                setSelected={setSelected}
                             /> */}
 
                             <Typography
@@ -169,22 +161,19 @@ const SidebarMine = () => {
                                 title="Bar Chart"
                                 to="/bar"
                                 icon={<BarChartOutlinedIcon  />}
-                                selected={selected}
-                                setSelected={setSelected}
+                                location={location.pathname}
                             />
                             <Item
                                 title="Pie Chart"
                                 to="/pie"
                                 icon={<PieChartOutlineOutlinedIcon/>}
-                                selected={selected}
-                                setSelected={setSelected}
+                                location={location.pathname}
                             />
                             <Item
                                 title="Line Chart"
                                 to="/line"
                                 icon={<TimelineOutlinedIcon/>}
-                                selected={selected}
-                                setSelected={setSelected}
+                                location={location.pathname}
                             />
 
                             <Typography
@@ -198,15 +187,13 @@ const SidebarMine = () => {
                                 title="Create Rule"
                                 to="/create-rule"
                                 icon={<AddIcon/>}
-                                selected={selected}
-                                setSelected={setSelected}
+                                location={location.pathname}
                             />
                             <Item
                                 title="View Rules"
                                 to="/view-rules"
                                 icon={<EditIcon/>}
-                                selected={selected}
-                                setSelected={setSelected}
+                                location={location.pathname}
                             />
                         </Box>
                 </Menu>

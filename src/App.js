@@ -1,5 +1,5 @@
 
-import { useState } from "react";
+import { useState} from "react";
 import { ColorModeContext, useMode} from "./theme";
 import {CssBaseline, ThemeProvider} from "@mui/material";
 import { Route, Routes} from "react-router-dom";
@@ -25,10 +25,11 @@ import ViewRules from "./scenes/view-rules";
 import EditRule from "./scenes/edit_rule";
 
 
+
+
 function App() {
   const [theme, colorMode] = useMode();
   const [isSidebar] = useState(true);
-
 
   return (
     <AuthProvider>

@@ -5,6 +5,8 @@ import Header from "../../components/Header";
 import Rule from "../../components/Rule";
 import { useNavigate } from "react-router-dom";
 
+
+
 function withMyHook(Component){
     return function WrappedComponent(props){
         const navigate = useNavigate();
