@@ -32,7 +32,7 @@ class Transactions extends Component {
     }
 
     componentDidMount() {
-        this.getRuleData(this.state.selectedRule);
+        this.getRuleData(this.props.rule, this.props.ruleName);
         this.getRules();
     }
 

@@ -132,15 +132,7 @@ class BarChart extends Component {
                             id: 'lines'
                         }
                     ]}
-                    borderColor={{
-                        from: 'color',
-                        modifiers: [
-                            [
-                                'darker',
-                                1.6
-                            ]
-                        ]
-                    }}
+                    borderColor="#FFFFFF"
                     axisTop={null}
                     axisRight={null}
                     axisBottom={{
@@ -161,15 +153,7 @@ class BarChart extends Component {
                     }}
                     labelSkipWidth={12}
                     labelSkipHeight={12}
-                    labelTextColor={{
-                        from: 'color',
-                        modifiers: [
-                            [
-                                'darker',
-                                1.6
-                            ]
-                        ]
-                    }}
+                    labelTextColor="#FFFFFF"
                     legends={[
                         {
                             dataFrom: 'keys',

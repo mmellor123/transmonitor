@@ -78,11 +78,10 @@ class Dashboard extends Component {
     }
 
     handleSearch = () => {
-        console.log("Handle Search")
         let [sDate, eDate] = getDates(this.state.selectedYear, this.state.selectedMonth);
         this.setState({ isLoading: true })
         fetchData(this.state.url + "start=" + sDate + "T00:00:00&end=" + eDate + "T00:00:00&rule=" + this.state.rule).then((results) => {
-            this.setState({ datas: results, startDate: sDate, endDate: eDate, isLoading: false });
+            this.setState({ datas: results, startDate: sDate, endDate: eDate, isLoading: false});
         });
     }
 
@@ -231,7 +230,7 @@ class Dashboard extends Component {
                                     alignItems="center"
                                 >
                                     <Typography variant="h5" fontWeight="600" color={colors.grey[100]}>
-                                        TRANSACTIONS TABLE
+                                        TRANSACTIONS TABLE - {this.state.ruleName}
                                     </Typography>
                                 </Box>
                                 <Box m="30px 30px 30px 30px">
