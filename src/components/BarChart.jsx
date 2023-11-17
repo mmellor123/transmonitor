@@ -97,7 +97,8 @@ class BarChart extends Component {
                     padding={0.3}
                     valueScale={{ type: 'linear' }}
                     indexScale={{ type: 'band', round: true }}
-                    colors={{ scheme: 'nivo' }}
+                    //TODO Commented out colors
+                    // colors={{ scheme: 'nivo' }}
                     defs={[
                         {
                             id: 'dots',
@@ -132,7 +133,8 @@ class BarChart extends Component {
                             id: 'lines'
                         }
                     ]}
-                    borderColor="#FFFFFF"
+                    //TODO Removed colour here
+                    // borderColor="#FFFFFF"
                     axisTop={null}
                     axisRight={null}
                     axisBottom={{
@@ -153,7 +155,8 @@ class BarChart extends Component {
                     }}
                     labelSkipWidth={12}
                     labelSkipHeight={12}
-                    labelTextColor="#FFFFFF"
+                    //TODO Removed color from this
+                    // labelTextColor="#FFFFFF"
                     legends={[
                         {
                             dataFrom: 'keys',

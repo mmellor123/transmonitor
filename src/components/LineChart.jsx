@@ -92,7 +92,8 @@ class LineChart extends Component {
                         }
                     }}
                     // colors={isDashboard ? {datum: "color"} : {scheme: "nivo"}}
-                    colors={{scheme: "nivo"}}
+                    //TODO Commented out colors prop
+                    // colors={{scheme: "nivo"}}
                     margin={{ top: 50, right: 80, bottom: 50, left: 30 }}
                     xScale={{ type: 'point' }}
                     yScale={{
