@@ -6,7 +6,7 @@ import Table from "../../components/Table";
 import { useSearchParams } from "react-router-dom";
 import Header from "../../components/Header";
 import EmailButton from "../../components/EmailButton";
-
+import { useAuth } from "../../components/auth.jsx";
 
 
 function withMyHook(Component) {
@@ -14,7 +14,8 @@ function withMyHook(Component) {
         const theme = useTheme();
         const colors = tokens(theme.palette.mode);
         const [searchParams] = useSearchParams();
-        return <Component {...props} theme={theme} colors={colors} type={searchParams.get('type')} cif={searchParams.get('cif')} start={searchParams.get('start')} end={searchParams.get('end')} />
+        const {token} = useAuth();
+        return <Component {...props} token={token} theme={theme} colors={colors} type={searchParams.get('type')} cif={searchParams.get('cif')} start={searchParams.get('start')} end={searchParams.get('end')} />
     }
 }
 
@@ -32,7 +33,7 @@ class Customer extends Component {
     }
 
     getRuleData = (rule) => {
-        fetchData(this.state.url).then((results) => {
+        fetchData(this.state.url, this.props.token).then((results) => {
             this.setState({ datas: results, selectedRule: rule });
         });
     }
@@ -45,7 +46,7 @@ class Customer extends Component {
         const colors = this.props.colors;
         return (
             <Box m="20px">
-                <Header title="Customer Transactiions" subtitle="View Customer Transactions" />
+                <Header title={"Customer Transactions: CIF ("+this.props.cif+")"}  subtitle={this.props.type+" transactions between ("+this.props.start+" to "+this.props.end+")"} />
                 <Box
                     display={isWidescreen() ? "grid" : ""}
                     gridTemplateColumns="repeat(12, 1fr)"

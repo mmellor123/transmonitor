@@ -4,12 +4,14 @@ import { useTheme, Box} from "@mui/material";
 import React, {Component} from "react";
 import {fetchData, BASE_URL} from "../common/functions.jsx";
 import LoadingCircle from "./LoadingCircle";
+import { useAuth } from "./auth.jsx";
 
 function withMyHook(Component){
     return function WrappedComponent(props){
         const theme = useTheme();
         const colors = tokens(theme.palette.mode);
-        return <Component {...props} theme={theme} colors={colors}/>
+        const {token} = useAuth();
+        return <Component {...props} theme={theme} colors={colors} token={token}/>
     }
 }
 
@@ -38,7 +40,7 @@ class PieChart extends Component {
         const startDate = this.props.startDate;
         const endDate = this.props.endDate;
         this.setState({isLoading: true})
-        fetchData(PIE_URL + "start="+startDate+"&end="+endDate).then((results) => {
+        fetchData(PIE_URL + "start="+startDate+"&end="+endDate, this.props.token).then((results) => {
             this.setState({datas: results, isLoading: false})
         });
     }

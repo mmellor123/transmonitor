@@ -6,7 +6,7 @@ import { useNavigate } from 'react-router-dom';
 import { ReactComponent as Logo } from "../scenes/global/flower.svg";
 import {BASE_URL} from "../common/functions"
 import {Box} from '@mui/material';
-
+import axios from "../api/axios";
 
 const USER_REGEX = /^[a-zA-Z0-9_]{5,}[a-zA-Z]+[0-9]*$/;
 const PWD_REGEX = /^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{6,16}$/;
@@ -16,7 +16,7 @@ export const Login = () => {
     const userRef = useRef();
     const errRef = useRef();
     
-    const auth = useAuth();
+    const { setToken} = useAuth();
     const navigate = useNavigate();
 
 
@@ -51,7 +51,9 @@ export const Login = () => {
         setErrMsg('');
     }, [user, pwd]);
 
+
     const handleSubmit = async (e) => {
+        console.log(setToken)
         e.preventDefault();
         const v1 = USER_REGEX.test(user);
         const v2 = PWD_REGEX.test(pwd);
@@ -59,14 +61,17 @@ export const Login = () => {
             setErrMsg("Invalid Entry");
             return;
         }
-        await fetch(BASE_URL+"/login", {method: 'POST', headers: {'content-type': 'application/json', 'token':'mytoken'}, body: JSON.stringify({username: user, password: pwd})})
+        await fetch(BASE_URL+"/login-jwt", {method: 'POST', headers: {'content-type': 'application/json'}, body: JSON.stringify({username: user, password: pwd})})
           .then(res => res.json())
           .then(
             (results) => {
-                    if(results['status'] === "success"){
+                    if(true){
+                        console.log("Logging in: ", results['access_token']);
                         setSuccess(true);
-                        auth.login(user);
-                        navigate('/', {replace: true})
+                        setToken(results['access_token']);
+
+                        // setRefresh(results['refresh_token']);
+                        navigate('/', {replace: true});
                     }
                     else{
                         setErrMsg(results['message'])

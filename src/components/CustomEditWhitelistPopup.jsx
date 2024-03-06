@@ -20,7 +20,7 @@ class CustomEditWhitelistPopup extends React.Component {
 
 
   componentDidMount() {
-    fetchData(BASE_URL + "/get-customers").then((results) => {
+    fetchData(BASE_URL + "/get-customers", this.props.token).then((results) => {
       this.setState({ cifList: results })
     });
   }
@@ -44,7 +44,7 @@ class CustomEditWhitelistPopup extends React.Component {
   }
 
   doesCustomerExist(cif) {
-    postData(BASE_URL + "/get-customers-from-cif", { "cif": [cif] }, "POST").then((results) => {
+    postData(BASE_URL + "/get-customers-from-cif", { "cif": [cif] }, "POST", this.props.token).then((results) => {
       if (results.length === 1) {
         return true;
       }
@@ -56,7 +56,7 @@ class CustomEditWhitelistPopup extends React.Component {
 
   handleChangeCif = (cif) => {
     if (INTEGER_REGEX.test(cif) && !this.props.whitelist.includes(cif)) {
-      postData(BASE_URL + "/get-customers-from-cif", { "cif": [cif] }, "POST").then((results) => {
+      postData(BASE_URL + "/get-customers-from-cif", { "cif": [cif] }, "POST", this.props.token).then((results) => {
         var result = false;
         if (results.length === 1) {
           result = true;

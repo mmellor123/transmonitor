@@ -5,6 +5,7 @@ import { fetchData, BASE_URL } from "../common/functions.jsx";
 import Table from "../components/Table";
 import EmailButton from "../components/EmailButton";
 import LoadingCircle from "./LoadingCircle";
+import { useAuth } from "./auth.jsx";
 
 
 
@@ -12,7 +13,8 @@ function withMyHook(Component) {
     return function WrappedComponent(props) {
         const theme = useTheme();
         const colors = tokens(theme.palette.mode);
-        return <Component {...props} theme={theme} colors={colors} />
+        const {token} = useAuth();
+        return <Component {...props} theme={theme} colors={colors} token={token} />
     }
 }
 
@@ -47,13 +49,13 @@ class Transactions extends Component {
         const startDate = this.props.startDate;
         const endDate = this.props.endDate;
         this.setState({ isLoading: true })
-        fetchData(TRANS_URL + "?rule_id=" + rule + "&start=" + startDate + "T00:00:00&end=" + endDate + "T00:00:00").then((results) => {
+        fetchData(TRANS_URL + "?rule_id=" + rule + "&start=" + startDate + "T00:00:00&end=" + endDate + "T00:00:00", this.props.token).then((results) => {
             this.setState({ datas: results, selectedRule: ruleName, selectedRuleId: rule, isLoading: false })
         });
     }
 
     getRules = () => {
-        fetchData(RULES_URL).then((results) => {
+        fetchData(RULES_URL, this.props.token).then((results) => {
             this.setState({ rules: results });
         });
     }

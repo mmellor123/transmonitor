@@ -19,10 +19,12 @@ import  Customer  from "./scenes/customer";
 import { AuthProvider } from "./components/auth";
 import { Login } from "./components/Login";
 import { RequireAuth } from "./components/RequireAuth";
+import { ProtecteRoute } from "./routes/ProtectedRoute";
 import Register from "./components/Register";
 import CreateRule from "./scenes/create_rule";
 import ViewRules from "./scenes/view-rules";
 import EditRule from "./scenes/edit_rule";
+import Logout from "./components/Logout";
 
 
 
@@ -41,22 +43,23 @@ function App() {
             <main className="content">
               {/* <Topbar setIsSidebar={setIsSidebar}/> */}
               <Routes>
-                  <Route path="/" element={<RequireAuth><Dashboard /></RequireAuth>} />
-                  <Route path="/contacts" element={<RequireAuth><Contacts/></RequireAuth>}/>
-                  <Route path="/invoices" element={<RequireAuth><Invoices/></RequireAuth>} />
-                  <Route path="/form" element={<RequireAuth><Form/></RequireAuth>} />
-                  <Route path="/bar" element={<RequireAuth><Bar/></RequireAuth>} />
-                  <Route path="/pie" element={<RequireAuth><Pie/></RequireAuth>} />
-                  <Route path="/line" element={<RequireAuth><Line/></RequireAuth>} />
-                  {/* <Route path="/faq" element={<RequireAuth><FAQ/></RequireAuth>} /> */}
-                  <Route path="/geography" element={<RequireAuth><Geography/></RequireAuth>} />
-                  <Route path="/calendar" element={<RequireAuth><Calendar/></RequireAuth>} />
-                  <Route path="/customer" element={<RequireAuth><Customer/></RequireAuth>} />
+                  <Route path="/" element={<ProtecteRoute><Dashboard /></ProtecteRoute>} />
+                  <Route path="/contacts" element={<ProtecteRoute><Contacts/></ProtecteRoute>}/>
+                  <Route path="/invoices" element={<ProtecteRoute><Invoices/></ProtecteRoute>} />
+                  <Route path="/form" element={<ProtecteRoute><Form/></ProtecteRoute>} />
+                  <Route path="/bar" element={<ProtecteRoute><Bar/></ProtecteRoute>} />
+                  <Route path="/pie" element={<ProtecteRoute><Pie/></ProtecteRoute>} />
+                  <Route path="/line" element={<ProtecteRoute><Line/></ProtecteRoute>} />
+                  {/* <Route path="/faq" element={<ProtecteRoute><FAQ/></ProtecteRoute>} /> */}
+                  <Route path="/geography" element={<ProtecteRoute><Geography/></ProtecteRoute>} />
+                  <Route path="/logout" element={<ProtecteRoute><Logout/></ProtecteRoute>} />
+                  <Route path="/calendar" element={<ProtecteRoute><Calendar/></ProtecteRoute>} />
+                  <Route path="/customer" element={<ProtecteRoute><Customer/></ProtecteRoute>} />
                   <Route path="/login" element={<Login/>} />
                   <Route path="/register" element={<Register/>} />
-                  <Route path="/create-rule" element={<RequireAuth><CreateRule/></RequireAuth>} />
-                  <Route path="/view-rules" element={<RequireAuth><ViewRules/></RequireAuth>} />
-                  <Route path="/edit-rule" element={<RequireAuth><EditRule/></RequireAuth>} />
+                  <Route path="/create-rule" element={<ProtecteRoute><CreateRule/></ProtecteRoute>} />
+                  <Route path="/view-rules" element={<ProtecteRoute><ViewRules/></ProtecteRoute>} />
+                  <Route path="/edit-rule" element={<ProtecteRoute><EditRule/></ProtecteRoute>} />
               </Routes>
             </main>
           </div>

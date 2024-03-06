@@ -3,6 +3,7 @@ import TextField from '@mui/material/TextField';
 import { Paper } from '@mui/material'
 import Autocomplete from '@mui/material/Autocomplete';
 import { styled } from "@mui/material/styles";
+import { ContactSupportOutlined } from '@mui/icons-material';
 
 
 const InventoryEntry = ({ entry, index, onDelete }) => {
@@ -19,6 +20,7 @@ const InventoryEntry = ({ entry, index, onDelete }) => {
 };
 
 const InventoryApp = ({ validCif, cif, onChange, onAdd, list, listWithName, onDelete, addCustomer, search, onFilter, cifList }) => {
+  console.log("listWithname: ", listWithName);
   const filteredArray = listWithName.filter(item => item.cif.indexOf(search) > -1 || (item.name && item.name.includes(search)) || (item.sname && item.sname.includes(search)));
 
   const StyledAutocomplete = styled(Autocomplete)({

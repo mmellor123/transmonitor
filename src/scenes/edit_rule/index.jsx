@@ -8,6 +8,7 @@ import {fetchData, BASE_URL, deleteRule} from "../../common/functions.jsx";
 import {Link} from "react-router-dom";
 import CustomConfirmPopup from '../../components/CustomConfirmPopup'; // Assuming the file path for CustomConfirmPopup
 import { useNavigate } from "react-router-dom";
+import { useAuth } from "../../components/auth.jsx";
 
 
 
@@ -17,7 +18,8 @@ function withMyHook(Component){
         const navigate = useNavigate();
         const theme = useTheme();
         const colors = tokens(theme.palette.mode);
-        return <Component {...props} searchParams={searchParams} navigate={navigate} colors={colors}/>
+        const {token} = useAuth();
+        return <Component {...props} searchParams={searchParams} navigate={navigate} colors={colors} token={token}/>
     }
 }
 
@@ -41,7 +43,7 @@ class EditRule extends Component {
       };
 
     componentDidMount(){
-        fetchData(BASE_URL + "/get-rule?rule_id="+this.props.searchParams.get("id")).then((results) => {
+        fetchData(BASE_URL + "/get-rule?rule_id="+this.props.searchParams.get("id"), this.props.token).then((results) => {
             this.setState({data: results});
         })
     }

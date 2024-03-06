@@ -12,6 +12,8 @@ import { fetchData, getDates, monthIndexToString, BASE_URL, debounce, MAX_WIDTH,
 import Dropdown from 'react-bootstrap/Dropdown';
 
 import SetMonth from "../../components/SetMonth";
+import { useAuth } from "../../components/auth.jsx";
+import useRefreshToken from "../../hooks/useRefreshToken.js";
 
 const RULES_URL = BASE_URL + '/get-rules'
 const ENV_URL = BASE_URL + '/get-environment'
@@ -21,7 +23,9 @@ function withMyHook(Component) {
     return function WrappedComponent(props) {
         const theme = useTheme();
         const colors = tokens(theme.palette.mode);
-        return <Component {...props} theme={theme} colors={colors} />
+        const {token} = useAuth();
+        const refresh = useRefreshToken()
+        return <Component {...props} refresh={refresh} theme={theme} colors={colors} token={token} />
     }
 }
 
@@ -54,10 +58,11 @@ class Dashboard extends Component {
         if (r.length === 0) {
             return
         }
+        const token = this.props.token;
         const ruleName = r[0]["name"]
         const rule = r[0]["id"]
         this.setState({ isLoading: true })
-        fetchData(this.state.url + "start=" + startDate + "T00:00:00&end=" + endDate + "T00:00:00&rule=" + rule).then((results) => {
+        fetchData(this.state.url + "start=" + startDate + "T00:00:00&end=" + endDate + "T00:00:00&rule=" + rule, token).then((results) => {
             this.setState({ datas: results, isLoading: false, rule: rule, ruleName: ruleName, rules: r });
         });
     }
@@ -72,7 +77,7 @@ class Dashboard extends Component {
     }
 
     getEnvironment = () => {
-        fetchData(ENV_URL).then((result) => {
+        fetchData(ENV_URL, this.props.token).then((result) => {
             this.setState({ environment: result['environment'] })
         })
     }
@@ -80,7 +85,7 @@ class Dashboard extends Component {
     handleSearch = () => {
         let [sDate, eDate] = getDates(this.state.selectedYear, this.state.selectedMonth);
         this.setState({ isLoading: true })
-        fetchData(this.state.url + "start=" + sDate + "T00:00:00&end=" + eDate + "T00:00:00&rule=" + this.state.rule).then((results) => {
+        fetchData(this.state.url + "start=" + sDate + "T00:00:00&end=" + eDate + "T00:00:00&rule=" + this.state.rule, this.props.token).then((results) => {
             this.setState({ datas: results, startDate: sDate, endDate: eDate, isLoading: false});
         });
     }
@@ -93,7 +98,7 @@ class Dashboard extends Component {
         const d = new Date();
         let [startDate, endDate] = getDates(d.getFullYear(), d.getMonth());
         this.setState({ startDate: startDate, endDate: endDate, selectedMonth: d.getMonth(), selectedYear: d.getFullYear() });
-        fetchData(RULES_URL).then((results) => {
+        fetchData(RULES_URL, this.props.token).then((results) => {
             this.getRuleData(startDate, endDate, results);
         });
     }
@@ -107,12 +112,15 @@ class Dashboard extends Component {
     }
 
     render() {
-        const width = window.innerWidth;
         const colors = this.props.colors;
         const startDate = this.state.startDate;
         const endDate = this.state.endDate;
+        const refresh = this.props.refresh;
         return (
             <Box m="20px">
+                <button onClick={() =>refresh()}>Token</button>
+                <br/>
+                <button onClick={() =>{console.log(this.props.token)}}>Access Token</button>
                 {/* {this.state.isLoading && <LoadingCircle/>} */}
                 <Box display="flex" justifyContent="space-between" alignItems="center">
                     <Header title={"Dashboard (" + this.state.environment + ")"} subtitle="Welcome to your dashboard" />

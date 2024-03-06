@@ -7,7 +7,7 @@ import {faInfoCircle } from "@fortawesome/free-solid-svg-icons";
 import {postData, BASE_URL, isWidescreen, debounce} from "../common/functions.jsx";
 import CustomConfirmPopup from './CustomConfirmPopup'; // Assuming the file path for CustomConfirmPopup
 import CustomEditWhitelistPopup from './CustomEditWhitelistPopup'; // Assuming the file path for CustomConfirmPopup
-
+import { useAuth } from "./auth.jsx";
 
 
 
@@ -21,7 +21,8 @@ function withMyHook(Component) {
     return function WrappedComponent(props) {
         const theme = useTheme();
         const colors = tokens(theme.palette.mode);
-        return <Component {...props} theme={theme} colors={colors} />
+        const {token} = useAuth();
+        return <Component {...props} theme={theme} colors={colors} token={token} />
     }
 }
 
@@ -66,7 +67,7 @@ class Rule extends Component {
 
     //Updates fields to have data for particular rule
     updateFields(data){
-        postData(BASE_URL + "/get-customers-from-cif", {"cif": data.whitelist}, "POST").then((results) => {
+        postData(BASE_URL + "/get-customers-from-cif", {"cif": data.whitelist}, "POST", this.props.token).then((results) => {
             this.setState({
                 periodUnit: data.period_unit, 
                 period:data.period, 
@@ -180,10 +181,10 @@ class Rule extends Component {
         }
         if(this.props.endpoint ==="/update-rule"){
             payload['rule_id'] = this.props.ruleId
-            postData(BASE_URL+this.props.endpoint, payload, "PUT");
+            postData(BASE_URL+this.props.endpoint, payload, "PUT", this.props.token);
         }
         else if(this.props.endpoint ==="/create-rule"){
-            postData(BASE_URL+this.props.endpoint, payload, "POST");
+            postData(BASE_URL+this.props.endpoint, payload, "POST", this.props.token);
         }
         this.props.navigate("/view-rules");
     }
@@ -208,7 +209,7 @@ class Rule extends Component {
       }
 
       updateWhitelist(arr){
-        postData(BASE_URL + "/get-customers-from-cif", {"cif": arr}, "POST").then((results) => {
+        postData(BASE_URL + "/get-customers-from-cif", {"cif": arr}, "POST", this.props.token).then((results) => {
             this.setState({whitelist: arr, whitelistWithName: results})
         });
       }
@@ -216,7 +217,7 @@ class Rule extends Component {
       addCustomer = (cif) => {
         var arr = this.state.whitelist;
         arr.push(cif);
-        postData(BASE_URL + "/get-customers-from-cif", {"cif": arr}, "POST").then((results) => {
+        postData(BASE_URL + "/get-customers-from-cif", {"cif": arr}, "POST", this.props.token).then((results) => {
             this.setState({whitelist: arr, whitelistWithName: results})
         });
       }
@@ -247,6 +248,7 @@ class Rule extends Component {
                             addCustomer={this.addCustomer}
                             filter={this.state.filter}
                             onFilter={this.handleFilter}
+                            token={this.props.token}
                         />
                     )}
 

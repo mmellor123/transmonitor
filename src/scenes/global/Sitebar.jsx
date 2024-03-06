@@ -1,7 +1,7 @@
 import { useState } from "react";
-import { Sidebar, Menu, MenuItem, useProSidebar} from "react-pro-sidebar";
-import {Box, IconButton, Typography, useTheme} from '@mui/material';
-import {tokens} from "../../theme";
+import { Sidebar, Menu, MenuItem, useProSidebar } from "react-pro-sidebar";
+import { Box, IconButton, Typography, useTheme } from '@mui/material';
+import { tokens } from "../../theme";
 import HomeOutlinedIcon from "@mui/icons-material/HomeOutlined";
 import ReceiptOutlinedIcon from "@mui/icons-material/ReceiptOutlined";
 
@@ -9,6 +9,7 @@ import BarChartOutlinedIcon from "@mui/icons-material/BarChartOutlined";
 import PieChartOutlineOutlinedIcon from "@mui/icons-material/PieChartOutlineOutlined";
 import TimelineOutlinedIcon from "@mui/icons-material/TimelineOutlined";
 import MenuOutlinedIcon from "@mui/icons-material/MenuOutlined";
+import LogoutIcon from '@mui/icons-material/Logout';
 import AddIcon from '@mui/icons-material/Add';
 import EditIcon from '@mui/icons-material/Edit';
 
@@ -16,13 +17,14 @@ import { useAuth } from "../../components/auth";
 import { Item } from "../../common/functions";
 import { ReactComponent as Logo } from "./flower.svg";
 import { useLocation } from "react-router-dom";
+import { Logout } from "@mui/icons-material";
 
 
-const SidebarMine = ({isSidebar}) => {
+const SidebarMine = ({ isSidebar }) => {
     const theme = useTheme();
     const colors = tokens(theme.palette.mode);
     const { collapseSidebar, collapsed } = useProSidebar();
-    const auth = useAuth();
+    const { token } = useAuth();
     const location = useLocation();
 
     return (
@@ -47,34 +49,34 @@ const SidebarMine = ({isSidebar}) => {
             display='flex'
             boxShadow="0px 4px 19px 0px #aaaaaa"
         >
-            {auth.user && (
-            <Sidebar backgroundColor={colors.primary[400]} collapsed={collapsed}>
-                <Menu iconShape="square">
-                    {/* LOGO AND MENU ICON */}
+            {token && (
+                <Sidebar backgroundColor={colors.primary[400]} collapsed={collapsed}>
+                    <Menu iconShape="square">
+                        {/* LOGO AND MENU ICON */}
                         <MenuItem onClick={() => collapseSidebar()}
-                            icon={collapsed ? <MenuOutlinedIcon/> : undefined}
+                            icon={collapsed ? <MenuOutlinedIcon /> : undefined}
                             style={{
                                 margin: "10px 0 20px 0",
                                 color: colors.grey[100],
                             }}
                         >
-                        {!collapsed && (
-                            <Box display="flex" justifyContent="space-between" alignItems="center" ml="15px">
-                                <Typography variant="h3" color={colors.grey[100]}>
-                                    ADMINIS
-                                </Typography>
-                                <IconButton>
-                                    <MenuOutlinedIcon/>          
-                                </IconButton>
-                            </Box>
-                            
-                        )} 
+                            {!collapsed && (
+                                <Box display="flex" justifyContent="space-between" alignItems="center" ml="15px">
+                                    <Typography variant="h3" color={colors.grey[100]}>
+                                        ADMINIS
+                                    </Typography>
+                                    <IconButton>
+                                        <MenuOutlinedIcon />
+                                    </IconButton>
+                                </Box>
+
+                            )}
                         </MenuItem>
 
                         {!collapsed && (
                             <Box mb="25px">
                                 <Box display="flex" justifyContent="center" alignItems="center">
-                                    <Logo/>
+                                    <Logo />
                                     {/* <img
                                         alt="profile-user"
                                         width="100px"
@@ -88,7 +90,7 @@ const SidebarMine = ({isSidebar}) => {
                                         variant="h2"
                                         color={colors.grey[100]}
                                         fontWeight="bold"
-                                        sx={{m: "10px 0 0 0"}}
+                                        sx={{ m: "10px 0 0 0" }}
                                     >
                                         AML Monitoring
                                     </Typography>
@@ -103,7 +105,7 @@ const SidebarMine = ({isSidebar}) => {
                             <Item
                                 title="Dashboard"
                                 to="/"
-                                icon={<HomeOutlinedIcon/>}
+                                icon={<HomeOutlinedIcon />}
                                 location={location.pathname}
 
                             />
@@ -111,7 +113,7 @@ const SidebarMine = ({isSidebar}) => {
                             <Typography
                                 variant="h6"
                                 color={colors.grey[300]}
-                                sx={{m:"15px 0 5px 20px"}}
+                                sx={{ m: "15px 0 5px 20px" }}
                             >
                                 Data
                             </Typography>
@@ -123,17 +125,17 @@ const SidebarMine = ({isSidebar}) => {
                             <Item
                                 title="Transactions"
                                 to="/invoices"
-                                icon={<ReceiptOutlinedIcon/>}
+                                icon={<ReceiptOutlinedIcon />}
                                 location={location.pathname}
                             />
-                            
-                            <Typography
+
+                            {/* <Typography
                                 variant="h6"
                                 color={colors.grey[300]}
                                 sx={{m:"15px 0 5px 20px"}}
                             >
                                 Pages
-                            </Typography>
+                            </Typography> */}
                             {/* <Item
                                 title="Profile Form"
                                 to="/form"
@@ -150,7 +152,7 @@ const SidebarMine = ({isSidebar}) => {
                                 icon={<HelpOutlineOutlinedIcon  yOutlinedIcon />}
                             /> */}
 
-                            <Typography
+                            {/* <Typography
                                 variant="h6"
                                 color={colors.grey[300]}
                                 sx={{m:"15px 0 5px 20px"}}
@@ -174,30 +176,44 @@ const SidebarMine = ({isSidebar}) => {
                                 to="/line"
                                 icon={<TimelineOutlinedIcon/>}
                                 location={location.pathname}
-                            />
+                            /> */}
 
                             <Typography
                                 variant="h6"
                                 color={colors.grey[300]}
-                                sx={{m:"15px 0 5px 20px"}}
+                                sx={{ m: "15px 0 5px 20px" }}
                             >
                                 Rules
                             </Typography>
                             <Item
                                 title="Create Rule"
                                 to="/create-rule"
-                                icon={<AddIcon/>}
+                                icon={<AddIcon />}
                                 location={location.pathname}
                             />
                             <Item
                                 title="View Rules"
                                 to="/view-rules"
-                                icon={<EditIcon/>}
+                                icon={<EditIcon />}
+                                location={location.pathname}
+                            />
+
+                            <Typography
+                                variant="h6"
+                                color={colors.grey[300]}
+                                sx={{ m: "15px 0 5px 20px" }}
+                            >
+                                Account
+                            </Typography>
+                            <Item
+                                title="Logout"
+                                to="/logout"
+                                icon={<Logout />}
                                 location={location.pathname}
                             />
                         </Box>
-                </Menu>
-            </Sidebar>
+                    </Menu>
+                </Sidebar>
             )}
         </Box>
     );

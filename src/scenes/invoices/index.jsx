@@ -6,6 +6,7 @@ import Dropdown from 'react-bootstrap/Dropdown';
 import Transactions from "../../components/Transactions";
 import Header from "../../components/Header";
 import SetMonth from "../../components/SetMonth";
+import { useAuth } from "../../components/auth.jsx";
 
 
 
@@ -13,7 +14,8 @@ function withMyHook(Component) {
     return function WrappedComponent(props) {
         const theme = useTheme();
         const colors = tokens(theme.palette.mode);
-        return <Component {...props} theme={theme} colors={colors} />
+        const {token} = useAuth();
+        return <Component {...props} theme={theme} colors={colors} token={token}/>
     }
 }
 
@@ -58,7 +60,8 @@ class Invoices extends Component {
         const d = new Date();
         let [startDate, endDate] = getDates(d.getFullYear(), d.getMonth());
         this.setState({ startDate: startDate, endDate: endDate, selectedMonth: d.getMonth(), selectedYear: d.getFullYear() });
-        fetchData(RULES_URL).then((results) => {
+        fetchData(RULES_URL, this.props.token).then((results) => {
+            this.setState({rules: results});
             this.getRuleData(startDate, endDate, results);
         });
     }
@@ -67,10 +70,10 @@ class Invoices extends Component {
         if (r.length === 0) {
             return
         }
-        const ruleName = r[0]["name"]
-        const rule = r[0]["id"]
+        const ruleName = r[0]["name"];
+        const rule = r[0]["id"];
         this.setState({ isLoading: true })
-        fetchData(this.state.url + "start=" + startDate + "T00:00:00&end=" + endDate + "T00:00:00&rule=" + rule).then((results) => {
+        fetchData(this.state.url + "start=" + startDate + "T00:00:00&end=" + endDate + "T00:00:00&rule=" + rule, this.props.token).then((results) => {
             this.setState({ datas: results, isLoading: false, rule: rule, ruleName: ruleName, rules: r });
         });
     }

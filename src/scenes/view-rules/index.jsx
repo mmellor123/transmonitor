@@ -3,6 +3,14 @@ import Table from "../../components/Table";
 import {fetchData, BASE_URL, deleteRule} from "../../common/functions.jsx";
 import {Box} from "@mui/material";
 import Header from "../../components/Header";
+import { useAuth } from "../../components/auth.jsx";
+
+function withMyHook(Component){
+    return function WrappedComponent(props){
+        const {token} = useAuth();
+        return <Component {...props} token={token}/>
+    }
+}
 
 
 class ViewRules extends Component {
@@ -12,7 +20,7 @@ class ViewRules extends Component {
     }
 
     fetchRuleData(){
-        fetchData(BASE_URL +"/get-rules").then((results) => {
+        fetchData(BASE_URL +"/get-rules", this.props.token).then((results) => {
             this.setState({data: results})
         });
     }
@@ -37,4 +45,4 @@ class ViewRules extends Component {
     }
 }
 
-export default ViewRules
+export default withMyHook(ViewRules);

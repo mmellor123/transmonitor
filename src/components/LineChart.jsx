@@ -4,13 +4,15 @@ import { ResponsiveLine } from "@nivo/line";
 import React, {Component} from "react";
 import {fetchData, BASE_URL} from "../common/functions.jsx";
 import LoadingCircle from "./LoadingCircle";
+import { useAuth } from "./auth.jsx";
 
 
 function withMyHook(Component){
     return function WrappedComponent(props){
         const theme = useTheme();
         const colors = tokens(theme.palette.mode);
-        return <Component {...props} theme={theme} colors={colors}/>
+        const {token} = useAuth()
+        return <Component {...props} theme={theme} colors={colors} token={token}/>
     }
 }
 
@@ -41,15 +43,16 @@ class LineChart extends Component {
         const startDate = this.props.startDate;
         const endDate = this.props.endDate;
         this.setState({isLoading: true})
-        fetchData(LINE_URL + "start="+startDate+"T00:00:00&end="+endDate+"T00:00:00").then((results) => {
+        fetchData(LINE_URL + "start="+startDate+"T00:00:00&end="+endDate+"T00:00:00", this.props.token).then((results) => {
             this.setState({datas: results, isLoading: false});
-        });
+        })
     }
 
     render(){
         const isDashboard = this.props.isDashboard;
         const colors = this.props.colors;
         let data = this.state.datas;
+
         if(isDashboard){
             data = this.props.data;
         }
