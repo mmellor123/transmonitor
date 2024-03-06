@@ -3,7 +3,6 @@ import { Typography, useTheme } from '@mui/material';
 import { Link, useNavigate } from "react-router-dom";
 import { MenuItem } from "react-pro-sidebar";
 import { tokens } from "../theme";
-import axios from 'axios';
 
 export const BASE_URL = "https://s2.transactionmonitor.co.uk";
 export const TOKEN = "mytoken";
@@ -93,7 +92,7 @@ export function jsonToCSV(dict) {
 export function sendEmail(email, csv, filename) {
   fetch(BASE_URL + "/send-email",
     {
-      method: "POST", headers: { 'Authorization': axios.defaults.headers.common["Authorization"], 'content-type': 'application/json' },
+      method: "POST", headers: { 'Authorization': "Bearer test", 'content-type': 'application/json' },
       body: JSON.stringify({ email: email, csv_file: csv, filename: filename })
     })
     .then(res => {
@@ -162,7 +161,7 @@ export async function fetchData(url, token) {
 }
 
 export async function fetchData2(url, payload) {
-  const response = await fetch(url, { method: "POST", body: JSON.stringify(payload), headers: { 'Authorization':  axios.defaults.headers.common["Authorization"]} })
+  const response = await fetch(url, { method: "POST", body: JSON.stringify(payload), headers: { 'Authorization':  "Bearer test"} })
     .then(
       res => res.json()
     )
